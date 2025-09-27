@@ -1,0 +1,3 @@
+[submodule "deeponets-tf"]
+	path = deeponets-tf
+	url = git@github.com:briviosimone/deeponets-tf.git
