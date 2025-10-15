@@ -1,16 +1,22 @@
+import keras
 import tensorflow as tf
 
-class DenseNetwork(tf.keras.Model):
+# Clear all previously registered custom objects
+keras.saving.get_custom_objects().clear()
+
+@keras.saving.register_keras_serializable(package="MyLayers")
+class DenseNetwork(tf.keras.layers.Layer):
     """ A basic dense network of fixed width """
 
     def __init__(
         self, 
-        width : int, 
-        depth : int, 
-        output_dim : int,
+        width : int = 1, 
+        depth : int = 1, 
+        output_dim : int = 1,
         input_dim = None,
         activation = 'gelu', 
-        kernel_initializer = 'he_uniform'
+        kernel_initializer = 'he_uniform',
+        **kwargs
     ):
         """
         
@@ -24,9 +30,13 @@ class DenseNetwork(tf.keras.Model):
             kernel_initializer: weight matrix initializer (defaults to 
                                 'he_uniform').
         """
-        super().__init__()
+        super(DenseNetwork, self).__init__(**kwargs)
         self.input_dim = input_dim
         self.output_dim = output_dim
+        self.width = width
+        self.depth = depth
+        self.activation = activation
+        self.kernel_initializer = kernel_initializer
         self.dense_layers = list()
         for d in range(depth):
             if d < depth - 1:
@@ -59,15 +69,30 @@ class DenseNetwork(tf.keras.Model):
             x = layer(x)
         return x
     
+    def get_config(self):
+        # Return the config necessary to reconstruct this model
+        base_config = super(DenseNetwork, self).get_config()
+        return {
+            **base_config,
+            "width": self.width,
+            "depth": self.depth,
+            "output_dim": self.output_dim,
+            "input_dim": self.input_dim,
+            "activation": self.activation,
+            "kernel_initializer": self.kernel_initializer
+        }
+    
 
 
 
+@keras.saving.register_keras_serializable()
 class DeepONet(tf.keras.Model):
 
     def __init__(
             self, 
             branch : DenseNetwork, 
-            trunk : DenseNetwork
+            trunk : DenseNetwork,
+            **kwargs
         ):
         """
         
@@ -75,12 +100,10 @@ class DeepONet(tf.keras.Model):
             branch (DenseNetwork): the branch net to generate expansion coeffs. 
             trunk (DenseNetwork): the trunk net to generate the basis functions.
         """
-        super().__init__()
+        super(DeepONet, self).__init__(**kwargs)
         assert branch.output_dim == trunk.output_dim
         self.branch = branch
         self.trunk = trunk
-
-
 
     def call(self, inputs):
         """ 
@@ -94,3 +117,20 @@ class DeepONet(tf.keras.Model):
         basis = self.trunk(x)    # dimension: ... x r
         ein_syntax = 'bj,bij->bi' if (len(basis.shape) == 3) else 'bj,ij->bi'
         return tf.einsum(ein_syntax, coeffs, basis) # dimension: B x ...
+    
+    def get_config(self):
+        # Return the config necessary to reconstruct this model
+        base_config = super(DeepONet, self).get_config()
+        return {
+            **base_config,
+            "branch": tf.keras.utils.serialize_keras_object(self.branch),
+            "trunk": tf.keras.utils.serialize_keras_object(self.trunk)
+        }
+
+    @classmethod
+    def from_config(cls, config):
+        branch_config = config.pop("branch")
+        trunk_config = config.pop("trunk")
+        config["branch"] = tf.keras.utils.deserialize_keras_object(branch_config)
+        config["trunk"] = tf.keras.utils.deserialize_keras_object(trunk_config)
+        return cls(**config)
