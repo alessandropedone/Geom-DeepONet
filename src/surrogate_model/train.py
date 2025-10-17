@@ -1,8 +1,9 @@
 
+from pyexpat import model
 import tensorflow as tf
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from model import DenseNetwork
+from model import DenseNetwork, DeepONet
 
 def train_dense_network(model_path: str, seed: int = 40):
 
@@ -103,3 +104,148 @@ def train_dense_network(model_path: str, seed: int = 40):
 
     model.plot_training_history()
     
+
+
+
+def train_don(model_path: str):
+
+    import numpy as np
+
+    # Hyperparameters setup --------------------------------------------------------
+    r = 20     # low-rank dimension
+    p = 3      # number of problem parameters = geometrical parameters
+    d = 1      # number of spatial dimensions
+    ns = 1000  # number of samples = number of meshes
+    nh = 350   # number of dofs = x-coordinates available for each mesh
+    seed = 40  # random seed for data splitting
+    # ------------------------------------------------------------------------------
+
+    # Import coordinates dataset and convert to numpy array
+    coordinates = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
+
+    # Geometrical parameters (mu)
+    mu = coordinates.iloc[:, 1:4]
+    mu = mu.to_numpy()
+    mu = mu.reshape((ns*nh, p))  # Reshape to (ns*nh, p)
+
+    # Spatial coordinates (x)
+    x = coordinates.iloc[:, 4]
+    x = x.to_numpy()
+    x = x.reshape((ns*nh, d))  # Reshape to (ns*nh, d)
+
+    # Import normal derivative potential dataset and convert to numpy array
+    normal_derivative = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
+    y = normal_derivative.iloc[:, 5]
+    y = y.to_numpy()
+    y = y.reshape((ns*nh, 1))  # Reshape to (ns*nh, 1)
+
+    # Print shapes
+    print("mu shape:", mu.shape)
+    print("x shape:", x.shape)
+    print("y shape:", y.shape)
+
+    # Split indices for train+val and test sets first (split along the first dimension)
+    idx = np.arange(ns*nh)
+    idx_trainval, idx_test = train_test_split(idx, test_size=0.2, random_state=seed)
+    # Split train+val indices into train and val sets
+    idx_train, idx_val = train_test_split(idx_trainval, test_size=0.2, random_state=seed)
+    # Use indices to split the arrays along the first dimension
+    mu_train, mu_val, mu_test = mu[idx_train], mu[idx_val], mu[idx_test]
+    x_train, x_val, x_test = x[idx_train], x[idx_val], x[idx_test]
+    y_train, y_val, y_test = y[idx_train], y[idx_val], y[idx_test]
+
+    # Mixed Precision Setup
+    policy = tf.keras.mixed_precision.Policy('mixed_float16')
+    tf.keras.mixed_precision.set_global_policy(policy)
+
+    print("X_train shape:", x_train.shape)
+    print("mu_train shape:", mu_train.shape)
+    print("y_train shape:", y_train.shape)
+
+
+    branch = DenseNetwork(
+        X = x_train, 
+        input_neurons = p, 
+        n_neurons = [512, 256, 128, 256], 
+        activation = 'relu', 
+        output_neurons = 20, 
+        output_activation = 'linear', 
+        initializer = 'he_normal',
+        l1_coeff= 0, 
+        l2_coeff = 1e-4, 
+        batch_normalization = True, 
+        dropout = True, 
+        dropout_rate = 0.5, 
+        leaky_relu_alpha = None,
+        layer_normalization = True,
+        positional_encoding_frequencies = 0,
+    )
+
+    trunk = DenseNetwork(
+        X = x_train, 
+        input_neurons = d, 
+        n_neurons = [512, 256, 128, 256], 
+        activation = 'relu', 
+        output_neurons = 20, 
+        output_activation = 'linear', 
+        initializer = 'he_normal',
+        l1_coeff= 0, 
+        l2_coeff = 1e-4, 
+        batch_normalization = True, 
+        dropout = True, 
+        dropout_rate = 0.5, 
+        leaky_relu_alpha = None,
+        layer_normalization = True,
+        positional_encoding_frequencies = 20,
+    )
+
+    don = DeepONet(branch = branch, trunk = trunk)
+
+    don.build(input_shape=[(None, p), (None, d)])
+    don.summary()
+
+    # --- Learning rate schedule ---
+    def lr_warmup_schedule(epoch, lr):
+        warmup_epochs = 5
+        base_lr = 5e-4
+        start_lr = 1e-6
+        if epoch <= warmup_epochs:
+            return start_lr + (base_lr - start_lr) * (epoch / warmup_epochs)
+        return lr
+
+    warmup_callback = tf.keras.callbacks.LearningRateScheduler(lr_warmup_schedule, verbose=0)
+
+    reduce_callback = tf.keras.callbacks.ReduceLROnPlateau(
+        monitor='val_loss',
+        factor=0.5,
+        patience=4,
+        verbose=1
+    )
+
+    """     don.train_model(
+        X = x_train,
+        mu = mu_train,
+        y = y_train,
+        X_val = x_val,
+        mu_val = mu_val,
+        y_val = y_val,
+        learning_rate= 1e-3, 
+        epochs = 1000, 
+        batch_size = 2048, 
+        loss = 'mse', 
+        validation_freq = 1, 
+        verbose = 1, 
+        lr_scheduler = [warmup_callback, reduce_callback], 
+        metrics = ['mae', 'mse'],
+        clipnorm = 1, 
+        early_stopping_patience = 15,
+        log = True,
+        optimizer = 'adam')
+    
+    model.save_model(model_path)
+
+    print("Evaluating the model on the validation set...")
+    model.evaluate_model(mu = mu_val, x = x_val, y = y_val)
+
+    print("Evaluating the model on the test set...")
+    model.evaluate_model(mu = mu_test, x = x_test, y = y_test) """

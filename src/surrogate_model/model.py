@@ -23,14 +23,19 @@ class FourierFeatures(tf.keras.layers.Layer):
             self.freqs = tf.constant(2.0 ** tf.range(1, self.num_frequencies + 1, dtype=tf.float32)[tf.newaxis, :])
 
     def call(self, x):
-        # Use the same positional encoding approach with learnable or fixed frequencies
-        x3 = tf.expand_dims(x[:, 3], -1)
-        encoded = [x3]
+        # x shape: (batch, time, feature)
+        x_last = x[..., -1:]  # shape: (batch, time, 1)
+        # Start encoding list
+        encoded = []
+        # Apply sinusoidal or learnable frequency encoding
         for i in range(self.num_frequencies):
             freq = self.freqs[0, i]
-            encoded.append(tf.sin(freq * x3))
-            encoded.append(tf.cos(freq * x3))
-        return tf.concat([x[:, :3], *encoded], axis=-1)
+            encoded.append(tf.sin(freq * x_last))
+            encoded.append(tf.cos(freq * x_last))
+        # Concatenate along the feature dimension
+        encoded_features = tf.concat(encoded, axis=-1)
+        # Combine the original x with the new encodings
+        return tf.concat([x, encoded_features], axis=-1)
     
     def get_config(self):
         config = super().get_config()
@@ -339,3 +344,59 @@ class DenseNetwork(tf.keras.Model):
         plt.grid(True)
         plt.show()
 
+
+@register_keras_serializable()
+class DeepONet(tf.keras.Model):
+
+    def __init__(
+            self, 
+            branch : DenseNetwork, 
+            trunk : DenseNetwork,
+            **kwargs
+        ):
+        """
+        
+        Args:
+            branch (DenseNetwork): the branch net to generate expansion coeffs. 
+            trunk (DenseNetwork): the trunk net to generate the basis functions.
+        """
+        super(DeepONet, self).__init__(**kwargs)
+        assert branch.output_neurons == trunk.output_neurons
+        self.branch = branch
+        self.trunk = trunk
+
+    def call(self, inputs):
+        """ 
+
+        Args:
+            mu: batch of parameters (dimension: B x p)
+            x: batch of spatial points (tensor whose last dimension is d)
+        """
+        mu, x = inputs
+        coeffs = self.branch(mu) # dimension: ns x r
+        basis = self.trunk(x)    # dimension: ns x nh x r
+        ein_syntax = 'bj,bij->bi' if (len(basis.shape) == 3) else 'bj,ij->bi'
+        return tf.einsum(ein_syntax, coeffs, basis) # dimension: ns x nh
+    
+    def build(self, input_shape):
+        dummy_mu = tf.keras.Input(shape=(self.branch.input_neurons,))
+        dummy_x = tf.keras.Input(shape=(self.trunk.input_neurons,))
+        self.call((dummy_mu, dummy_x))
+        super(DeepONet, self).build(input_shape)
+    
+    def get_config(self):
+        # Return the config necessary to reconstruct this model
+        base_config = super(DeepONet, self).get_config()
+        return {
+            **base_config,
+            "branch": tf.keras.utils.serialize_keras_object(self.branch),
+            "trunk": tf.keras.utils.serialize_keras_object(self.trunk)
+        }
+
+    @classmethod
+    def from_config(cls, config):
+        branch_config = config.pop("branch")
+        trunk_config = config.pop("trunk")
+        config["branch"] = tf.keras.utils.deserialize_keras_object(branch_config)
+        config["trunk"] = tf.keras.utils.deserialize_keras_object(trunk_config)
+        return cls(**config)
