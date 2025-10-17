@@ -1,28 +1,36 @@
 import tensorflow as tf
 import pandas as pd
 import numpy as np
-from model import DenseNetwork, FourierFeatures
+from model import DenseNetwork, FourierFeatures, LogUniformFreqInitializer, EinsumLayer, DeepONet
 
 ##
 # @param x (numpy.ndarray): The input data for the model.
 # @param y (numpy.ndarray): The target data for the model.
 # @param model_path (str): The path to the saved model.
-def plot_prediction(x: np.ndarray, y: np.ndarray, model_path: str) -> None:
+def plot_prediction(x: np.ndarray, y: np.ndarray, model_path: str, don : bool = False) -> None:
     """"
     Plot the prediction from the surrogate model.
     """
     # Load the saved model
     model = tf.keras.models.load_model(
         model_path, 
-        custom_objects={"DenseNetwork": DenseNetwork, 'FourierFeatures': FourierFeatures})
+        custom_objects={
+            "DenseNetwork": DenseNetwork, 
+            'FourierFeatures': FourierFeatures, 
+            'LogUniformFreqInitializer': LogUniformFreqInitializer, 
+            'EinsumLayer': EinsumLayer, 
+            'DeepONet': DeepONet})
     
 
     model.summary()
 
-
     # Make a prediction
-    y_pred = model.predict(x)
-    y_pred = y_pred.flatten()
+    if don:
+        mu_branch = x[0, 0:3].reshape(1, 3)
+        x_trunk = x[:, 3:4]
+        y_pred = model([mu_branch, x_trunk]).numpy().flatten()
+    else:
+        y_pred = model.predict(x)
 
     # Plot the prediction
     # Take x coordinates from the 4th column
@@ -65,7 +73,7 @@ def plot_prediction(x: np.ndarray, y: np.ndarray, model_path: str) -> None:
 
 ##
 # @param model_path (str): The path to the saved model.
-def plot_random_prediction(model_path: str):
+def plot_random_prediction(model_path: str, don: bool = False) -> None:
     """
     Plot a random prediction from the surrogate model.
     """
@@ -94,4 +102,4 @@ def plot_random_prediction(model_path: str):
     x_sample = x[mask]
     y_sample = y[mask]
 
-    plot_prediction(x_sample, y_sample, model_path=model_path)
+    plot_prediction(x_sample, y_sample, model_path=model_path, don=don)

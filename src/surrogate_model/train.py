@@ -1,5 +1,4 @@
 
-from pyexpat import model
 import tensorflow as tf
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -94,13 +93,13 @@ def train_dense_network(model_path: str, seed: int = 40):
         optimizer = 'adam',
     )
 
-    model.save(model_path)
-
     print("Evaluating the model on the validation set...")
     model.evaluate(x = x_val, y = y_val, return_dict=True)
 
     print("Evaluating the model on the test set...")
     model.evaluate(x = x_test, y = y_test, return_dict=True)
+
+    model.save(model_path)
 
     model.plot_training_history()
     
@@ -120,24 +119,25 @@ def train_don(model_path: str):
     seed = 40  # random seed for data splitting
     # ------------------------------------------------------------------------------
 
-    # Import coordinates dataset and convert to numpy array
-    coordinates = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
+    data_csv = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
+    mu = data_csv.iloc[:, 1:4] # geometrical parameters
+    mu = np.array(mu)
 
-    # Geometrical parameters (mu)
-    mu = coordinates.iloc[:, 1:4]
-    mu = mu.to_numpy()
-    mu = mu.reshape((ns*nh, p))  # Reshape to (ns*nh, p)
+    #Now we have to reshape mu to be ns x p (remove duplicates)
+    mu = mu[::nh, :]
+    x = data_csv.iloc[:, 4]    # x-coordinates
+    x = np.array(x)
 
-    # Spatial coordinates (x)
-    x = coordinates.iloc[:, 4]
-    x = x.to_numpy()
-    x = x.reshape((ns*nh, d))  # Reshape to (ns*nh, d)
+    #Now we have to reshape x to be ns x nh x d
+    x = x.reshape((ns, nh, d))
+    y = data_csv.iloc[:, 5]    # solution at x-coordinates
+    y = np.array(y)
 
-    # Import normal derivative potential dataset and convert to numpy array
-    normal_derivative = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
-    y = normal_derivative.iloc[:, 5]
-    y = y.to_numpy()
-    y = y.reshape((ns*nh, 1))  # Reshape to (ns*nh, 1)
+    #Now we have to reshape y to be ns x nh
+    y = y.reshape((ns, nh))
+    print(mu.shape) # should be ns x p
+    print(x.shape) # should be ns x nh x d
+    print(y.shape) # should be ns x nh
 
     # Print shapes
     print("mu shape:", mu.shape)
@@ -145,7 +145,7 @@ def train_don(model_path: str):
     print("y shape:", y.shape)
 
     # Split indices for train+val and test sets first (split along the first dimension)
-    idx = np.arange(ns*nh)
+    idx = np.arange(ns)
     idx_trainval, idx_test = train_test_split(idx, test_size=0.2, random_state=seed)
     # Split train+val indices into train and val sets
     idx_train, idx_val = train_test_split(idx_trainval, test_size=0.2, random_state=seed)
@@ -154,13 +154,13 @@ def train_don(model_path: str):
     x_train, x_val, x_test = x[idx_train], x[idx_val], x[idx_test]
     y_train, y_val, y_test = y[idx_train], y[idx_val], y[idx_test]
 
+    print("mu_train shape:", mu_train.shape)
+    print("X_train shape:", x_train.shape)
+    print("y_train shape:", y_train.shape)
+
     # Mixed Precision Setup
     policy = tf.keras.mixed_precision.Policy('mixed_float16')
     tf.keras.mixed_precision.set_global_policy(policy)
-
-    print("X_train shape:", x_train.shape)
-    print("mu_train shape:", mu_train.shape)
-    print("y_train shape:", y_train.shape)
 
 
     branch = DenseNetwork(
@@ -168,7 +168,7 @@ def train_don(model_path: str):
         input_neurons = p, 
         n_neurons = [512, 256, 128, 256], 
         activation = 'relu', 
-        output_neurons = 20, 
+        output_neurons = r, 
         output_activation = 'linear', 
         initializer = 'he_normal',
         l1_coeff= 0, 
@@ -186,7 +186,7 @@ def train_don(model_path: str):
         input_neurons = d, 
         n_neurons = [512, 256, 128, 256], 
         activation = 'relu', 
-        output_neurons = 20, 
+        output_neurons = r, 
         output_activation = 'linear', 
         initializer = 'he_normal',
         l1_coeff= 0, 
@@ -199,10 +199,10 @@ def train_don(model_path: str):
         positional_encoding_frequencies = 20,
     )
 
-    don = DeepONet(branch = branch, trunk = trunk)
+    model = DeepONet(branch = branch, trunk = trunk)
 
-    don.build(input_shape=[(None, p), (None, d)])
-    don.summary()
+    model.build(input_shape=[(None, p), (None, d)])
+    model.summary()
 
     # --- Learning rate schedule ---
     def lr_warmup_schedule(epoch, lr):
@@ -222,7 +222,7 @@ def train_don(model_path: str):
         verbose=1
     )
 
-    """     don.train_model(
+    model.train_model(
         X = x_train,
         mu = mu_train,
         y = y_train,
@@ -231,7 +231,7 @@ def train_don(model_path: str):
         y_val = y_val,
         learning_rate= 1e-3, 
         epochs = 1000, 
-        batch_size = 2048, 
+        batch_size = 8, 
         loss = 'mse', 
         validation_freq = 1, 
         verbose = 1, 
@@ -241,11 +241,13 @@ def train_don(model_path: str):
         early_stopping_patience = 15,
         log = True,
         optimizer = 'adam')
-    
-    model.save_model(model_path)
 
     print("Evaluating the model on the validation set...")
-    model.evaluate_model(mu = mu_val, x = x_val, y = y_val)
+    model.evaluate([mu_val, x_val], y_val)
 
     print("Evaluating the model on the test set...")
-    model.evaluate_model(mu = mu_test, x = x_test, y = y_test) """
+    model.evaluate([mu, x], y)
+
+    model.save(model_path)
+
+    model.plot_training_history()

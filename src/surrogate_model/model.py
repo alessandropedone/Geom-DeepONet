@@ -344,7 +344,23 @@ class DenseNetwork(tf.keras.Model):
         plt.grid(True)
         plt.show()
 
+@register_keras_serializable()
+class EinsumLayer(tf.keras.layers.Layer):
+    def __init__(self, ein_syntax, **kwargs):
+        super().__init__(**kwargs)
+        self.ein_syntax = ein_syntax
 
+    def call(self, inputs):
+        coeffs, basis = inputs
+        return tf.einsum(self.ein_syntax, coeffs, basis)
+    
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "ein_syntax": self.ein_syntax,
+        })
+        return config
+    
 @register_keras_serializable()
 class DeepONet(tf.keras.Model):
 
@@ -365,6 +381,9 @@ class DeepONet(tf.keras.Model):
         self.branch = branch
         self.trunk = trunk
 
+        # Initialize history to None
+        self.history = None
+
     def call(self, inputs):
         """ 
 
@@ -373,11 +392,28 @@ class DeepONet(tf.keras.Model):
             x: batch of spatial points (tensor whose last dimension is d)
         """
         mu, x = inputs
-        coeffs = self.branch(mu) # dimension: ns x r
-        basis = self.trunk(x)    # dimension: ns x nh x r
-        ein_syntax = 'bj,bij->bi' if (len(basis.shape) == 3) else 'bj,ij->bi'
-        return tf.einsum(ein_syntax, coeffs, basis) # dimension: ns x nh
+
+        # Compute branch output
+        # Input mu shape: batch x p
+        # Output shape: batch x low rank dimension
+        coeffs = self.branch(mu)
+        
+        # Compute trunk output
+        # Input x shape: time x d  OR  batch x time x d
+        # Output shape: time x low rank dimension  OR  batch x time x low rank dimension
+        if len(x.shape) == 3:  # batch x time x d
+            # Apply trunk to each time step
+            original_shape = tf.shape(x)
+            x_reshaped = tf.reshape(x, [-1, x.shape[-1]])
+            basis_flat = self.trunk(x_reshaped)
+            basis = tf.reshape(basis_flat, [original_shape[0], original_shape[1], -1])
+        else:  # time x d
+            basis = self.trunk(x)
     
+        ein_syntax = 'bj,bij->bi' if (len(basis.shape) == 3) else 'bj,ij->bi'
+        output = EinsumLayer(ein_syntax)([coeffs, basis])
+        return output
+
     def build(self, input_shape):
         dummy_mu = tf.keras.Input(shape=(self.branch.input_neurons,))
         dummy_x = tf.keras.Input(shape=(self.trunk.input_neurons,))
@@ -400,3 +436,100 @@ class DeepONet(tf.keras.Model):
         config["branch"] = tf.keras.utils.deserialize_keras_object(branch_config)
         config["trunk"] = tf.keras.utils.deserialize_keras_object(trunk_config)
         return cls(**config)
+    
+
+    def train_model(self, 
+                    X: np.ndarray,
+                    mu: np.ndarray,
+                    y: np.ndarray, 
+                    X_val: np.ndarray, 
+                    mu_val: np.ndarray,
+                    y_val: np.ndarray, 
+                    learning_rate: float = 1e-3, 
+                    epochs: int = 10000, 
+                    batch_size: int = 15000, 
+                    loss: str = 'mean_squared_error', 
+                    validation_freq: int = 1, 
+                    verbose: int = 0,
+                    lr_scheduler = None,
+                    metrics: list = ['mse'],
+                    clipnorm: float = None,
+                    early_stopping_patience: int = None,
+                    log: bool = False,
+                    optimizer: str = 'adam'
+                    ) -> None:
+        """
+        Trains the model on the provided dataset.
+        Use "tensorboard --logdir logs" to visualize logs (if log is set to True).
+        """
+        if X.size == 0 or y.size == 0 or X_val.size == 0 or y_val.size == 0 or mu.size == 0 or mu_val.size == 0:
+            raise ValueError("Input arrays must not be empty")
+        if loss == 'huber_loss':
+            loss = tf.keras.losses.Huber(delta=1.0)
+
+        if optimizer not in ['adam', 'sgd', 'rmsprop']:
+            raise ValueError("Unsupported optimizer. Supported optimizers are: 'adam', 'sgd', 'rmsprop'.")
+        if optimizer == 'sgd':
+            optimizer = tf.keras.optimizers.SGD
+            if clipnorm is not None:
+                self.compile(loss=loss, metrics=metrics,optimizer=optimizer(learning_rate=learning_rate, momentum=0.9, nesterov=True, clipnorm=clipnorm))
+            else:
+                self.compile(loss=loss, metrics=metrics,optimizer=optimizer(learning_rate=learning_rate, momentum=0.9, nesterov=True))
+        elif optimizer == 'rmsprop':
+            self.compile(loss=loss, metrics=metrics,optimizer=tf.keras.optimizers.RMSprop(learning_rate=learning_rate, rho=0.9, momentum=0.9, epsilon=1e-07, centered=False))
+        elif optimizer == 'adam':
+            optimizer = tf.keras.optimizers.Adam
+            if clipnorm is not None:
+                self.compile(loss=loss, metrics=metrics,optimizer=optimizer(learning_rate=learning_rate, clipnorm=clipnorm))
+            else:
+                self.compile(loss=loss, metrics=metrics,optimizer=optimizer(learning_rate=learning_rate))
+        
+        callbacks = []
+        if lr_scheduler is not None:
+            for callback in lr_scheduler:
+                callbacks.append(callback)
+
+        # Set up TensorBoard callback with profiling
+        if log:
+            log_dir = "logs/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+            tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, write_steps_per_second=True)
+            callbacks.append(tensorboard_callback)
+        # TensorBoard command: tensorboard --logdir logs
+
+        # Early stopping callback
+        if early_stopping_patience is not None:
+            early_stopping = tf.keras.callbacks.EarlyStopping(
+                monitor='val_loss', 
+                patience=early_stopping_patience, 
+                restore_best_weights=True
+            )
+            callbacks.append(early_stopping)
+
+        self.history = self.fit(
+            [mu, X], y, epochs=epochs, batch_size=batch_size, verbose=verbose,
+            validation_data=([mu_val, X_val], y_val), validation_freq=validation_freq,
+            callbacks=callbacks
+        )
+
+    ##
+    def plot_training_history(self) -> None:
+        """
+        Plots the training and validation loss over epochs.
+        This method should be called after training the model using `train_model`.
+        """
+        if self.history is None:
+            raise ValueError("The model has no training history. Train the model using 'train_model' method first.")
+
+        plt.figure(figsize=(8, 6))  # Adjust the figure size as needed
+        tot_train = len(self.history.history['loss'])
+        tot_valid = len(self.history.history['val_loss']) 
+        valid_freq = int(tot_train / tot_valid)
+        plt.plot(np.arange(tot_train), self.history.history['loss'], 'b-', label='Training loss', linewidth=2)
+        plt.plot(valid_freq * np.arange(tot_valid), self.history.history['val_loss'], 'r--', label='Validation loss', linewidth=2)
+        plt.yscale('log')
+        plt.xlabel('Epochs', fontsize=14)
+        plt.ylabel('Loss', fontsize=14)
+        plt.legend(fontsize=12)
+        plt.title('Training and Validation Loss', fontsize=16)
+        plt.grid(True)
+        plt.show()
