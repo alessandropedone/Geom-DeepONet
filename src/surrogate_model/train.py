@@ -3,18 +3,9 @@ import tensorflow as tf
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from model import DenseNetwork, DeepONet
+from meshes_coordinates import load_h5_solutions
 
 def train_dense_network(model_path: str, seed: int = 40):
-
-    # Import coordinates dataset and convert to numpy array
-    coordinates = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
-    x = coordinates.iloc[:, 1:5]
-    x = x.to_numpy()
-
-    # Import normal derivative potential dataset and convert to numpy array
-    normal_derivative = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
-    y = normal_derivative.iloc[:, 5]
-    y = y.to_numpy()
 
     seed = seed
 
@@ -106,17 +97,17 @@ def train_dense_network(model_path: str, seed: int = 40):
 
 
 
-def train_don(model_path: str):
+def train_don(model_path: str, seed: int = 40):
 
     import numpy as np
 
     # Hyperparameters setup --------------------------------------------------------
-    r = 20     # low-rank dimension
-    p = 3      # number of problem parameters = geometrical parameters
-    d = 1      # number of spatial dimensions
-    ns = 1000  # number of samples = number of meshes
-    nh = 350   # number of dofs = x-coordinates available for each mesh
-    seed = 40  # random seed for data splitting
+    r = 20         # low-rank dimension
+    p = 3          # number of problem parameters = geometrical parameters
+    d = 1          # number of spatial dimensions
+    ns = 1000      # number of samples = number of meshes
+    nh = 350       # number of dofs = x-coordinates available for each mesh
+    seed = seed    # random seed for data splitting
     # ------------------------------------------------------------------------------
 
     data_csv = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
@@ -246,8 +237,117 @@ def train_don(model_path: str):
     model.evaluate([mu_val, x_val], y_val)
 
     print("Evaluating the model on the test set...")
-    model.evaluate([mu, x], y)
+    model.evaluate([mu_test, x_test], y_test)
 
     model.save(model_path)
 
     model.plot_training_history()
+
+
+def train_potential(model_path: str, seed: int = 40):
+
+    import numpy as np
+
+    # Import coordinates dataset and solutions
+    x1, x2, pot, gx, gy, mask = load_h5_solutions()
+    x = np.stack((x1, x2), axis=2)
+
+    # Hyperparameters setup --------------------------------------------------------
+    r = 20          # low-rank dimension
+    p = 3           # number of problem parameters = geometrical parameters
+    d = 2           # number of spatial dimensions
+    ns = 1000       # number of samples = number of meshes
+    nh = len(x1[0]) # max number of dofs = x-coordinates available for each mesh
+    seed = seed     # random seed for data splitting
+    # ------------------------------------------------------------------------------
+
+    data_csv = pd.read_csv('data/parameters.csv')
+    mu = data_csv.iloc[:, 1:4] # geometrical parameters
+    mu = np.array(mu)
+
+    y = pot   # solution at x-coordinates
+    y = np.array(y)
+
+    # Print shapes
+    print("mu shape:", mu.shape)
+    print("x shape:", x.shape)
+    print("y shape:", y.shape)
+
+    # Split indices for train+val and test sets first (split along the first dimension)
+    idx = np.arange(ns)
+    idx_trainval, idx_test = train_test_split(idx, test_size=0.2, random_state=seed)
+    # Split train+val indices into train and val sets
+    idx_train, idx_val = train_test_split(idx_trainval, test_size=0.2, random_state=seed)
+    # Use indices to split the arrays along the first dimension
+    mu_train, mu_val, mu_test = mu[idx_train], mu[idx_val], mu[idx_test]
+    x_train, x_val, x_test = x[idx_train], x[idx_val], x[idx_test]
+    y_train, y_val, y_test = y[idx_train], y[idx_val], y[idx_test]
+
+    print("mu_train shape:", mu_train.shape)
+    print("X_train shape:", x_train.shape)
+    print("y_train shape:", y_train.shape)
+
+    # Mixed Precision Setup
+    policy = tf.keras.mixed_precision.Policy('mixed_float16')
+    tf.keras.mixed_precision.set_global_policy(policy)
+
+
+    branch = DenseNetwork(
+        X = x_train, 
+        input_neurons = p, 
+        n_neurons = [512, 256, 128, 256], 
+        activation = 'relu', 
+        output_neurons = r, 
+        output_activation = 'linear', 
+        initializer = 'he_normal',
+        l1_coeff= 0, 
+        l2_coeff = 1e-4, 
+        batch_normalization = True, 
+        dropout = True, 
+        dropout_rate = 0.5, 
+        leaky_relu_alpha = None,
+        layer_normalization = True,
+        positional_encoding_frequencies = 0,
+    )
+
+    trunk = DenseNetwork(
+        X = x_train, 
+        input_neurons = d, 
+        n_neurons = [512, 256, 128, 256], 
+        activation = 'relu', 
+        output_neurons = r, 
+        output_activation = 'linear', 
+        initializer = 'he_normal',
+        l1_coeff= 0, 
+        l2_coeff = 1e-4, 
+        batch_normalization = True, 
+        dropout = True, 
+        dropout_rate = 0.5, 
+        leaky_relu_alpha = None,
+        layer_normalization = True,
+        positional_encoding_frequencies = 20,
+    )
+
+    model = DeepONet(branch = branch, trunk = trunk)
+
+    model.build(input_shape=[(None, p), (None, d)])
+    model.summary()
+
+    # --- Learning rate schedule ---
+    def lr_warmup_schedule(epoch, lr):
+        warmup_epochs = 5
+        base_lr = 5e-4
+        start_lr = 1e-6
+        if epoch <= warmup_epochs:
+            return start_lr + (base_lr - start_lr) * (epoch / warmup_epochs)
+        return lr
+
+    warmup_callback = tf.keras.callbacks.LearningRateScheduler(lr_warmup_schedule, verbose=0)
+
+    reduce_callback = tf.keras.callbacks.ReduceLROnPlateau(
+        monitor='val_loss',
+        factor=0.5,
+        patience=4,
+        verbose=1
+    )
+
