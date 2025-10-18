@@ -21,7 +21,6 @@ def plot_prediction(x: np.ndarray, y: np.ndarray, model_path: str, don : bool = 
             'EinsumLayer': EinsumLayer, 
             'DeepONet': DeepONet})
     
-
     model.summary()
 
     # Make a prediction

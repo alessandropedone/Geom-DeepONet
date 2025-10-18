@@ -7,6 +7,16 @@ from meshes_coordinates import load_h5_solutions
 
 def train_dense_network(model_path: str, seed: int = 40):
 
+    # Import coordinates dataset and convert to numpy array
+    coordinates = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
+    x = coordinates.iloc[:, 1:5]
+    x = x.to_numpy()
+
+    # Import normal derivative potential dataset and convert to numpy array
+    normal_derivative = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
+    y = normal_derivative.iloc[:, 5]
+    y = y.to_numpy()    
+
     seed = seed
 
     # Split into train+val and test sets first
@@ -155,7 +165,7 @@ def train_don(model_path: str, seed: int = 40):
 
 
     branch = DenseNetwork(
-        X = x_train, 
+        X = mu_train, 
         input_neurons = p, 
         n_neurons = [512, 256, 128, 256], 
         activation = 'relu', 
@@ -249,7 +259,7 @@ def train_potential(model_path: str, seed: int = 40):
     import numpy as np
 
     # Import coordinates dataset and solutions
-    x1, x2, pot, gx, gy, mask = load_h5_solutions()
+    x1, x2, pot, gx, gy = load_h5_solutions()
     x = np.stack((x1, x2), axis=2)
 
     # Hyperparameters setup --------------------------------------------------------
@@ -288,14 +298,14 @@ def train_potential(model_path: str, seed: int = 40):
     print("y_train shape:", y_train.shape)
 
     # Mixed Precision Setup
-    policy = tf.keras.mixed_precision.Policy('mixed_float16')
+    policy = tf.keras.mixed_precision.Policy('float32')
     tf.keras.mixed_precision.set_global_policy(policy)
 
 
     branch = DenseNetwork(
-        X = x_train, 
+        X = mu_train, 
         input_neurons = p, 
-        n_neurons = [512, 256, 128, 256], 
+        n_neurons = [128, 64, 32, 128], 
         activation = 'relu', 
         output_neurons = r, 
         output_activation = 'linear', 
@@ -306,14 +316,14 @@ def train_potential(model_path: str, seed: int = 40):
         dropout = True, 
         dropout_rate = 0.5, 
         leaky_relu_alpha = None,
-        layer_normalization = True,
+        layer_normalization = False,
         positional_encoding_frequencies = 0,
     )
 
     trunk = DenseNetwork(
         X = x_train, 
         input_neurons = d, 
-        n_neurons = [512, 256, 128, 256], 
+        n_neurons = [128, 64, 32, 128], 
         activation = 'relu', 
         output_neurons = r, 
         output_activation = 'linear', 
@@ -324,7 +334,7 @@ def train_potential(model_path: str, seed: int = 40):
         dropout = True, 
         dropout_rate = 0.5, 
         leaky_relu_alpha = None,
-        layer_normalization = True,
+        layer_normalization = False,
         positional_encoding_frequencies = 20,
     )
 
@@ -350,4 +360,55 @@ def train_potential(model_path: str, seed: int = 40):
         patience=4,
         verbose=1
     )
+
+    # Be very careful about precision, since here tf.reduce_sum(mask) 
+    # can be very big if the number of points in a batch is large.
+    # Here we use float32 globally to avoid issues, 
+    # that ensure that we don't get overflow in the summation 
+    # when the number of points is less than 3.4e38.
+    # Using mixed precision with float16 would lead to overflow
+    # when the number of points in batch is larger than ~6e4.
+    def masked_mse(y_true, y_pred):
+        mask = tf.cast(~tf.math.is_nan(y_true), y_pred.dtype)
+        y_true = tf.where(tf.math.is_nan(y_true), 0.0, y_true)
+        y_true = tf.cast(y_true, y_pred.dtype)
+        return tf.reduce_sum(mask * tf.square(y_pred - y_true)) / tf.reduce_sum(mask)
+
+    def masked_mae(y_true, y_pred):
+        mask = tf.cast(~tf.math.is_nan(y_true), y_pred.dtype)
+        y_true = tf.where(tf.math.is_nan(y_true), 0.0, y_true)
+        y_true = tf.cast(y_true, y_pred.dtype)
+        return tf.reduce_sum(mask * tf.abs(y_pred - y_true)) / tf.reduce_sum(mask)
+
+    model.train_model(
+        X = x_train,
+        mu = mu_train,
+        y = y_train,
+        X_val = x_val,
+        mu_val = mu_val,
+        y_val = y_val,
+        learning_rate= 1e-3, 
+        epochs = 1000, 
+        batch_size = 8, 
+        loss = masked_mse, 
+        validation_freq = 1, 
+        verbose = 1, 
+        lr_scheduler = [warmup_callback, reduce_callback], 
+        metrics = [masked_mae, masked_mse],
+        clipnorm = 1, 
+        early_stopping_patience = 15,
+        log = True,
+        optimizer = 'adam')
+
+    print("Evaluating the model on the validation set...")
+    model.evaluate([mu_val, x_val], y_val)
+
+    print("Evaluating the model on the test set...")
+    model.evaluate([mu_test, x_test], y_test)
+
+    model.save(model_path)
+
+    model.plot_training_history()
+
+    
 

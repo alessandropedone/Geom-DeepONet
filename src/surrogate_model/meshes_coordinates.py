@@ -31,19 +31,14 @@ def load_h5_solutions():
     # Save lengths of each array before padding
     lengths = [len(arr) for arr in all_x]   # before padding
 
-    # Create mask from x_coords
-    mask = np.zeros((len(all_x), max_len), dtype=np.uint8)
-    for i, n in enumerate(lengths):
-        mask[i, :n] = 1
 
     # Pad arrays with 0s to ensure uniform length
     for i in range(len(all_x)):
-        all_x[i] = np.pad(all_x[i], (0, max_len - len(all_x[i])), 'constant')
-        all_y[i] = np.pad(all_y[i], (0, max_len - len(all_y[i])), 'constant')
-        all_potential[i] = np.pad(all_potential[i], (0, max_len - len(all_potential[i])), 'constant')
-        all_grad_x[i] = np.pad(all_grad_x[i], (0, max_len - len(all_grad_x[i])), 'constant')
-        all_grad_y[i] = np.pad(all_grad_y[i], (0, max_len - len(all_grad_y[i])), 'constant')
-
+        all_x[i] = np.pad(all_x[i], (0, max_len - len(all_x[i])), 'constant', constant_values=0)
+        all_y[i] = np.pad(all_y[i], (0, max_len - len(all_y[i])), 'constant', constant_values=0)
+        all_potential[i] = np.pad(all_potential[i], (0, max_len - len(all_potential[i])), 'constant', constant_values=np.nan)
+        all_grad_x[i] = np.pad(all_grad_x[i], (0, max_len - len(all_grad_x[i])), 'constant', constant_values=np.nan)
+        all_grad_y[i] = np.pad(all_grad_y[i], (0, max_len - len(all_grad_y[i])), 'constant', constant_values=np.nan)
 
     # Stack arrays in each list to create 2D matrixes
     x_matrix = np.stack(all_x)
@@ -52,4 +47,4 @@ def load_h5_solutions():
     grad_x_matrix = np.stack(all_grad_x)
     grad_y_matrix = np.stack(all_grad_y)
 
-    return x_matrix, y_matrix, potential_matrix, grad_x_matrix, grad_y_matrix, mask
+    return x_matrix, y_matrix, potential_matrix, grad_x_matrix, grad_y_matrix

@@ -9,12 +9,12 @@ from dataset_generation import generate_datasets, combine_temp_files, unroll_nor
 
 # Core of the code that produces the results
 #generate_geometries()
-#generate_meshes()
+generate_meshes()
 #generate_datasets()
 #combine_temp_files("data/coordinates.csv")
 #combine_temp_files("data/normal_derivative_potential.csv") 
 #remove_msh_files()
-unroll_normal_derivative_potential()
+#unroll_normal_derivative_potential()
 
 # Importing the necessary libraries
 import pandas as pd
