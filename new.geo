@@ -1,6 +1,6 @@
 // Parameters
 nx = 20;
-ny = 3;
+ny = 5;
 u = -2;
 
 xmin = -50;
@@ -34,7 +34,7 @@ For i In {1:nx}
 EndFor
 
 // Vertical edges
-For i In {1:ny}
+For i In {2:ny-1}
     y = (i-1) * yheight / (ny-1);
 
     L = 100;
@@ -56,13 +56,32 @@ For i In {1:ny}
     hp = hp + 1;
 EndFor
 
+// Create point lists
+UpperPts[] = {}; LowerPts[] = {};
+RightPts[] = {}; LeftPts[] = {};
 
-// Create splines
-Spline(1) = {UpperID[]};
-Spline(2) = {LowerID[]};
-Spline(3) = {RightID[]};
-Spline(4) = {LeftID[]};
+For i In {1:nx}
+  UpperPts[] += {UpperID[i]};
+  LowerPts[] += {LowerID[i]};
+EndFor
 
-// Create line loop and plane surface
-Line Loop(1) = {1, 2, 3, 4};
+For i In {2:ny-1}
+  RightPts[] += {RightID[i]};
+  LeftPts[] += {LeftID[i]};
+EndFor
+
+// Build splines
+Spline(1) = {UpperPts[]};
+Spline(2) = {LowerPts[]};
+Spline(3) = {LowerPts[nx-1], RightPts[], UpperPts[nx-1]};
+Spline(4) = {LowerPts[0], LeftPts[], UpperPts[0]};
+
+// Correct orientation
+Curve Loop(1) = {2, 3, -1, -4};
 Plane Surface(1) = {1};
+
+Mesh 2;
+
+
+
+
