@@ -184,9 +184,9 @@ def train_don(model_path: str, seed: int = 40):
 
     trunk = DenseNetwork(
         X = x_train, 
-        input_neurons = d, 
-        n_neurons = [512, 256, 128, 256], 
-        activation = 'relu', 
+        input_neurons = d,
+        n_neurons = [512, 256, 128, 256],
+        activation = 'relu',
         output_neurons = r, 
         output_activation = 'linear', 
         initializer = 'he_normal',
