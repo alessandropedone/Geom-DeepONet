@@ -12,6 +12,19 @@ from load_solutions import load_h5_solutions
 
 ## Potential Model
 #run_on_device(train_potential, "models/potential_model_light.keras")
-mu, x, y, potential, grad_x, grad_y = load_h5_solutions()
+
+#mu, x, y, potential, grad_x, grad_y = load_h5_solutions()
+import numpy as np
+#np.savez('solutions.npz', mu=mu, x=x, y=y, potential=potential, grad_x=grad_x, grad_y=grad_y)
+
+# load data from npz
+data = np.load('solutions.npz')
+mu = data['mu']
+x = data['x']
+y = data['y']
+potential = data['potential']
+grad_x = data['grad_x']
+grad_y = data['grad_y']
+
 # COUNTOUR PLOT TBD
 plot_prediction_2D(mu, x, y, potential, "models/potential_model_light.keras")

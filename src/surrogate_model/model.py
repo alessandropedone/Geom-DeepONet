@@ -384,7 +384,7 @@ class DeepONet(tf.keras.Model):
         # Initialize history to None
         self.history = None
 
-    def call(self, inputs):
+    def call(self, inputs, return_branch=False, return_trunk=False):
         """ 
 
         Args:
@@ -409,7 +409,14 @@ class DeepONet(tf.keras.Model):
             basis = tf.reshape(basis_flat, [original_shape[0], original_shape[1], -1])
         else:  # time x d
             basis = self.trunk(x)
-    
+
+        if return_branch & return_trunk:
+            return coeffs, basis
+        if return_branch:
+            return coeffs
+        if return_trunk:
+            return basis
+        
         ein_syntax = 'bj,bij->bi' if (len(basis.shape) == 3) else 'bj,ij->bi'
         output = EinsumLayer(ein_syntax)([coeffs, basis])
         return output

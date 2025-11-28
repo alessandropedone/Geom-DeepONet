@@ -58,7 +58,8 @@ def modify_quantity(input_path: str, output_path: str, name: str, quantity: str,
 
 
 ##
-def reset_data():
+# @param data_folder (str): Path to the data folder to reset.
+def reset_data(data_folder: str = "data"):
     """
     Reset the data folder silently.
     """
@@ -67,7 +68,6 @@ def reset_data():
         with contextlib.redirect_stdout(fnull):
             reset_environment()
     
-    data_folder = "data"
     parameters_file = os.path.join(data_folder, "parameters.csv")
     
     # Ensure folder exists
@@ -85,7 +85,8 @@ def reset_data():
 # @param coeff_range (tuple): Range of deformation coefficient values (min, max).
 # @param directory (str): Directory to save the generated geometry files.
 # @param geometry_input (str): Path to the input geometry file.
-def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_range: tuple, directory: str, geometry_input: str = "geometry.geo"):
+# @param data_folder (str): Path to the data folder to save parameters.
+def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_range: tuple, directory: str, geometry_input: str = "geometry.geo", data_folder: str = "data"):
     """
     Generate geometries by modifying the distance, overetch, and coefficients of deformation of the plates.
     This function creates a series of geometry files with different parameters.
@@ -98,11 +99,11 @@ def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_rang
     coeff4 = np.linspace(coeff_range[0], coeff_range[1], 5)
 
     # Ensure the parameters.csv file is empty before writing
-    with open("data/parameters.csv", "w") as csv_file:
+    with open(os.path.join(data_folder, "parameters.csv"), "w") as csv_file:
         csv_file.write("ID ,Overetch,Distance,Coeff1,Coeff2,Coeff3,Coeff4\n")
         csv_file.truncate()
     
-    reset_data()
+    reset_data(data_folder=data_folder)
     total = len(overetches) * len(distances) * len(coeff1) * len(coeff2) * len(coeff3) * len(coeff4)
 
     j = 1
@@ -121,13 +122,13 @@ def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_rang
                         for c2 in coeff2:
                             for c3 in coeff3:
                                 for c4 in coeff4:
-                                    modify_quantity("geometry.geo", "data/" + directory, str(j), "overetch", o)
-                                    modify_quantity(os.path.join("data/" + directory, str(j) + ".geo"), "data/" + directory, str(j), "distance", d)
-                                    modify_quantity(os.path.join("data/" + directory, str(j) + ".geo"), "data/" + directory, str(j), "coeff(1)", c1)
-                                    modify_quantity(os.path.join("data/" + directory, str(j) + ".geo"), "data/" + directory, str(j), "coeff(2)", c2)
-                                    modify_quantity(os.path.join("data/" + directory, str(j) + ".geo"), "data/" + directory, str(j), "coeff(3)", c3)
-                                    modify_quantity(os.path.join("data/" + directory, str(j) + ".geo"), "data/" + directory, str(j), "coeff(4)", c4)
-                                    with open("data/parameters.csv", "a") as csv_file:
+                                    modify_quantity(geometry_input, os.path.join(data_folder, directory), str(j), "overetch", o)
+                                    modify_quantity(os.path.join(data_folder, directory, str(j) + ".geo"), os.path.join(data_folder, directory), str(j), "distance", d)
+                                    modify_quantity(os.path.join(data_folder, directory, str(j) + ".geo"), os.path.join(data_folder, directory), str(j), "coeff(1)", c1)
+                                    modify_quantity(os.path.join(data_folder, directory, str(j) + ".geo"), os.path.join(data_folder, directory), str(j), "coeff(2)", c2)
+                                    modify_quantity(os.path.join(data_folder, directory, str(j) + ".geo"), os.path.join(data_folder, directory), str(j), "coeff(3)", c3)
+                                    modify_quantity(os.path.join(data_folder, directory, str(j) + ".geo"), os.path.join(data_folder, directory), str(j), "coeff(4)", c4)
+                                    with open(os.path.join(data_folder, "parameters.csv"), "a") as csv_file:
                                         csv_file.write(f"{j},{o},{d},{c1},{c2},{c3},{c4}\n")
                                     j += 1
                                     progress.update(task, advance=1)

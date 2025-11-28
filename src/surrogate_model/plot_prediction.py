@@ -245,13 +245,17 @@ def plot_prediction_2D(mu: np.array, x: np.ndarray, y: np.ndarray, z: np.ndarray
     print ("Shape of z_real", z_real.shape)
 
     z_pred = model([mu,coord]).numpy()
+    branch_output = model.call([mu, coord], return_branch=True).numpy()
+    trunk_output = model.call([mu, coord], return_trunk=True).numpy()
+    print ("Shape of branch output", branch_output.shape)
+    print ("Shape of trunk output", trunk_output.shape)
     print ("Shape of z_pred", z_pred.shape)
     x = x.flatten()
     y = y.flatten()
     z_pred = z_pred.flatten()
     z_real = z_real.flatten()
 
-    plot_comparison(x, y, z_real, z_pred, title="Potential Function Comparison")
+    #plot_comparison(x, y, z_real, z_pred, title="Potential Function Comparison")
 
 
 

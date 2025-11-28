@@ -21,7 +21,7 @@ conda activate pacs
 
 # Install packages from conda-forge
 echo -e "${GREEN}Installing core scientific packages from conda-forge...${NC}"
-conda install -c conda-forge fenics-dolfinx mpich pyvista numpy scipy matplotlib pandas tensorflow ipython compilers -y
+conda install -c conda-forge fenics-dolfinx mpich pyvista numpy scipy matplotlib pandas tensorflow ipython compilers plotly -y
 
 # Install GMSH and Python bindings
 echo -e "${GREEN}Installing GMSH and Python bindings...${NC}"
@@ -29,7 +29,8 @@ conda install -c conda-forge gmsh python-gmsh -y
 
 # Install Python packages with pip
 echo -e "${YELLOW}Installing additional Python packages with pip...${NC}"
-pip install scikit-learn meshio
+pip install scikit-learn meshio alphashape
+conda install tqdm
 
 # Install CUDA toolkit
 echo -e "${GREEN}Installing CUDA toolkit...${NC}"
