@@ -26,15 +26,15 @@ L = 100 - overetch;
 n = 4; 
 
 // 1st mode coefficient
-coeff(1) = 0.10000000000000003;
+coeff(1) = 0.07499999999999998;
 beta(1) = 0.596864 * 3.1415926535 / L;
 
 // 2nd mode coefficient
-coeff(2) = 0.10000000000000003;
+coeff(2) = 0.07499999999999998;
 beta(2) = 1.49418 * 3.1415926535 / L;
 
 // 3rd mode coefficient
-coeff(3) = 0.10000000000000003;
+coeff(3) = 0.07499999999999998;
 beta(3) = 2.50025 * 3.1415926535 / L;
 
 // 4th mode coefficient

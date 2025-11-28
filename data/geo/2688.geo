@@ -26,7 +26,7 @@ L = 100 - overetch;
 n = 4; 
 
 // 1st mode coefficient
-coeff(1) = -0.1;
+coeff(1) = -0.075;
 beta(1) = 0.596864 * 3.1415926535 / L;
 
 // 2nd mode coefficient

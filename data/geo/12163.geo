@@ -30,7 +30,7 @@ coeff(1) = 0.0;
 beta(1) = 0.596864 * 3.1415926535 / L;
 
 // 2nd mode coefficient
-coeff(2) = -0.1;
+coeff(2) = -0.075;
 beta(2) = 1.49418 * 3.1415926535 / L;
 
 // 3rd mode coefficient

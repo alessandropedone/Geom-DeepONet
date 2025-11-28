@@ -41,7 +41,7 @@ def train_dense_network(model_path: str, seed: int = 40):
     tf.keras.mixed_precision.set_global_policy(policy)
 
     model = DenseNetwork(
-        X = x_train, 
+        normalization_layer=True,
         input_neurons = 4, 
         n_neurons = [512, 256, 128, 256], 
         activation = 'relu', 
@@ -57,6 +57,7 @@ def train_dense_network(model_path: str, seed: int = 40):
         layer_normalization = True,
         positional_encoding_frequencies = 20,
     )
+    model.adapt(x_train)
 
     # Build the model by providing an input shape just for summary purpose
     # The model will be built in any case during the first call to fit(), which is inside train_model() method
@@ -165,7 +166,7 @@ def train_don(model_path: str, seed: int = 40):
 
 
     branch = DenseNetwork(
-        X = mu_train, 
+        normalization_layer=True,
         input_neurons = p, 
         n_neurons = [512, 256, 128, 256], 
         activation = 'relu', 
@@ -181,9 +182,10 @@ def train_don(model_path: str, seed: int = 40):
         layer_normalization = True,
         positional_encoding_frequencies = 0,
     )
+    branch.adapt(mu_train)
 
     trunk = DenseNetwork(
-        X = x_train, 
+        normalization_layer=True,
         input_neurons = d,
         n_neurons = [512, 256, 128, 256],
         activation = 'relu',
@@ -199,6 +201,7 @@ def train_don(model_path: str, seed: int = 40):
         layer_normalization = True,
         positional_encoding_frequencies = 20,
     )
+    trunk.adapt(x_train)
 
     model = DeepONet(branch = branch, trunk = trunk)
 
@@ -299,7 +302,7 @@ def train_potential(model_path: str, seed: int = 40):
 
 
     branch = DenseNetwork(
-        X = mu_train, 
+        normalization_layer=True,
         input_neurons = p, 
         n_neurons = [128, 64, 32, 128], 
         activation = 'relu', 
@@ -315,9 +318,10 @@ def train_potential(model_path: str, seed: int = 40):
         layer_normalization = True,
         positional_encoding_frequencies = 0,
     )
+    branch.adapt(mu_train)
 
     trunk = DenseNetwork(
-        X = x_train, 
+        normalization_layer=True,
         input_neurons = d, 
         n_neurons = [128, 64, 32, 128], 
         activation = 'relu', 
@@ -333,6 +337,7 @@ def train_potential(model_path: str, seed: int = 40):
         layer_normalization = True,
         positional_encoding_frequencies = 10,
     )
+    trunk.adapt(x_train)
 
     model = DeepONet(branch = branch, trunk = trunk)
 

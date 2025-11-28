@@ -11,6 +11,7 @@ from load_solutions import load_h5_solutions
 
 
 ## Potential Model
-#run_on_device(train_potential, "models/potential_model.keras")
+#run_on_device(train_potential, "models/potential_model_light.keras")
 mu, x, y, potential, grad_x, grad_y = load_h5_solutions()
-plot_prediction_2D(mu, x, y, potential, "models/potential_model.keras")
+# COUNTOUR PLOT TBD
+plot_prediction_2D(mu, x, y, potential, "models/potential_model_light.keras")

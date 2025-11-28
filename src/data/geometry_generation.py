@@ -113,7 +113,7 @@ def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_rang
         TimeElapsedColumn(),
         TimeRemainingColumn()
     ) as progress:
-        task = progress.add_task("Generating geoemtries", total=total)
+        task = progress.add_task("Generating geometries", total=total)
         while not progress.finished:
             for o in overetches:
                 for d in distances:

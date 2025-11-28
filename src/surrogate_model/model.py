@@ -71,7 +71,7 @@ class DenseNetwork(tf.keras.Model):
 
     ##
     def __init__(self,
-                X: np.ndarray = None,
+                normalization_layer: bool = True,
                 input_neurons: int = 1, 
                 n_neurons: list = None, 
                 activation: str = 'tanh',
@@ -93,7 +93,8 @@ class DenseNetwork(tf.keras.Model):
 
         super().__init__(**kwargs)
 
-        self.X = X
+        self.normalization_layer = normalization_layer
+        self.norm_layer = tf.keras.layers.Normalization(axis=-1)
         self.input_neurons = input_neurons
         self.n_neurons = n_neurons or [64] * 8  # safe default
         self.activation = activation
@@ -124,18 +125,12 @@ class DenseNetwork(tf.keras.Model):
         BatchNormalization = tf.keras.layers.BatchNormalization
         Dropout = tf.keras.layers.Dropout
         LeakyReLU = tf.keras.layers.LeakyReLU
-        Normalization = tf.keras.layers.Normalization
 
         self.all_layers = []
 
         # Normalization
-        if self.X is not None:
-            norm_layer = Normalization(axis=-1)
-            if self.X.ndim == 3:
-                norm_layer.adapt(self.X.reshape(-1, self.X.shape[-1]))
-            else:
-                norm_layer.adapt(self.X)
-            self.all_layers.append(norm_layer)
+        if self.normalization_layer:
+            self.all_layers.append(self.norm_layer)
 
         # Positional Encoding
         if self.positional_encoding_frequencies and self.positional_encoding_frequencies > 0:
@@ -207,12 +202,19 @@ class DenseNetwork(tf.keras.Model):
             x = layer(x)
         return x
     
+    def adapt(self, X: np.ndarray):
+        if self.normalization_layer:
+            if X.ndim == 3:
+                self.norm_layer.adapt(X.reshape(-1, X.shape[-1]))
+            else:
+                self.norm_layer.adapt(X)
+    
     def get_config(self):
         # Return the config necessary to reconstruct this model
         base_config = super(DenseNetwork, self).get_config()
         return {
             **base_config,
-            "X": self.X.tolist() if self.X is not None else None,
+            "normalization_layer": self.normalization_layer,
             "input_neurons": self.input_neurons,
             "n_neurons": self.n_neurons,
             "activation": self.activation,
@@ -228,11 +230,9 @@ class DenseNetwork(tf.keras.Model):
             "layer_normalization": self.layer_normalization,
             "positional_encoding_frequencies": self.positional_encoding_frequencies,
         }
-
+    
     @classmethod
     def from_config(cls, config):
-        if config["X"] is not None:
-            config["X"] = np.array(config["X"])
         return cls(**config)
         
         
