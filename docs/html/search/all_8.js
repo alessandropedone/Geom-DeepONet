@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['idx_0',['idx',['../namespacemain.html#acd5a73d049a188d4068ab446d75ceba8',1,'main']]],
-  ['initializer_1',['initializer',['../namespacesurrogate__model.html#ae5d82e8c41533085bb9e84b969c09d50',1,'surrogate_model']]]
+  ['history_0',['history',['../classmodel_1_1DenseNetwork.html#abf092a4cfcc5090e5192041b21b14ee0',1,'model.DenseNetwork.history'],['../classmodel_1_1DeepONet.html#a02ade22a1f1ba289dbd891a2227b933a',1,'model.DeepONet.history']]]
 ];

@@ -1,4 +1,4 @@
-digraph "/home/ale/pacs-project/src/surrogate_model"
+digraph "/home/ale/Geom-DeepONet/src/surrogate_model"
 {
  // LATEX_PDF_SIZE
   bgcolor="transparent";

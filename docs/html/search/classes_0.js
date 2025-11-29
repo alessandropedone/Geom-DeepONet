@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['nn_5fmodel_0',['NN_Model',['../classtemp_1_1NN__Model.html',1,'temp']]]
+  ['deeponet_0',['DeepONet',['../classmodel_1_1DeepONet.html',1,'model']]],
+  ['densenetwork_1',['DenseNetwork',['../classmodel_1_1DenseNetwork.html',1,'model']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['early_5fstopping_0',['early_stopping',['../namespacesurrogate__model.html#abce5fe0a7623c068f37c184722f423db',1,'surrogate_model']]],
-  ['empty_5fresults_5ffolder_1',['empty_results_folder',['../namespacedataset__generation.html#a7065237e70fa53994d6b3050e087615e',1,'dataset_generation']]],
-  ['epochs_2',['epochs',['../namespacesurrogate__model.html#a98081d88ac88189cad6b85768e2c4d29',1,'surrogate_model']]]
+  ['ein_5fsyntax_0',['ein_syntax',['../classmodel_1_1EinsumLayer.html#a024efe5a1d0b3f82747ad4129c8b7835',1,'model::EinsumLayer']]],
+  ['einsumlayer_1',['EinsumLayer',['../classmodel_1_1EinsumLayer.html',1,'model']]]
 ];

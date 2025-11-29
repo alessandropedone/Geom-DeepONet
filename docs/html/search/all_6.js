@@ -1,13 +1,12 @@
 var searchData=
 [
-  ['generate_5fdatasets_0',['generate_datasets',['../namespacedataset__generation.html#a6da0868dd4c6dd250df40933be633a3c',1,'dataset_generation']]],
-  ['generate_5fgeometries_1',['generate_geometries',['../namespacegeometry__generation.html#af6d174f04de98150a5bf68c742bcd77a',1,'geometry_generation']]],
-  ['generate_5fmesh_2',['generate_mesh',['../namespacemesh__generation.html#aa4e346138a3034ff36e996f415292fee',1,'mesh_generation']]],
-  ['generate_5fmesh_5ffrom_5fgeo_3',['generate_mesh_from_geo',['../namespacemesh__generation.html#a46cfe15c30fb22b352ae71b46dae6461',1,'mesh_generation']]],
-  ['generate_5fmeshes_4',['generate_meshes',['../namespacemesh__generation.html#ae1793148fe85ec0e77d0d9681349868d',1,'mesh_generation']]],
-  ['geometry_5fgeneration_5',['geometry_generation',['../namespacegeometry__generation.html',1,'']]],
-  ['geometry_5fgeneration_2epy_6',['geometry_generation.py',['../geometry__generation_8py.html',1,'']]],
-  ['gpus_7',['gpus',['../namespacesurrogate__model.html#a6a1fa7eae7d1a779835677fa495feaab',1,'surrogate_model']]],
-  ['grad_5fx_8',['grad_x',['../namespacemain.html#a8614a79a4b8c3223d34302e4982ae5fe',1,'main']]],
-  ['grad_5fy_9',['grad_y',['../namespacemain.html#af6614cb2e43d868a292cdbf926e0a0c6',1,'main']]]
+  ['figsize_0',['figsize',['../namespaceconvergence.html#a7d89430f842bf37180e1f2a346eaccf3',1,'convergence']]],
+  ['fom_1',['fom',['../namespacefom.html',1,'fom'],['../namespacefom.html#a4daeb5decebcd2ae7ba649b3f31211cf',1,'fom.fom()']]],
+  ['fom_20copy_2',['fom copy',['../namespacefom_01copy.html',1,'']]],
+  ['fom_20copy_2epy_3',['fom copy.py',['../fom_01copy_8py.html',1,'']]],
+  ['fom_2epy_4',['fom.py',['../fom_8py.html',1,'']]],
+  ['fontsize_5',['fontsize',['../namespaceconvergence.html#a8c0779a3dfe591204bfca27d993542f2',1,'convergence']]],
+  ['fourierfeatures_6',['FourierFeatures',['../classmodel_1_1FourierFeatures.html',1,'model']]],
+  ['freqs_7',['freqs',['../classmodel_1_1FourierFeatures.html#a53c3e672cab74f8a6bf5d831d43c6717',1,'model::FourierFeatures']]],
+  ['from_5fconfig_8',['from_config',['../classmodel_1_1DenseNetwork.html#a9a0cec24909bb02d62c4235adea63e76',1,'model.DenseNetwork.from_config()'],['../classmodel_1_1DeepONet.html#a5508cba5564aa26b163e7970f59cc4e1',1,'model.DeepONet.from_config()']]]
 ];

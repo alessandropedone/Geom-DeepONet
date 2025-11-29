@@ -1,14 +1,16 @@
 var searchData=
 [
-  ['random_5fstate_0',['random_state',['../namespacesurrogate__model.html#af7d930ad2e49fbcb2875d45bf38fd141',1,'surrogate_model']]],
-  ['readme_2emd_1',['README.md',['../README_8md.html',1,'']]],
-  ['regularizer_2',['regularizer',['../namespacesurrogate__model.html#a3bb32cf268bff9a8c2c58d8b1c953e5c',1,'surrogate_model']]],
-  ['regularizers_3',['regularizers',['../namespacesurrogate__model.html#a4a15cd0e5b17023545c87b8427f90507',1,'surrogate_model']]],
-  ['remove_4',['remove',['../namespaceremove.html',1,'']]],
-  ['remove_2epy_5',['remove.py',['../remove_8py.html',1,'']]],
-  ['remove_5fmsh_5ffiles_6',['remove_msh_files',['../namespaceremove.html#afda99427833529cd4e4eb94b76fb42be',1,'remove']]],
-  ['reset_5fdata_7',['reset_data',['../namespacegeometry__generation.html#a60cc4d28cb6d5560f18c9ee9d170abc4',1,'geometry_generation']]],
-  ['reset_5fenvironment_8',['reset_environment',['../namespaceremove.html#a92ddd6b34bd453f1809b8c5d8b566d22',1,'remove']]],
-  ['roms_9',['Coupling Traditional solvers and DL-ROMs',['../index.html',1,'']]],
-  ['rotate_5fupper_5fplate_10',['rotate_upper_plate',['../namespacegeometry__generation.html#a69fded3ee1a62055c9f050966f8fafd9',1,'geometry_generation']]]
+  ['path_0',['path',['../namespaceold__main.html#ae506b2eedc0d75be939979afc2154bbe',1,'old_main']]],
+  ['plot_1',['plot',['../namespaceplot__solutions.html#a748fed7a2c2efb635626dfaa7030a130',1,'plot_solutions']]],
+  ['plot_5fcomparison_2',['plot_comparison',['../namespaceplot__prediction.html#ac23e242a310b2f4e5cffc1473ccd0e7e',1,'plot_prediction']]],
+  ['plot_5fprediction_3',['plot_prediction',['../namespaceplot__prediction.html',1,'plot_prediction'],['../namespaceplot__prediction.html#a32a0010a4ba3be12e05ab8ea93a10f5b',1,'plot_prediction.plot_prediction()']]],
+  ['plot_5fprediction_2epy_4',['plot_prediction.py',['../plot__prediction_8py.html',1,'']]],
+  ['plot_5fprediction_5f2d_5',['plot_prediction_2D',['../namespaceplot__prediction.html#ab5da313ae68036d31648665887a2b025',1,'plot_prediction']]],
+  ['plot_5frandom_5fprediction_6',['plot_random_prediction',['../namespaceplot__prediction.html#a7fafc673229bda7d5a93925ef4ddf4a6',1,'plot_prediction']]],
+  ['plot_5fsolutions_7',['plot_solutions',['../namespaceplot__solutions.html',1,'']]],
+  ['plot_5fsolutions_2epy_8',['plot_solutions.py',['../plot__solutions_8py.html',1,'']]],
+  ['plot_5fstyles_9',['plot_styles',['../namespaceconvergence.html#a64ef2813bc9c7fb0699f8663f72b49cc',1,'convergence']]],
+  ['plot_5ftraining_5fhistory_10',['plot_training_history',['../classmodel_1_1DenseNetwork.html#ace8e861576b07014d61bbf7ce6db26a9',1,'model.DenseNetwork.plot_training_history()'],['../classmodel_1_1DeepONet.html#ae55f73c5577c9b68841bb26ab8957da9',1,'model.DeepONet.plot_training_history()']]],
+  ['positional_5fencoding_5ffrequencies_11',['positional_encoding_frequencies',['../classmodel_1_1DenseNetwork.html#ae16959d30564734c02ec248e8439b9fe',1,'model::DenseNetwork']]],
+  ['potential_12',['potential',['../namespaceold__main.html#a0fec3dad5fc5440a11dfb77485712d00',1,'old_main.potential'],['../namespacemain.html#abe4c267a63409b1b7cd9c6aaf0779b4a',1,'main.potential']]]
 ];

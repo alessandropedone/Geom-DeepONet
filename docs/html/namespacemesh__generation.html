@@ -80,34 +80,52 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a46cfe15c30fb22b352ae71b46dae6461" id="r_a46cfe15c30fb22b352ae71b46dae6461"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#a46cfe15c30fb22b352ae71b46dae6461">generate_mesh_from_geo</a> (str geo_path)</td></tr>
-<tr class="separator:a46cfe15c30fb22b352ae71b46dae6461"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e346138a3034ff36e996f415292fee" id="r_aa4e346138a3034ff36e996f415292fee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#aa4e346138a3034ff36e996f415292fee">generate_mesh</a> (int i)</td></tr>
-<tr class="separator:aa4e346138a3034ff36e996f415292fee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1793148fe85ec0e77d0d9681349868d" id="r_ae1793148fe85ec0e77d0d9681349868d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#ae1793148fe85ec0e77d0d9681349868d">generate_meshes</a> ()</td></tr>
-<tr class="separator:ae1793148fe85ec0e77d0d9681349868d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57c3b262d1fba06d74530bfe4b2104e4" id="r_a57c3b262d1fba06d74530bfe4b2104e4"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#a57c3b262d1fba06d74530bfe4b2104e4">generate_mesh_from_geo</a> (str file_path, str mesh_path=&quot;data/msh&quot;)</td></tr>
+<tr class="separator:a57c3b262d1fba06d74530bfe4b2104e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a941cc802af1addde72eb2f8d2c4ad8b9" id="r_a941cc802af1addde72eb2f8d2c4ad8b9"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#a941cc802af1addde72eb2f8d2c4ad8b9">generate_mesh</a> (int i, str geometry_path=&quot;data/geo&quot;, str mesh_path=&quot;data/msh&quot;)</td></tr>
+<tr class="separator:a941cc802af1addde72eb2f8d2c4ad8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a760c0e082565b106bedb155576bf0e39" id="r_a760c0e082565b106bedb155576bf0e39"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#a760c0e082565b106bedb155576bf0e39">generate_meshes</a> (str geometry_path=&quot;data/geo&quot;, str mesh_path=&quot;data/msh&quot;, bool use_multiprocessing=True, bool use_all_cores=False)</td></tr>
+<tr class="separator:a760c0e082565b106bedb155576bf0e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generate meshes from .geo files using gmsh in parallel. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aa4e346138a3034ff36e996f415292fee" name="aa4e346138a3034ff36e996f415292fee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4e346138a3034ff36e996f415292fee">&#9670;&#160;</a></span>generate_mesh()</h2>
+<a id="a941cc802af1addde72eb2f8d2c4ad8b9" name="a941cc802af1addde72eb2f8d2c4ad8b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a941cc802af1addde72eb2f8d2c4ad8b9">&#9670;&#160;</a></span>generate_mesh()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mesh_generation.generate_mesh </td>
+          <td class="memname"> None mesh_generation.generate_mesh </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>geometry_path</em> = <code>&quot;data/geo&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>mesh_path</em> = <code>&quot;data/msh&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">i</td><td>(int): Index of the geometry.</td></tr>
+    <tr><td class="paramname">i</td><td>(int): Index of the geometry. </td></tr>
+    <tr><td class="paramname">geometry_path</td><td>(str): Path to the directory containing .geo files. </td></tr>
+    <tr><td class="paramname">mesh_path</td><td>(str): Path to the directory where .msh files will be saved.</td></tr>
   </table>
   </dd>
 </dl>
@@ -115,46 +133,87 @@ Functions</h2></td></tr>
 </pre> 
 </div>
 </div>
-<a id="a46cfe15c30fb22b352ae71b46dae6461" name="a46cfe15c30fb22b352ae71b46dae6461"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46cfe15c30fb22b352ae71b46dae6461">&#9670;&#160;</a></span>generate_mesh_from_geo()</h2>
+<a id="a57c3b262d1fba06d74530bfe4b2104e4" name="a57c3b262d1fba06d74530bfe4b2104e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57c3b262d1fba06d74530bfe4b2104e4">&#9670;&#160;</a></span>generate_mesh_from_geo()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mesh_generation.generate_mesh_from_geo </td>
+          <td class="memname"> None mesh_generation.generate_mesh_from_geo </td>
           <td>(</td>
           <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>geo_path</em></td><td>)</td>
+          <td class="paramname"><em>file_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>mesh_path</em> = <code>&quot;data/msh&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">geo_path</td><td>(str): Path to the .geo file.</td></tr>
+    <tr><td class="paramname">file_path</td><td>(str): Path to the .geo file. </td></tr>
+    <tr><td class="paramname">mesh_path</td><td>(str): Path to the directory where .msh files will be saved.</td></tr>
   </table>
   </dd>
 </dl>
 <pre class="fragment">Generate a mesh from a .geo file using gmsh.</pre> 
 </div>
 </div>
-<a id="ae1793148fe85ec0e77d0d9681349868d" name="ae1793148fe85ec0e77d0d9681349868d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1793148fe85ec0e77d0d9681349868d">&#9670;&#160;</a></span>generate_meshes()</h2>
+<a id="a760c0e082565b106bedb155576bf0e39" name="a760c0e082565b106bedb155576bf0e39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a760c0e082565b106bedb155576bf0e39">&#9670;&#160;</a></span>generate_meshes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mesh_generation.generate_meshes </td>
+          <td class="memname"> None mesh_generation.generate_meshes </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>geometry_path</em> = <code>&quot;data/geo&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>mesh_path</em> = <code>&quot;data/msh&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>use_multiprocessing</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>use_all_cores</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Generate meshes for all geometries in the range from 1 to 1000.
-This function uses multiprocessing to speed up the process.
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">geometry_path</td><td>(str): Path to the directory containing .geo files. </td></tr>
+    <tr><td class="paramname">mesh_path</td><td>(str): Path to the directory where .msh files will be saved.</td></tr>
+  </table>
+  </dd>
+</dl>
+<pre class="fragment">Generate meshes for all geometries present in the specified directory using multiprocessing.
+Displays a fancy animated progress bar.
 </pre> 
 </div>
 </div>

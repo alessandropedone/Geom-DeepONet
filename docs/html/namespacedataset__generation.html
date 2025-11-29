@@ -80,22 +80,21 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7065237e70fa53994d6b3050e087615e" id="r_a7065237e70fa53994d6b3050e087615e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a7065237e70fa53994d6b3050e087615e">empty_results_folder</a> ()</td></tr>
-<tr class="separator:a7065237e70fa53994d6b3050e087615e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abce3ae7e04a54185f69d33f87ec19664" id="r_abce3ae7e04a54185f69d33f87ec19664"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#abce3ae7e04a54185f69d33f87ec19664">set_up_environment</a> ()</td></tr>
-<tr class="separator:abce3ae7e04a54185f69d33f87ec19664"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a437b92cfc3eb5b3bca47afd387a58680" id="r_a437b92cfc3eb5b3bca47afd387a58680"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a437b92cfc3eb5b3bca47afd387a58680">process_mesh</a> (str mesh)</td></tr>
-<tr class="separator:a437b92cfc3eb5b3bca47afd387a58680"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6da0868dd4c6dd250df40933be633a3c" id="r_a6da0868dd4c6dd250df40933be633a3c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a6da0868dd4c6dd250df40933be633a3c">generate_datasets</a> ()</td></tr>
-<tr class="separator:a6da0868dd4c6dd250df40933be633a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a979325b77a0b13ec44dfef9d98202175" id="r_a979325b77a0b13ec44dfef9d98202175"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a979325b77a0b13ec44dfef9d98202175">combine_temp_files</a> (str filename, bool clean=True)</td></tr>
-<tr class="separator:a979325b77a0b13ec44dfef9d98202175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a510dab96125a6e67207c1662cf9c0ee4" id="r_a510dab96125a6e67207c1662cf9c0ee4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a510dab96125a6e67207c1662cf9c0ee4">reset_results</a> (str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:a510dab96125a6e67207c1662cf9c0ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a319923e93f668291c7eb04b696e9ba44" id="r_a319923e93f668291c7eb04b696e9ba44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a319923e93f668291c7eb04b696e9ba44">generate_datasets</a> (str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:a319923e93f668291c7eb04b696e9ba44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0376039d712e5f94d92a910ffe049979" id="r_a0376039d712e5f94d92a910ffe049979"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#a0376039d712e5f94d92a910ffe049979">combine_temp_files</a> (str filename, bool clean=True, str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:a0376039d712e5f94d92a910ffe049979"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbfd35ce061f2b740e741cbff4a76428" id="r_acbfd35ce061f2b740e741cbff4a76428"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedataset__generation.html#acbfd35ce061f2b740e741cbff4a76428">unroll_normal_derivative_potential</a> (str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:acbfd35ce061f2b740e741cbff4a76428"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Functions to generate datasets by processing mesh files in parallel and then combine the results in a single CSV file (dataset.csv). </p>
+<p>Full order model that solves the PDE and saves the solution and the gradient of the solution in a .h5 file. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a979325b77a0b13ec44dfef9d98202175" name="a979325b77a0b13ec44dfef9d98202175"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a979325b77a0b13ec44dfef9d98202175">&#9670;&#160;</a></span>combine_temp_files()</h2>
+<a id="a0376039d712e5f94d92a910ffe049979" name="a0376039d712e5f94d92a910ffe049979"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0376039d712e5f94d92a910ffe049979">&#9670;&#160;</a></span>combine_temp_files()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -110,7 +109,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool &#160;</td>
-          <td class="paramname"><em>clean</em> = <code>True</code>&#160;</td>
+          <td class="paramname"><em>clean</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -122,7 +127,8 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>(str): path to the main dataset file. </td></tr>
-    <tr><td class="paramname">clean</td><td>(bool): whether to clean up temporary files after combining.</td></tr>
+    <tr><td class="paramname">clean</td><td>(bool): whether to clean up temporary files after combining. </td></tr>
+    <tr><td class="paramname">data_folder</td><td>(str): path to the data folder.</td></tr>
   </table>
   </dd>
 </dl>
@@ -133,25 +139,8 @@ It also cleans up the temporary files and folder.
 </pre> 
 </div>
 </div>
-<a id="a7065237e70fa53994d6b3050e087615e" name="a7065237e70fa53994d6b3050e087615e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7065237e70fa53994d6b3050e087615e">&#9670;&#160;</a></span>empty_results_folder()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">dataset_generation.empty_results_folder </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Emtpy the results folder by removing all files inside it.</pre> 
-</div>
-</div>
-<a id="a6da0868dd4c6dd250df40933be633a3c" name="a6da0868dd4c6dd250df40933be633a3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6da0868dd4c6dd250df40933be633a3c">&#9670;&#160;</a></span>generate_datasets()</h2>
+<a id="a319923e93f668291c7eb04b696e9ba44" name="a319923e93f668291c7eb04b696e9ba44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a319923e93f668291c7eb04b696e9ba44">&#9670;&#160;</a></span>generate_datasets()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,64 +148,81 @@ It also cleans up the temporary files and folder.
         <tr>
           <td class="memname">dataset_generation.generate_datasets </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Generate datasets by processing all mesh files in parallel.
-This function sets up the environment, processes each mesh file,
-and saves the results in a temporary folder.
-</pre> 
-</div>
-</div>
-<a id="a437b92cfc3eb5b3bca47afd387a58680" name="a437b92cfc3eb5b3bca47afd387a58680"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a437b92cfc3eb5b3bca47afd387a58680">&#9670;&#160;</a></span>process_mesh()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">dataset_generation.process_mesh </td>
-          <td>(</td>
-          <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>mesh</em></td><td>)</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mesh</td><td>(str): path to the mesh file.</td></tr>
+    <tr><td class="paramname">data_folder</td><td>(str): path to the data folder.</td></tr>
   </table>
   </dd>
 </dl>
-<pre class="fragment">Solves the PDE and saves the gradient of the solution on the lower edge of the upper plate in a specific .csv file.
-It also saves the solution and the gradient of the solution in a .h5 file.
-This function is called in parallel for each mesh file.
+<pre class="fragment">Generate datasets by processing all mesh files in parallel.
+This function sets up the environment, processes each mesh file,
+and saves the results in a temporary folder.
 </pre> 
 </div>
 </div>
-<a id="abce3ae7e04a54185f69d33f87ec19664" name="abce3ae7e04a54185f69d33f87ec19664"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abce3ae7e04a54185f69d33f87ec19664">&#9670;&#160;</a></span>set_up_environment()</h2>
+<a id="a510dab96125a6e67207c1662cf9c0ee4" name="a510dab96125a6e67207c1662cf9c0ee4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510dab96125a6e67207c1662cf9c0ee4">&#9670;&#160;</a></span>reset_results()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">dataset_generation.set_up_environment </td>
+          <td class="memname">dataset_generation.reset_results </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">This function is called at the beginning of the generate_datasets function.
-It sets up the environment by removing all files in the results folder and
-copying the parameters.csv file to dataset.csv.
-It also reads the mesh from the first .msh file and prepares the dataset for processing, 
-writing in the dataset.csv file first line the coordinates of the DOFs (distance from a chosen point).
-In the end, it creates a temporary folder to store intermediate CSV files.
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data_folder</td><td>(str): path to the data folder.</td></tr>
+  </table>
+  </dd>
+</dl>
+<pre class="fragment">Emtpy the results folder by removing all files inside it.</pre> 
+</div>
+</div>
+<a id="acbfd35ce061f2b740e741cbff4a76428" name="acbfd35ce061f2b740e741cbff4a76428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbfd35ce061f2b740e741cbff4a76428">&#9670;&#160;</a></span>unroll_normal_derivative_potential()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dataset_generation.unroll_normal_derivative_potential </td>
+          <td>(</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data_folder</td><td>(str): path to the data folder.</td></tr>
+  </table>
+  </dd>
+</dl>
+<pre class="fragment">Unroll the normal derivative potential dataset by creating a dataset with 
+one value of the normal derivative of the potetial one coordinate for each row.
+Structure of the dataset:
+- The first column contains the mesh number.
+- The following three columns contain the geometric parameters: 
+    - the overecth of the upper plate,
+    - the distance between the two plates,
+    - the angle of the upper plate.
+- The following column contains the coordinate of the point on the lower edge of the upper plate.
+- The last column contains the normal derivative of the potential at that coordinate.
+This function reads the normal_derivative_potential.csv file, unrolls it,
+and saves the unrolled dataset in a new CSV file named unrolled_normal_derivative_potential.csv.
 </pre> 
 </div>
 </div>

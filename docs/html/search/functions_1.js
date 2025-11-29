@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['build_5fmodel_0',['build_model',['../classtemp_1_1NN__Model.html#a0d0060640900fdf47d5e5969a9bee908',1,'temp::NN_Model']]]
+  ['adapt_0',['adapt',['../classmodel_1_1DenseNetwork.html#a66c3c95ad1c562d4864561e3400d60ac',1,'model::DenseNetwork']]]
 ];

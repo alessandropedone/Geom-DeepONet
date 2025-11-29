@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['random_5fstate_0',['random_state',['../namespacesurrogate__model.html#af7d930ad2e49fbcb2875d45bf38fd141',1,'surrogate_model']]],
-  ['regularizer_1',['regularizer',['../namespacesurrogate__model.html#a3bb32cf268bff9a8c2c58d8b1c953e5c',1,'surrogate_model']]],
-  ['regularizers_2',['regularizers',['../namespacesurrogate__model.html#a4a15cd0e5b17023545c87b8427f90507',1,'surrogate_model']]]
+  ['output_5factivation_0',['output_activation',['../classmodel_1_1DenseNetwork.html#acd381f864dab5ea3fdb7b2ee4f25e06a',1,'model::DenseNetwork']]],
+  ['output_5fneurons_1',['output_neurons',['../classmodel_1_1DenseNetwork.html#af682ae898823cd499a03beb75ec2cfc4',1,'model::DenseNetwork']]],
+  ['output_5fpath_2',['output_path',['../namespaceconvergence.html#aff81104ee506518ac4b54b5cf4b9ee2c',1,'convergence']]]
 ];

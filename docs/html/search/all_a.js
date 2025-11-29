@@ -1,11 +1,14 @@
 var searchData=
 [
-  ['main_0',['main',['../namespacemain.html',1,'']]],
-  ['main_2epy_1',['main.py',['../data_2main_8py.html',1,'(Global Namespace)'],['../surrogate__model_2main_8py.html',1,'(Global Namespace)']]],
-  ['mesh_5fgeneration_2',['mesh_generation',['../namespacemesh__generation.html',1,'']]],
-  ['mesh_5fgeneration_2epy_3',['mesh_generation.py',['../mesh__generation_8py.html',1,'']]],
-  ['metrics_4',['metrics',['../namespacesurrogate__model.html#a7000337e0c579748d16d0d946cbf8747',1,'surrogate_model']]],
-  ['model_5',['model',['../classtemp_1_1NN__Model.html#ae70b673feb442d04b597baebc945422e',1,'temp.NN_Model.model'],['../namespacesurrogate__model.html#a0c8d709c0ab1febfa27ab9df3726a6a9',1,'surrogate_model.model']]],
-  ['modify_5fplates_5fdistance_6',['modify_plates_distance',['../namespacegeometry__generation.html#aef1b31368cf0273219203eb707dae770',1,'geometry_generation']]],
-  ['modify_5fplates_5foveretch_7',['modify_plates_overetch',['../namespacegeometry__generation.html#ae440c792144e522f5f397d3808d645a9',1,'geometry_generation']]]
+  ['l1_5fcoeff_0',['l1_coeff',['../classmodel_1_1DenseNetwork.html#ae7363ebc5dd5d9a755bcdbe7c85c012a',1,'model::DenseNetwork']]],
+  ['l2_5fcoeff_1',['l2_coeff',['../classmodel_1_1DenseNetwork.html#ac2ceacd4cd575da362ad6867d5dbbb9e',1,'model::DenseNetwork']]],
+  ['label_2',['label',['../namespaceold__main.html#aee9aae0a6e6f43165d2335dcfe214304',1,'old_main']]],
+  ['layer_5fnormalization_3',['layer_normalization',['../classmodel_1_1DenseNetwork.html#a41a6d1cc3169643cf95651c1e0707e74',1,'model::DenseNetwork']]],
+  ['leaky_5frelu_5falpha_4',['leaky_relu_alpha',['../classmodel_1_1DenseNetwork.html#a42de5415ea731b9d19381de4c0a02347',1,'model::DenseNetwork']]],
+  ['learnable_5',['learnable',['../classmodel_1_1FourierFeatures.html#a6ed4a624735989c6337173d3a5266d87',1,'model::FourierFeatures']]],
+  ['load_5fh5_5fsolutions_6',['load_h5_solutions',['../namespaceload__solutions.html#ac830f9fd8c8672a26914bab78309c378',1,'load_solutions']]],
+  ['load_5fsolutions_7',['load_solutions',['../namespaceload__solutions.html',1,'']]],
+  ['load_5fsolutions_2epy_8',['load_solutions.py',['../load__solutions_8py.html',1,'']]],
+  ['loc_9',['loc',['../namespaceconvergence.html#a63f29ec9fc9e280ee5e0abc63f0a334b',1,'convergence']]],
+  ['loguniformfreqinitializer_10',['LogUniformFreqInitializer',['../classmodel_1_1LogUniformFreqInitializer.html',1,'model']]]
 ];

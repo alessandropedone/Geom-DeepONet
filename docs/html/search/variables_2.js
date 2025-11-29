@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['c_0',['c',['../namespacemain.html#ad759577e53e2ce061239002d8a592cc5',1,'main']]],
-  ['callbacks_1',['callbacks',['../namespacesurrogate__model.html#aaedbf1d6cbd642783e755fbe8abb1378',1,'surrogate_model']]],
-  ['cmap_2',['cmap',['../namespacemain.html#adc1dacfb4a7a4585f28206418afa7c25',1,'main']]],
-  ['coordinates_3',['coordinates',['../namespacemain.html#aff1da3d713d6224ead434af140f18e0c',1,'main.coordinates'],['../namespacesurrogate__model.html#a8e044be4e62fda4d771f579503f17533',1,'surrogate_model.coordinates']]],
-  ['coordinates_5fx_4',['coordinates_x',['../namespacemain.html#af4b1e3efc2d153540df634a233363a7b',1,'main']]],
-  ['coordinates_5fy_5',['coordinates_y',['../namespacemain.html#a5d7fc58e52cdc19de3bbc9ab588bf415',1,'main']]],
-  ['coords_6',['coords',['../namespacemain.html#ae09d75418ce368e75e2b1f42ce0ae071',1,'main']]]
+  ['c_0',['c',['../namespaceold__main.html#a8294de2d9cc92a3fc2d7d8f039f85e98',1,'old_main']]],
+  ['cmap_1',['cmap',['../namespaceold__main.html#af4a8b33626b8be514a4b6a22c4d3bf78',1,'old_main']]],
+  ['coordinates_2',['coordinates',['../namespaceold__main.html#a016a74a38633189999c8c08f8039bdc1',1,'old_main']]],
+  ['coordinates_5fx_3',['coordinates_x',['../namespaceold__main.html#aa3c2649627fd44d07f51061176809480',1,'old_main']]],
+  ['coordinates_5fy_4',['coordinates_y',['../namespaceold__main.html#aec9fd8ae720d42a8e08764838f20a0b2',1,'old_main']]],
+  ['coords_5',['coords',['../namespaceold__main.html#aee6a7b55abffa8d2df2ec027f421a2dd',1,'old_main']]]
 ];
