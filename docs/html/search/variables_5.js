@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['figsize_0',['figsize',['../namespaceconvergence.html#a7d89430f842bf37180e1f2a346eaccf3',1,'convergence']]],
-  ['fontsize_1',['fontsize',['../namespaceconvergence.html#a8c0779a3dfe591204bfca27d993542f2',1,'convergence']]],
-  ['freqs_2',['freqs',['../classmodel_1_1FourierFeatures.html#a53c3e672cab74f8a6bf5d831d43c6717',1,'model::FourierFeatures']]]
+  ['grad_5fx_0',['grad_x',['../namespacemain.html#a8614a79a4b8c3223d34302e4982ae5fe',1,'main']]],
+  ['grad_5fy_1',['grad_y',['../namespacemain.html#af6614cb2e43d868a292cdbf926e0a0c6',1,'main']]]
 ];

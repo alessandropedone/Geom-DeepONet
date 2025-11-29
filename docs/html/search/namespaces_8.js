@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['remove_0',['remove',['../namespaceremove.html',1,'']]]
+  ['train_0',['train',['../namespacetrain.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dataset_5fgeneration_0',['dataset_generation',['../namespacedataset__generation.html',1,'']]]
+  ['dataset_0',['dataset',['../namespacedataset.html',1,'']]]
 ];

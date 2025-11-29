@@ -2,3 +2,5 @@
 **/__pycache__/
 libdevice.10.bc
 logs/
+data/results/
+data/msh/

@@ -84,8 +84,8 @@ Functions</h2></td></tr>
 <tr class="separator:a57c3b262d1fba06d74530bfe4b2104e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a941cc802af1addde72eb2f8d2c4ad8b9" id="r_a941cc802af1addde72eb2f8d2c4ad8b9"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#a941cc802af1addde72eb2f8d2c4ad8b9">generate_mesh</a> (int i, str geometry_path=&quot;data/geo&quot;, str mesh_path=&quot;data/msh&quot;)</td></tr>
 <tr class="separator:a941cc802af1addde72eb2f8d2c4ad8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a760c0e082565b106bedb155576bf0e39" id="r_a760c0e082565b106bedb155576bf0e39"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#a760c0e082565b106bedb155576bf0e39">generate_meshes</a> (str geometry_path=&quot;data/geo&quot;, str mesh_path=&quot;data/msh&quot;, bool use_multiprocessing=True, bool use_all_cores=False)</td></tr>
-<tr class="separator:a760c0e082565b106bedb155576bf0e39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8312bff4b4a36cba871a8c8ecaf9930" id="r_aa8312bff4b4a36cba871a8c8ecaf9930"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemesh__generation.html#aa8312bff4b4a36cba871a8c8ecaf9930">generate_meshes</a> (str geometry_path=&quot;data/geo&quot;, str mesh_path=&quot;data/msh&quot;, bool use_multiprocessing=True, bool use_all_cores=False, bool empty_mesh_folder=True)</td></tr>
+<tr class="separator:aa8312bff4b4a36cba871a8c8ecaf9930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generate meshes from .geo files using gmsh in parallel. </p>
@@ -168,8 +168,8 @@ Functions</h2></td></tr>
 <pre class="fragment">Generate a mesh from a .geo file using gmsh.</pre> 
 </div>
 </div>
-<a id="a760c0e082565b106bedb155576bf0e39" name="a760c0e082565b106bedb155576bf0e39"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a760c0e082565b106bedb155576bf0e39">&#9670;&#160;</a></span>generate_meshes()</h2>
+<a id="aa8312bff4b4a36cba871a8c8ecaf9930" name="aa8312bff4b4a36cba871a8c8ecaf9930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8312bff4b4a36cba871a8c8ecaf9930">&#9670;&#160;</a></span>generate_meshes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +196,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool &#160;</td>
-          <td class="paramname"><em>use_all_cores</em> = <code>False</code>&#160;</td>
+          <td class="paramname"><em>use_all_cores</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>empty_mesh_folder</em> = <code>True</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -208,10 +214,16 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">geometry_path</td><td>(str): Path to the directory containing .geo files. </td></tr>
-    <tr><td class="paramname">mesh_path</td><td>(str): Path to the directory where .msh files will be saved.</td></tr>
+    <tr><td class="paramname">mesh_path</td><td>(str): Path to the directory where .msh files will be saved. </td></tr>
+    <tr><td class="paramname">use_multiprocessing</td><td>(bool): Whether to use multiprocessing for mesh generation. </td></tr>
+    <tr><td class="paramname">use_all_cores</td><td>(bool): Whether to use all CPU cores for multiprocessing. </td></tr>
+    <tr><td class="paramname">empty_mesh_folder</td><td>(bool): Whether to empty the mesh folder before generating new meshes. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>We added empty_mesh_folder since the generation of the meshes could take too long, or could be interrupted for some reason. In those cases you might want to keep the existing meshes and start again the procedure, but only generating the missing ones. </dd>
+<dd>
+While we are using multiprocessing to speed up the mesh generation, gmsh doesn't support gpus, so the speedup will be limited by the CPU capabilities.</dd></dl>
 <pre class="fragment">Generate meshes for all geometries present in the specified directory using multiprocessing.
 Displays a fancy animated progress bar.
 </pre> 

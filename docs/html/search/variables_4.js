@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ein_5fsyntax_0',['ein_syntax',['../classmodel_1_1EinsumLayer.html#a024efe5a1d0b3f82747ad4129c8b7835',1,'model::EinsumLayer']]]
+  ['freqs_0',['freqs',['../classmodel_1_1FourierFeatures.html#a53c3e672cab74f8a6bf5d831d43c6717',1,'model::FourierFeatures']]]
 ];

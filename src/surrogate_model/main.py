@@ -1,3 +1,6 @@
+## @file main.py
+# @brief Main script to train and evaluate surrogate models for geometry-to-solution mapping.
+
 from gpu_run import run_on_device
 from train import train_dense_network, train_don, train_potential
 from plot_prediction import plot_random_prediction, plot_prediction_2D

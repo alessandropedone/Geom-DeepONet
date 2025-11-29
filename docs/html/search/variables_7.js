@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['history_0',['history',['../classmodel_1_1DenseNetwork.html#abf092a4cfcc5090e5192041b21b14ee0',1,'model.DenseNetwork.history'],['../classmodel_1_1DeepONet.html#a02ade22a1f1ba289dbd891a2227b933a',1,'model.DeepONet.history']]]
+  ['initializer_0',['initializer',['../classmodel_1_1FourierFeatures.html#a0b810826827b2c10a8e28cfe007434f3',1,'model.FourierFeatures.initializer'],['../classmodel_1_1DenseNetwork.html#a6d1118470d9129c25f17599350c9783c',1,'model.DenseNetwork.initializer']]],
+  ['input_5fneurons_1',['input_neurons',['../classmodel_1_1DenseNetwork.html#aa82ac1480fa479dea2cfd4a41648bed8',1,'model::DenseNetwork']]]
 ];

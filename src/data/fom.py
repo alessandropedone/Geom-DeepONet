@@ -1,33 +1,123 @@
-## @package dataset_generation
-# @brief Full order model that solves the PDE and saves the solution and the gradient of the solution in a .h5 file.
+## @package fom
+# @brief Full order model that solves the PDE with given boundary conditions and returns solution, gradient, and mesh data.
+
+from pathlib import Path
+import alphashape
+from shapely import Point
+import numpy as np
+
+from mpi4py import MPI
+import gmsh
+
+from dolfinx.io import gmshio
+from dolfinx import fem
+from dolfinx.fem import functionspace
+from dolfinx.fem import (Constant, dirichletbc, locate_dofs_topological)
+from dolfinx.fem.petsc import LinearProblem
+from dolfinx import default_scalar_type
+import ufl
+
+import os, sys
+import h5py
+
+
+##
+# @brief Read the mesh from the .msh file and return the computational domain.
+# @param mesh (str): path to the mesh file.
+def get_domain_from_mesh(mesh_path: str) -> None:
+    """
+    Read the mesh from the .msh file and return the computational domain.
+    """
+    from mpi4py import MPI
+    from dolfinx.io import gmshio
+
+    domain, cell_tags, facet_tags = gmshio.read_from_msh(mesh_path, MPI.COMM_WORLD, 0, gdim=2)
+    return domain
+
+## 
+# @param domain: The computational domain containing mesh information.
+# @param facet_tags: The facet tags associated with the domain.
+# @return tuple: normals (np.ndarray), midpoints (np.ndarray)
+def compute_boundary_normals_and_midpoints(domain, facet_tags) -> tuple:
+    """
+    Compute boundary normals and midpoints for the facets of the upper plate (tags 10 and 11).
+    """
+    # 2D: facet dimension
+    fdim = domain.topology.dim - 1
+
+    # Combine facets 10 and 11
+    boundary_facets = np.concatenate([facet_tags.find(10), facet_tags.find(11)])
+
+    # Connectivity: facets -> vertices
+    facet_vertices = domain.topology.connectivity(fdim, 0)
+
+    midpoints = []
+    normals = []
+
+    for f in boundary_facets:
+        vertices = facet_vertices.links(f)  # get vertex indices for this facet
+        p0 = domain.geometry.x[vertices[0]]
+        p1 = domain.geometry.x[vertices[1]]
+        # Compute 2D edge vector
+        edge = p1 - p0
+        # Compute normal vector (perpendicular to edge)
+        n_vec = np.array([-edge[1], edge[0]])
+        n_vec /= np.linalg.norm(n_vec)
+        normals.append(n_vec)
+        midpoints.append((p0 + p1)/2)
+
+    normals = np.array(normals)
+    midpoints = np.array(midpoints)[:, :2]  # only x and y coordinates
+    
+    # Create polygon and point objects
+    polygon = alphashape.alphashape(midpoints, alpha=0.1)  # tune alpha
+    eps = 1e-6
+    p = np.zeros_like(midpoints)
+    for n, mp in zip(normals, midpoints):
+        p = mp + eps * n  
+        point = Point(p) 
+        if polygon.contains(point):
+            n *= -1
+
+    return normals, midpoints
 
 ##
 # @param mesh (str): path to the mesh file.
-# @param data_folder (str): path to the data folder.
-
-
-
-def fom(mesh: str, data_folder: str = "data"):
+# @param bc_lower_plate (float): Dirichlet BC value for the lower plate.
+# @param bc_upper_plate (float): Dirichlet BC value for the upper plate.
+# @return tuple: x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints
+# @note We return also the coordinate x_plate, y_plate, at which the gradient on the plate is computed,
+# but can consider the midpoints instead, since the gradient is constant on each facet (we chose DG0).
+# @note Thanks to this, to get the normal derivative on the plate we can just use the normals in the mid points. 
+# So one just needs to write grad_x_plate * normals[:,0] + grad_y_plate * normals[:,1].
+def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> tuple:
     """
-    Full order model that solves the PDE and saves the solution and the gradient of the solution in a .h5 file.
+    Full order model that solves the PDE with given boundary conditions and computes the solutions and its gradient.
+    It returns also the mesh data (x, y, cells) along with the solution (potential) and its gradient (grad_x, grad_y).
+    But also the coordinates of the moving/deforming plate DOFs (x_plate, y_plate) and the gradient values at those DOFs.
+    We also return the boundary normals and midpoints for further computations.
     """
 
     if mesh.is_file() and mesh.suffix == ".msh":
+        # Silence Gmsh chatter
+        stdout_fd = sys.stdout.fileno()
+        saved_stdout = os.dup(stdout_fd)
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        os.dup2(devnull, stdout_fd)
+        os.close(devnull)
         
-        # Read the mesh from the .msh file
-        from mpi4py import MPI
-        from dolfinx.io import gmshio
         domain, cell_tags, facet_tags = gmshio.read_from_msh(mesh, MPI.COMM_WORLD, 0, gdim=2)
+        
+        # Restore stdout
+        os.dup2(saved_stdout, stdout_fd)
+        os.close(saved_stdout)
+        
+        ## SOLVE FOR THE POTENTIAL DISTRIBUTION ##
 
         # Define finite element function space
-        from dolfinx.fem import functionspace
-        import numpy as np
         V = functionspace(domain, ("Lagrange", 1))
 
         # Identify the boundary (create facet to cell connectivity required to determine boundary facets)
-        from dolfinx import default_scalar_type
-        from dolfinx.fem import (Constant, dirichletbc, locate_dofs_topological)
-        from dolfinx.fem.petsc import LinearProblem
         tdim = domain.topology.dim
         fdim = tdim - 1
         domain.topology.create_connectivity(fdim, tdim)
@@ -41,8 +131,8 @@ def fom(mesh: str, data_folder: str = "data"):
         dofs_rect2 = locate_dofs_topological(V, fdim, facets_rect2)
 
         # Define different Dirichlet values
-        u_rect1 = Constant(domain, 0.0)
-        u_rect2 = Constant(domain, 1.0)
+        u_rect1 = Constant(domain, bc_upper_plate)
+        u_rect2 = Constant(domain, bc_lower_plate)
 
         # Create BCs
         bc1 = dirichletbc(u_rect1, dofs_rect1, V)
@@ -51,13 +141,10 @@ def fom(mesh: str, data_folder: str = "data"):
         bcs = [bc1, bc2]
 
         # Trial and test functions
-        import ufl
         u = ufl.TrialFunction(V)
         v = ufl.TestFunction(V)
 
         # Source term
-        from dolfinx import default_scalar_type
-        from dolfinx import fem
         f = fem.Constant(domain, default_scalar_type(0.0))
 
         # Variational problem
@@ -65,12 +152,12 @@ def fom(mesh: str, data_folder: str = "data"):
         L = f * v * ufl.dx
 
         # Assemble the system
-        from dolfinx.fem.petsc import LinearProblem
+         
         problem = LinearProblem(a, L, bcs=bcs, petsc_options={"ksp_type": "preonly", "pc_type": "lu"})
         uh = problem.solve()
 
 
-        import ufl
+        ## COMPUTE THE GRADIENT OF THE SOLUTION ##
 
         # Define the vector function space for the gradient
         V_grad = fem.functionspace(domain, ("DG", 0, (domain.geometry.dim, )))
@@ -87,79 +174,74 @@ def fom(mesh: str, data_folder: str = "data"):
         L_grad = ufl.inner(grad_u, v_vec) * ufl.dx
 
         # Assemble the system
-        from dolfinx.fem.petsc import LinearProblem
         problem_grad = LinearProblem(a_grad, L_grad, petsc_options={"ksp_type": "preonly", "pc_type": "lu"})
         grad_uh = problem_grad.solve()
 
+
+        ## EXTRACT AND RETURN RELEVANT DATA ##
+
         # Extract gradient components
         dim = domain.geometry.dim
-        grad_x_uh = grad_uh.x.array[0::dim]
-        grad_y_uh = grad_uh.x.array[1::dim]
+        grad_x = grad_uh.x.array[0::dim]
+        grad_y = grad_uh.x.array[1::dim]
+
+        # Get gradient values at tag 10, 11 facets (upper plate)
+        boundary_facets = np.concatenate([facet_tags.find(10), facet_tags.find(11)])
+        dofs1011 = locate_dofs_topological(V, fdim, boundary_facets)
+        
+        # Extract the x-coordinates and the y-coordinates of the DOFs
+        x_dofs = V.tabulate_dof_coordinates()[dofs1011]
+        x_plate = x_dofs[:, 0]
+        y_plate = x_dofs[:, 1]
+
+        # Evaluate grad_uh at those DOFs
+        grad_x_plate = grad_x[dofs1011]
+        grad_y_plate = grad_y[dofs1011]
         
         # Find all dofs in the function spaces
         dofs_uh = np.arange(V.dofmap.index_map.size_local)
-        dofs_grad_uh = np.arange(V_grad.dofmap.index_map.size_local)
 
-        
-        # Plot solution and gradient components (for debugging)
-        import matplotlib.pyplot as plt
-
-        # Get potential values and coordinates
+        # Get potential values, coordinates and connectivity
         potential = np.array(uh.x.array[dofs_uh])
         dofs_c = V.tabulate_dof_coordinates()[dofs_uh]
         x = np.array(dofs_c[:, 0])
         y = np.array(dofs_c[:, 1])
+        cells = domain.topology.connectivity(domain.topology.dim, 0).array.reshape(-1, domain.geometry.dim + 1)
 
-        # Get boundary coordinates for each tag separately
-        def get_boundary_coords(V, fdim, facet_tags, tag):
-            facets = facet_tags.find(tag)
-            dofs = locate_dofs_topological(V, fdim, facets)
-            coords = V.tabulate_dof_coordinates()[dofs]
-            return np.array(coords[:, 0]), np.array(coords[:, 1])
+        # Plot potential distribution and gradient components
+        # from plot_solutions import plot
+        # plot(x, y, cells, potential, title="Potential Distribution", colorbar_label="Potential")
+        # plot(x, y, cells, grad_x, title="Gradient X Component", colorbar_label="Gradient X", sharp_color_range=(-0.7, -0.5))
+        # plot(x, y, cells, grad_y, title="Gradient Y Component", colorbar_label="Gradient Y", sharp_color_range=(-0.7, -0.5))
 
-        # Get coordinates for each boundary
-        # Hole 1: tags 10 and 11 combined
-        x_hole1_tag10, y_hole1_tag10 = get_boundary_coords(V, fdim, facet_tags, 10)
-        x_hole1_tag11, y_hole1_tag11 = get_boundary_coords(V, fdim, facet_tags, 11)
-        x_hole1 = np.concatenate([x_hole1_tag10, x_hole1_tag11])
-        y_hole1 = np.concatenate([y_hole1_tag10, y_hole1_tag11])
-
-        # Hole 2: tag 12
-        x_hole2, y_hole2 = get_boundary_coords(V, fdim, facet_tags, 12)
-
-        # Outer boundary: tag 20
-        x_outer, y_outer = get_boundary_coords(V, fdim, facet_tags, 20)
-
-        # Plot potential with boundary overlays
-        # get domain connectivity matrix
-        cells = domain.topology.connectivity(tdim, 0).array.reshape(-1, tdim + 1)
-        import matplotlib.tri as tri
-        triang = tri.Triangulation(x, y, triangles = cells)
-        plt.tricontourf(triang, potential, levels=100, cmap='viridis')
-        # plot also the connectivity (mesh)
-        plt.triplot(triang, color='lightgrey', linewidth=0.5, alpha=0.5)
-        plt.title('Potential Distribution with Boundaries')
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.legend()
-        plt.colorbar(label="Potential")
-        plt.axis('equal')
-        plt.show()
+        normals, midpoints = compute_boundary_normals_and_midpoints(domain, facet_tags)
         
-        print("Shape of uh vector:", uh.x.array.shape)
-        print("Shape of grad_uh vector:", grad_uh.x.array.shape)
-        print("Number of dofs in V:", len(dofs_uh))
-        print("Number of dofs in V_grad:", len(dofs_grad_uh))
+        return x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints
 
 
-
-
-
-
-import pathlib
-
-mesh_folder_path = pathlib.Path("data/msh")
-mesh = list(mesh_folder_path.iterdir())  # Process only the first mesh for testing
-fom(mesh[0], data_folder="data")
-
-
+##
+# @param mesh (str): path to the mesh file.
+# @param data_folder (str): path to the data folder.
+def solvensave(mesh: str, data_folder: str = "data"):
+    """
+    Full order model that solves the PDE and saves the output in an .h5 file.
+    """
+    if mesh.is_file() and mesh.suffix == ".msh":
+        x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints = fom(mesh) 
+        # Save the results in a .h5 file
+        results_folder = Path(data_folder) / "results"
+        base_name = os.path.splitext(os.path.basename(mesh))[0]
+        filename = results_folder / f"{base_name}.h5"
+        with h5py.File(filename, "w") as file:
+            file.create_dataset("x", data=x)
+            file.create_dataset("y", data=y)
+            file.create_dataset("cells", data=cells)
+            file.create_dataset("potential", data=potential)
+            file.create_dataset("grad_x", data=grad_x)
+            file.create_dataset("grad_y", data=grad_y)
+            file.create_dataset("x_plate", data=x_plate)
+            file.create_dataset("y_plate", data=y_plate)
+            file.create_dataset("grad_x_plate", data=grad_x_plate)
+            file.create_dataset("grad_y_plate", data=grad_y_plate)
+            file.create_dataset("normals", data=normals)
+            file.create_dataset("midpoints", data=midpoints)

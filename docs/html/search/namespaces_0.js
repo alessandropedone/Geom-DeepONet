@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['convergence_0',['convergence',['../namespaceconvergence.html',1,'']]]
+  ['clean_0',['clean',['../namespaceclean.html',1,'']]]
 ];

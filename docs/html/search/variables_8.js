@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['idx_0',['idx',['../namespaceold__main.html#ac525eb079cb721c6985f3e2918a66f53',1,'old_main']]],
-  ['initializer_1',['initializer',['../classmodel_1_1FourierFeatures.html#a0b810826827b2c10a8e28cfe007434f3',1,'model.FourierFeatures.initializer'],['../classmodel_1_1DenseNetwork.html#a6d1118470d9129c25f17599350c9783c',1,'model.DenseNetwork.initializer']]],
-  ['input_5fneurons_2',['input_neurons',['../classmodel_1_1DenseNetwork.html#aa82ac1480fa479dea2cfd4a41648bed8',1,'model::DenseNetwork']]]
+  ['l1_5fcoeff_0',['l1_coeff',['../classmodel_1_1DenseNetwork.html#ae7363ebc5dd5d9a755bcdbe7c85c012a',1,'model::DenseNetwork']]],
+  ['l2_5fcoeff_1',['l2_coeff',['../classmodel_1_1DenseNetwork.html#ac2ceacd4cd575da362ad6867d5dbbb9e',1,'model::DenseNetwork']]],
+  ['layer_5fnormalization_2',['layer_normalization',['../classmodel_1_1DenseNetwork.html#a41a6d1cc3169643cf95651c1e0707e74',1,'model::DenseNetwork']]],
+  ['leaky_5frelu_5falpha_3',['leaky_relu_alpha',['../classmodel_1_1DenseNetwork.html#a42de5415ea731b9d19381de4c0a02347',1,'model::DenseNetwork']]],
+  ['learnable_4',['learnable',['../classmodel_1_1FourierFeatures.html#a6ed4a624735989c6337173d3a5266d87',1,'model::FourierFeatures']]]
 ];
