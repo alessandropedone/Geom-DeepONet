@@ -3,7 +3,7 @@ import tensorflow as tf
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from model import DenseNetwork, DeepONet
-from load_solutions import load_h5_solutions
+from surrogate_model.load import load_h5_solutions
 
 def train_dense_network(model_path: str, seed: int = 40):
 
@@ -15,7 +15,7 @@ def train_dense_network(model_path: str, seed: int = 40):
     # Import normal derivative potential dataset and convert to numpy array
     normal_derivative = pd.read_csv('data/unrolled_normal_derivative_potential.csv')
     y = normal_derivative.iloc[:, 5]
-    y = y.to_numpy()    
+    y = y.to_numpy() 
 
     seed = seed
 
@@ -362,7 +362,7 @@ def train_potential(model_path: str, seed: int = 40):
         verbose=1
     )
 
-    from masked_losses import masked_mse, masked_mae
+    from surrogate_model.losses import masked_mse, masked_mae
 
     model.train_model(
         X = x_train,

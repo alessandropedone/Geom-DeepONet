@@ -2,7 +2,7 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 from model import DenseNetwork, FourierFeatures, LogUniformFreqInitializer, EinsumLayer, DeepONet
-from masked_losses import masked_mse, masked_mae
+from surrogate_model.losses import masked_mse, masked_mae
 
 ##
 # @param x (numpy.ndarray): The input data for the model.

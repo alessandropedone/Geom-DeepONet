@@ -330,11 +330,9 @@ def plot_grad_y(file, postpone_show=False):
 def plot_normal_derivative(file, postpone_show=False):   
     """It plots the normal derivative of the potential on the upper plate as arrows.""" 
     plot_domain(file, postpone_show=True)
-    normals = file["normals"][:]
-    points = file["midpoints"][:]
-    grad_x = file["grad_x_plate"][:]
-    grad_y = file["grad_y_plate"][:]
-    normal_derivative = np.einsum('ij,ij->i', np.stack((grad_x, grad_y), axis=-1), normals)
+    normal_derivative = file["normal_derivatives_plate"][:]
+    points = file["midpoints_plate"][:]
+    normals = file["normal_vectors_plate"][:]
     U = normal_derivative * normals[:, 0]
     V = normal_derivative * normals[:, 1]
     # Add the plot arrows from midpoints in the direction of the normals scaled by the normal derivative

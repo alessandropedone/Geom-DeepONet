@@ -31,7 +31,7 @@ def test(names: list[str],
         geometry_input=geometry_input,
         data_folder=data_folder,
         parameters_file_name=parameters_file_name,
-        ignore_data=False
+        ignore_data=True
     )
 
     generate_meshes(data_folder=data_folder, empty_mesh_folder=True)
