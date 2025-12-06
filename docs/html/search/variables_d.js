@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['trunk_0',['trunk',['../classmodel_1_1DeepONet.html#a16a4e150d10d10124f6aad8378594624',1,'model::DeepONet']]]
+  ['ranges_0',['ranges',['../namespacemain.html#ad11a1805dd4f6710e9566106c6f795f2',1,'main']]]
 ];

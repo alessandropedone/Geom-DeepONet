@@ -80,27 +80,27 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9eac6c18ad599ccad77fd3a505972eb8" id="r_a9eac6c18ad599ccad77fd3a505972eb8"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#a9eac6c18ad599ccad77fd3a505972eb8">get_domain_from_mesh</a> (str mesh_path)</td></tr>
-<tr class="memdesc:a9eac6c18ad599ccad77fd3a505972eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the mesh from the .msh file and return the computational domain.  <br /></td></tr>
-<tr class="separator:a9eac6c18ad599ccad77fd3a505972eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed25b5153aa3f0ab1615b371c02e892a" id="r_aed25b5153aa3f0ab1615b371c02e892a"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#aed25b5153aa3f0ab1615b371c02e892a">compute_boundary_normals_and_midpoints</a> (domain, facet_tags)</td></tr>
-<tr class="separator:aed25b5153aa3f0ab1615b371c02e892a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4daeb5decebcd2ae7ba649b3f31211cf" id="r_a4daeb5decebcd2ae7ba649b3f31211cf"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#a4daeb5decebcd2ae7ba649b3f31211cf">fom</a> (str mesh, float bc_lower_plate=1.0, float bc_upper_plate=0.0)</td></tr>
-<tr class="separator:a4daeb5decebcd2ae7ba649b3f31211cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca3e9652f163d4864a3e1ec103099a88" id="r_aca3e9652f163d4864a3e1ec103099a88"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#aca3e9652f163d4864a3e1ec103099a88">solvensave</a> (str mesh, str data_folder=&quot;data&quot;)</td></tr>
-<tr class="separator:aca3e9652f163d4864a3e1ec103099a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b68b5d6b764d3fe1f4dc8dd5866b529" id="r_a2b68b5d6b764d3fe1f4dc8dd5866b529"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#a2b68b5d6b764d3fe1f4dc8dd5866b529">get_domain_from_mesh</a> (str mesh_path)</td></tr>
+<tr class="memdesc:a2b68b5d6b764d3fe1f4dc8dd5866b529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the mesh from the .msh file and return the computational domain.  <br /></td></tr>
+<tr class="separator:a2b68b5d6b764d3fe1f4dc8dd5866b529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13069abf83a275590e833fadfe7e3281" id="r_a13069abf83a275590e833fadfe7e3281"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#a13069abf83a275590e833fadfe7e3281">compute_boundary_normals_and_midpoints</a> (domain, boundary_facets)</td></tr>
+<tr class="separator:a13069abf83a275590e833fadfe7e3281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e15606d4b2ed85c44d3fa7ce5ec0e58" id="r_a1e15606d4b2ed85c44d3fa7ce5ec0e58"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#a1e15606d4b2ed85c44d3fa7ce5ec0e58">fom</a> (str mesh, float bc_lower_plate=1.0, float bc_upper_plate=0.0)</td></tr>
+<tr class="separator:a1e15606d4b2ed85c44d3fa7ce5ec0e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20ee3b520f89f32a141698d851ea98ed" id="r_a20ee3b520f89f32a141698d851ea98ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefom.html#a20ee3b520f89f32a141698d851ea98ed">solvensave</a> (str mesh, str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:a20ee3b520f89f32a141698d851ea98ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Full order model that solves the PDE with given boundary conditions and returns solution, gradient, and mesh data. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aed25b5153aa3f0ab1615b371c02e892a" name="aed25b5153aa3f0ab1615b371c02e892a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed25b5153aa3f0ab1615b371c02e892a">&#9670;&#160;</a></span>compute_boundary_normals_and_midpoints()</h2>
+<a id="a13069abf83a275590e833fadfe7e3281" name="a13069abf83a275590e833fadfe7e3281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13069abf83a275590e833fadfe7e3281">&#9670;&#160;</a></span>compute_boundary_normals_and_midpoints()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> tuple fom.compute_boundary_normals_and_midpoints </td>
+          <td class="memname"> tuple compute_boundary_normals_and_midpoints </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -109,7 +109,7 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>facet_tags</em>&#160;</td>
+          <td class="paramname"><em>boundary_facets</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -121,7 +121,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">domain</td><td>The computational domain containing mesh information. </td></tr>
-    <tr><td class="paramname">facet_tags</td><td>The facet tags associated with the domain. </td></tr>
+    <tr><td class="paramname">boundary_facets</td><td>The boundary facets associated with the domain. </td></tr>
   </table>
   </dd>
 </dl>
@@ -130,14 +130,14 @@ Functions</h2></td></tr>
 </pre> 
 </div>
 </div>
-<a id="a4daeb5decebcd2ae7ba649b3f31211cf" name="a4daeb5decebcd2ae7ba649b3f31211cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4daeb5decebcd2ae7ba649b3f31211cf">&#9670;&#160;</a></span>fom()</h2>
+<a id="a1e15606d4b2ed85c44d3fa7ce5ec0e58" name="a1e15606d4b2ed85c44d3fa7ce5ec0e58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e15606d4b2ed85c44d3fa7ce5ec0e58">&#9670;&#160;</a></span>fom()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> tuple fom.fom </td>
+          <td class="memname"> tuple fom </td>
           <td>(</td>
           <td class="paramtype">str&#160;</td>
           <td class="paramname"><em>mesh</em>, </td>
@@ -169,8 +169,8 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>tuple: x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>We return also the coordinate x_plate, y_plate, at which the gradient on the plate is computed, but can consider the midpoints instead, since the gradient is constant on each facet (we chose DG0). </dd>
+<dl class="section return"><dt>Returns</dt><dd>tuple: x, y, cells, potential, grad_x, grad_y, grad_x_plate, grad_y_plate, normals, midpoints </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>We return the midpoints of the facets of the upper plate boundary since the gradient is constant on each cell (we chose DG0). </dd>
 <dd>
 Thanks to this, to get the normal derivative on the plate we can just use the normals in the mid points. So one just needs to write grad_x_plate * normals[:,0] + grad_y_plate * normals[:,1].</dd></dl>
 <pre class="fragment">Full order model that solves the PDE with given boundary conditions and computes the solutions and its gradient.
@@ -180,14 +180,14 @@ We also return the boundary normals and midpoints for further computations.
 </pre> 
 </div>
 </div>
-<a id="a9eac6c18ad599ccad77fd3a505972eb8" name="a9eac6c18ad599ccad77fd3a505972eb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9eac6c18ad599ccad77fd3a505972eb8">&#9670;&#160;</a></span>get_domain_from_mesh()</h2>
+<a id="a2b68b5d6b764d3fe1f4dc8dd5866b529" name="a2b68b5d6b764d3fe1f4dc8dd5866b529"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b68b5d6b764d3fe1f4dc8dd5866b529">&#9670;&#160;</a></span>get_domain_from_mesh()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> None fom.get_domain_from_mesh </td>
+          <td class="memname"> None get_domain_from_mesh </td>
           <td>(</td>
           <td class="paramtype">str&#160;</td>
           <td class="paramname"><em>mesh_path</em></td><td>)</td>
@@ -207,14 +207,14 @@ We also return the boundary normals and midpoints for further computations.
 </pre> 
 </div>
 </div>
-<a id="aca3e9652f163d4864a3e1ec103099a88" name="aca3e9652f163d4864a3e1ec103099a88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca3e9652f163d4864a3e1ec103099a88">&#9670;&#160;</a></span>solvensave()</h2>
+<a id="a20ee3b520f89f32a141698d851ea98ed" name="a20ee3b520f89f32a141698d851ea98ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20ee3b520f89f32a141698d851ea98ed">&#9670;&#160;</a></span>solvensave()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">fom.solvensave </td>
+          <td class="memname">solvensave </td>
           <td>(</td>
           <td class="paramtype">str&#160;</td>
           <td class="paramname"><em>mesh</em>, </td>

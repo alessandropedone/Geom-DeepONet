@@ -1,13 +1,19 @@
 var searchData=
 [
-  ['plot_0',['plot',['../namespaceplot.html',1,'plot'],['../namespaceplot.html#af94b7270bbdfdf311252c4c6ff0c283d',1,'plot.plot()']]],
-  ['plot_2epy_1',['plot.py',['../plot_8py.html',1,'']]],
-  ['plot_5fcomparison_2',['plot_comparison',['../namespaceplot__prediction.html#ac23e242a310b2f4e5cffc1473ccd0e7e',1,'plot_prediction']]],
-  ['plot_5fprediction_3',['plot_prediction',['../namespaceplot__prediction.html',1,'plot_prediction'],['../namespaceplot__prediction.html#a32a0010a4ba3be12e05ab8ea93a10f5b',1,'plot_prediction.plot_prediction()']]],
-  ['plot_5fprediction_2epy_4',['plot_prediction.py',['../plot__prediction_8py.html',1,'']]],
-  ['plot_5fprediction_5f2d_5',['plot_prediction_2D',['../namespaceplot__prediction.html#ab5da313ae68036d31648665887a2b025',1,'plot_prediction']]],
-  ['plot_5frandom_5fprediction_6',['plot_random_prediction',['../namespaceplot__prediction.html#a7fafc673229bda7d5a93925ef4ddf4a6',1,'plot_prediction']]],
-  ['plot_5ftraining_5fhistory_7',['plot_training_history',['../classmodel_1_1DenseNetwork.html#ace8e861576b07014d61bbf7ce6db26a9',1,'model.DenseNetwork.plot_training_history()'],['../classmodel_1_1DeepONet.html#ae55f73c5577c9b68841bb26ab8957da9',1,'model.DeepONet.plot_training_history()']]],
-  ['positional_5fencoding_5ffrequencies_8',['positional_encoding_frequencies',['../classmodel_1_1DenseNetwork.html#ae16959d30564734c02ec248e8439b9fe',1,'model::DenseNetwork']]],
-  ['potential_9',['potential',['../namespacemain.html#abe4c267a63409b1b7cd9c6aaf0779b4a',1,'main']]]
+  ['parameters_5ffile_5fname_0',['parameters_file_name',['../namespacemain.html#ae1e27c1662a071a2fb564336bcf689e5',1,'main']]],
+  ['plot_1',['plot',['../namespaceplot.html',1,'plot'],['../namespaceplot.html#a9956cd384d56a0f1099243197d4d0b28',1,'plot.plot()']]],
+  ['plot_2epy_2',['plot.py',['../plot_8py.html',1,'']]],
+  ['plot_5fcomparison_3',['plot_comparison',['../namespaceplot__prediction.html#a39b378b506f2dc6846c80aa4640f47b7',1,'plot_prediction']]],
+  ['plot_5fdomain_4',['plot_domain',['../namespaceplot.html#a5ba0f43827964a8e26e92346fc1835ca',1,'plot']]],
+  ['plot_5fgrad_5fx_5',['plot_grad_x',['../namespaceplot.html#aa05f5b0b1d88f14144f88c4002b3f048',1,'plot']]],
+  ['plot_5fgrad_5fy_6',['plot_grad_y',['../namespaceplot.html#a92e3eff3963e7245002ad023441d13e2',1,'plot']]],
+  ['plot_5fnormal_5fderivative_7',['plot_normal_derivative',['../namespaceplot.html#afa698270da86417e4a739c8c89b1c64f',1,'plot']]],
+  ['plot_5fnumber_8',['plot_number',['../namespacemain.html#ae821d47b9d5cb5ac1e8c50e1e2d0bf1e',1,'main']]],
+  ['plot_5fpotential_9',['plot_potential',['../namespaceplot.html#aff329bc37023ae10126ba3b9f38a5237',1,'plot']]],
+  ['plot_5fprediction_10',['plot_prediction',['../namespaceplot__prediction.html',1,'plot_prediction'],['../namespaceplot__prediction.html#af784c678d1f9b24bb06ff42b11304509',1,'plot_prediction.plot_prediction()']]],
+  ['plot_5fprediction_2epy_11',['plot_prediction.py',['../plot__prediction_8py.html',1,'']]],
+  ['plot_5fprediction_5f2d_12',['plot_prediction_2D',['../namespaceplot__prediction.html#a8e478505455a80f82fcebcd2f1cddc4a',1,'plot_prediction']]],
+  ['plot_5frandom_5fprediction_13',['plot_random_prediction',['../namespaceplot__prediction.html#aa57990bc14f2c6b107256e87d3830f53',1,'plot_prediction']]],
+  ['plot_5ftraining_5fhistory_14',['plot_training_history',['../classmodel_1_1DeepONet.html#a7f75e80143f1afdaa76f45e8e90b30c1',1,'model.DeepONet.plot_training_history()'],['../classmodel_1_1DenseNetwork.html#a7f75e80143f1afdaa76f45e8e90b30c1',1,'model.DenseNetwork.plot_training_history(self)']]],
+  ['positional_5fencoding_5ffrequencies_15',['positional_encoding_frequencies',['../classmodel_1_1DenseNetwork.html#a0a0ca8bf596b36edd2123f2cc77855b0',1,'model::DenseNetwork']]]
 ];

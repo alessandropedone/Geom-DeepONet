@@ -80,25 +80,25 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a31d63f0b479c8ab20c2eb14044a7c92d" id="r_a31d63f0b479c8ab20c2eb14044a7c92d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceclean.html#a31d63f0b479c8ab20c2eb14044a7c92d">remove_msh_files</a> (str data_folder)</td></tr>
-<tr class="separator:a31d63f0b479c8ab20c2eb14044a7c92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93b0c4da791b41a8b5296550e2412844" id="r_a93b0c4da791b41a8b5296550e2412844"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceclean.html#a93b0c4da791b41a8b5296550e2412844">setup_data</a> (str data_folder=&quot;data&quot;, str parameters_head=&quot;ID,Overetch,Distance,Mode1,Mode2,Mode3,Mode4\n&quot;, str parameters_file_name=&quot;parameters.csv&quot;)</td></tr>
-<tr class="separator:a93b0c4da791b41a8b5296550e2412844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3f3e4177ffe596796e00f20801cbc0f" id="r_ac3f3e4177ffe596796e00f20801cbc0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceclean.html#ac3f3e4177ffe596796e00f20801cbc0f">remove_msh_files</a> (str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:ac3f3e4177ffe596796e00f20801cbc0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a468822a059aa5ce5a6fe0d565b257b7c" id="r_a468822a059aa5ce5a6fe0d565b257b7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceclean.html#a468822a059aa5ce5a6fe0d565b257b7c">setup_data</a> (str parameters_head, str parameters_file_name, bool ignore_data=False, str data_folder=&quot;data&quot;)</td></tr>
+<tr class="separator:a468822a059aa5ce5a6fe0d565b257b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Functions to clean up the environment. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a31d63f0b479c8ab20c2eb14044a7c92d" name="a31d63f0b479c8ab20c2eb14044a7c92d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31d63f0b479c8ab20c2eb14044a7c92d">&#9670;&#160;</a></span>remove_msh_files()</h2>
+<a id="ac3f3e4177ffe596796e00f20801cbc0f" name="ac3f3e4177ffe596796e00f20801cbc0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3f3e4177ffe596796e00f20801cbc0f">&#9670;&#160;</a></span>remove_msh_files()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">clean.remove_msh_files </td>
+          <td class="memname">remove_msh_files </td>
           <td>(</td>
-          <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>data_folder</em></td><td>)</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -113,29 +113,35 @@ Functions</h2></td></tr>
 </pre> 
 </div>
 </div>
-<a id="a93b0c4da791b41a8b5296550e2412844" name="a93b0c4da791b41a8b5296550e2412844"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93b0c4da791b41a8b5296550e2412844">&#9670;&#160;</a></span>setup_data()</h2>
+<a id="a468822a059aa5ce5a6fe0d565b257b7c" name="a468822a059aa5ce5a6fe0d565b257b7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a468822a059aa5ce5a6fe0d565b257b7c">&#9670;&#160;</a></span>setup_data()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">clean.setup_data </td>
+          <td class="memname">setup_data </td>
           <td>(</td>
-          <td class="paramtype">str &#160;</td>
-          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code>, </td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>parameters_head</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>parameters_file_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>ignore_data</em> = <code>False</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">str &#160;</td>
-          <td class="paramname"><em>parameters_head</em> = <code>&quot;ID,Overetch,Distance,Mode1,Mode2,Mode3,Mode4\n&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">str &#160;</td>
-          <td class="paramname"><em>parameters_file_name</em> = <code>&quot;parameters.csv&quot;</code>&#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -146,10 +152,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">data_folder</td><td>(str): Path to the data folder to reset.</td></tr>
+    <tr><td class="paramname">parameters_head</td><td>(str): Header line for the parameters CSV file. </td></tr>
+    <tr><td class="paramname">parameters_file_name</td><td>(str): Name of the parameters CSV file. </td></tr>
+    <tr><td class="paramname">ignore_data</td><td>(bool): Whether to ignore existing other data present in data_folder. </td></tr>
+    <tr><td class="paramname">data_folder</td><td>(str): Path to the data folder to reset. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>In any case, this function ensures the necessary subfolders and parameters file are set up.</dd></dl>
 <pre class="fragment">Reset the data folder silently.
 </pre> 
 </div>

@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['traditional_20solvers_20and_20dl_20roms_0',['Coupling Traditional solvers and DL-ROMs',['../index.html',1,'']]],
-  ['train_1',['train',['../namespacetrain.html',1,'']]],
-  ['train_2epy_2',['train.py',['../train_8py.html',1,'']]],
-  ['train_5fdense_5fnetwork_3',['train_dense_network',['../namespacetrain.html#a882504c3e694fd35beb76221188bc0d5',1,'train']]],
-  ['train_5fdon_4',['train_don',['../namespacetrain.html#a9dbc5ff715710b3e6eca4bef3b92772d',1,'train']]],
-  ['train_5fmodel_5',['train_model',['../classmodel_1_1DenseNetwork.html#a57919e1091c9d332605d1a57180386a2',1,'model.DenseNetwork.train_model()'],['../classmodel_1_1DeepONet.html#a6cea2e84d7689a1469560548e64a5f06',1,'model.DeepONet.train_model()']]],
-  ['train_5fpotential_6',['train_potential',['../namespacetrain.html#abcab1018a1b2ec9eb62fd25247612db5',1,'train']]],
-  ['trunk_7',['trunk',['../classmodel_1_1DeepONet.html#a16a4e150d10d10124f6aad8378594624',1,'model::DeepONet']]]
+  ['test_0',['test',['../namespacetest.html',1,'test'],['../namespacetest.html#ada2e3cbf54beaacf75b8eb9f6ab3d643',1,'test.test()']]],
+  ['test_2epy_1',['test.py',['../test_8py.html',1,'']]],
+  ['traditional_20solvers_20and_20dl_20roms_2',['Coupling Traditional solvers and DL-ROMs',['../index.html',1,'']]],
+  ['train_3',['train',['../namespacetrain.html',1,'']]],
+  ['train_2epy_4',['train.py',['../train_8py.html',1,'']]],
+  ['train_5fdense_5fnetwork_5',['train_dense_network',['../namespacetrain.html#a8464d6dc2d20036fa5028f9fabb0e7c2',1,'train']]],
+  ['train_5fdon_6',['train_don',['../namespacetrain.html#a199fbafe52f75eb5f5b07143f990af9e',1,'train']]],
+  ['train_5fmodel_7',['train_model',['../classmodel_1_1DenseNetwork.html#a7b2fd8ac8df8ee4dd00de4fd505b2a35',1,'model.DenseNetwork.train_model()'],['../classmodel_1_1DeepONet.html#ab4f9c7fae921fd9b59f39359fecb5b50',1,'model.DeepONet.train_model()']]],
+  ['train_5fpotential_8',['train_potential',['../namespacetrain.html#ac89484eb8496c228012290395ed1bf4c',1,'train']]],
+  ['trunk_9',['trunk',['../classmodel_1_1DeepONet.html#a41105594d270c1ae023ea786fc1bc6a7',1,'model::DeepONet']]]
 ];

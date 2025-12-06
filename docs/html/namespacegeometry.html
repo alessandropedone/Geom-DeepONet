@@ -80,49 +80,63 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5ec4f5bb5dfe0cdf02f263a0df8779e5" id="r_a5ec4f5bb5dfe0cdf02f263a0df8779e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegeometry.html#a5ec4f5bb5dfe0cdf02f263a0df8779e5">modify_quantity</a> (str input_path, str output_path, str name, str quantity, float value)</td></tr>
-<tr class="separator:a5ec4f5bb5dfe0cdf02f263a0df8779e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ab49f6055636f6e045619745910a4c2" id="r_a7ab49f6055636f6e045619745910a4c2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegeometry.html#a7ab49f6055636f6e045619745910a4c2">generate_geometries</a> (tuple overetch_range, tuple distance_range, tuple coeff_range, str geometry_input=&quot;geometry.geo&quot;, str data_folder=&quot;data&quot;)</td></tr>
-<tr class="separator:a7ab49f6055636f6e045619745910a4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09aaa08f2f8c3359a9b857f31f67dc0f" id="r_a09aaa08f2f8c3359a9b857f31f67dc0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegeometry.html#a09aaa08f2f8c3359a9b857f31f67dc0f">read_data_file</a> (str file_path=&quot;data.txt&quot;)</td></tr>
+<tr class="separator:a09aaa08f2f8c3359a9b857f31f67dc0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3ceb100ab8fc056d1e07bcf6540b76" id="r_abc3ceb100ab8fc056d1e07bcf6540b76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegeometry.html#abc3ceb100ab8fc056d1e07bcf6540b76">modify_quantity</a> (str input_path, str output_path, str name, str quantity, float value)</td></tr>
+<tr class="separator:abc3ceb100ab8fc056d1e07bcf6540b76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123374a859f344b40bd59ae8f298a1d8" id="r_a123374a859f344b40bd59ae8f298a1d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegeometry.html#a123374a859f344b40bd59ae8f298a1d8">generate_geometries</a> (list[str] names, list[tuple] ranges, list[int] num_points, str geometry_input, str data_folder=&quot;data&quot;, str parameters_file_name=&quot;parameters.csv&quot;, bool ignore_data=False)</td></tr>
+<tr class="separator:a123374a859f344b40bd59ae8f298a1d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Functions to generate datasets by processing the reference geometry file. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7ab49f6055636f6e045619745910a4c2" name="a7ab49f6055636f6e045619745910a4c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ab49f6055636f6e045619745910a4c2">&#9670;&#160;</a></span>generate_geometries()</h2>
+<a id="a123374a859f344b40bd59ae8f298a1d8" name="a123374a859f344b40bd59ae8f298a1d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a123374a859f344b40bd59ae8f298a1d8">&#9670;&#160;</a></span>generate_geometries()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">geometry.generate_geometries </td>
+          <td class="memname">generate_geometries </td>
           <td>(</td>
-          <td class="paramtype">tuple&#160;</td>
-          <td class="paramname"><em>overetch_range</em>, </td>
+          <td class="paramtype">list[str]&#160;</td>
+          <td class="paramname"><em>names</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">tuple&#160;</td>
-          <td class="paramname"><em>distance_range</em>, </td>
+          <td class="paramtype">list[tuple]&#160;</td>
+          <td class="paramname"><em>ranges</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">tuple&#160;</td>
-          <td class="paramname"><em>coeff_range</em>, </td>
+          <td class="paramtype">list[int]&#160;</td>
+          <td class="paramname"><em>num_points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>geometry_input</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">str &#160;</td>
-          <td class="paramname"><em>geometry_input</em> = <code>&quot;geometry.geo&quot;</code>, </td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">str &#160;</td>
-          <td class="paramname"><em>data_folder</em> = <code>&quot;data&quot;</code>&#160;</td>
+          <td class="paramname"><em>parameters_file_name</em> = <code>&quot;parameters.csv&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>ignore_data</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -133,27 +147,29 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">overetch_range</td><td>(tuple): Range of overetch values (min, max). </td></tr>
-    <tr><td class="paramname">distance_range</td><td>(tuple): Range of distance values (min, max). </td></tr>
-    <tr><td class="paramname">coeff_range</td><td>(tuple): Range of deformation coefficient values (min, max). </td></tr>
+    <tr><td class="paramname">names</td><td>(list[str]): List of the names, that appear in the geometry file of the quantities. </td></tr>
+    <tr><td class="paramname">ranges</td><td>(list[tuple]): List of ranges for each quantity. </td></tr>
+    <tr><td class="paramname">num_points</td><td>(list[int]): List of number of points to generate within the specified ranges for each quantity. </td></tr>
     <tr><td class="paramname">geometry_input</td><td>(str): Path to the input geometry file. </td></tr>
-    <tr><td class="paramname">data_folder</td><td>(str): Path to the data folder to save parameters.</td></tr>
+    <tr><td class="paramname">data_folder</td><td>(str): Path to the data folder. </td></tr>
+    <tr><td class="paramname">ignore_data</td><td>(bool): Whether to ignore existing other data present in data_folder. For example you may want to set this equal to TRUE if you have more data in that folder, or already computed solutions, and for some reason you want to generate the geomteries in that folder avoid touching every file except the "geo" subfolder the parameters file. </td></tr>
   </table>
   </dd>
 </dl>
-<pre class="fragment">Generate geometries by modifying the distance, overetch, and coefficients of deformation of the plates.
+<dl class="section note"><dt>Note</dt><dd>As output you get a series of geometry files in data_folder/geo and a parameters.csv file in data_folder.</dd></dl>
+<pre class="fragment">Generate geometries by modifying the list of quantities over specified ranges.
 This function creates a series of geometry files with different parameters.
 </pre> 
 </div>
 </div>
-<a id="a5ec4f5bb5dfe0cdf02f263a0df8779e5" name="a5ec4f5bb5dfe0cdf02f263a0df8779e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ec4f5bb5dfe0cdf02f263a0df8779e5">&#9670;&#160;</a></span>modify_quantity()</h2>
+<a id="abc3ceb100ab8fc056d1e07bcf6540b76" name="abc3ceb100ab8fc056d1e07bcf6540b76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc3ceb100ab8fc056d1e07bcf6540b76">&#9670;&#160;</a></span>modify_quantity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">geometry.modify_quantity </td>
+          <td class="memname">modify_quantity </td>
           <td>(</td>
           <td class="paramtype">str&#160;</td>
           <td class="paramname"><em>input_path</em>, </td>
@@ -200,6 +216,30 @@ This function creates a series of geometry files with different parameters.
   </dd>
 </dl>
 <pre class="fragment">Modify the geometry file to change the distance between the plates.</pre> 
+</div>
+</div>
+<a id="a09aaa08f2f8c3359a9b857f31f67dc0f" name="a09aaa08f2f8c3359a9b857f31f67dc0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09aaa08f2f8c3359a9b857f31f67dc0f">&#9670;&#160;</a></span>read_data_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">read_data_file </td>
+          <td>(</td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>file_path</em> = <code>&quot;data.txt&quot;</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file_path</td><td>(str): Path to the data file.</td></tr>
+  </table>
+  </dd>
+</dl>
+<pre class="fragment">Read the data file and return names, ranges, and num_points.</pre> 
 </div>
 </div>
 </div><!-- contents -->
