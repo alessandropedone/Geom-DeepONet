@@ -1,33 +1,19 @@
 ## @file main.py
 # @brief Main script to train and evaluate surrogate models for geometry-to-solution mapping.
 
-from gpu_run import run_on_device
-from train import train_dense_network, train_don, train_potential
-from plot_prediction import plot_random_prediction, plot_prediction_2D
-from load_solutions import load_h5_solutions
-
-## Normal Derivative Model
-#run_on_device(train_dense_network, "models/fourier_features.keras")
-#run_on_device(plot_random_prediction, "models/fourier_features.keras")
-#train_don("models/don_model.keras")
-#run_on_device(plot_random_prediction, "models/don_model.keras", don=True)
-
-
-## Potential Model
-#run_on_device(train_potential, "models/potential_model_light.keras")
-
-#mu, x, y, potential, grad_x, grad_y = load_h5_solutions()
 import numpy as np
-#np.savez('solutions.npz', mu=mu, x=x, y=y, potential=potential, grad_x=grad_x, grad_y=grad_y)
 
-# load data from npz
-data = np.load('solutions.npz')
-mu = data['mu']
-x = data['x']
-y = data['y']
-potential = data['potential']
-grad_x = data['grad_x']
-grad_y = data['grad_y']
+# Import coordinates dataset and solutions
+from load import load
+data_folder = "test"
+mu, x, y, potential, x_plate, y_plate, normal_derivatives_plate = load(data_folder=data_folder)
 
-# COUNTOUR PLOT TBD
-plot_prediction_2D(mu, x, y, potential, "models/potential_model_light.keras")
+# Define input and output arrays
+x = np.stack((x, y), axis=2)
+y = np.array(potential) 
+
+# Train the model
+from gpu import run_on_device
+from train import train
+run_on_device(train, model_path="models/model.keras", r=20, x=x, y=y, mu=mu)
+
