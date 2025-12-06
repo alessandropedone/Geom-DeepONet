@@ -7,6 +7,7 @@ import multiprocessing
 from multiprocessing import cpu_count
 from tqdm import tqdm
 from fom import solvensave
+from functools import partial
 
 ##
 # @param data_folder (str): path to the data folder.
@@ -58,8 +59,9 @@ def generate_datasets(data_folder: str = "data", use_multiprocessing: bool = Tru
 
         with multiprocessing.Pool(num_workers) as pool:
                 # Fancy progress bar
+                solvensave_with_opts = partial(solvensave, data_folder=data_folder)
                 for _ in tqdm(
-                    pool.imap_unordered(solvensave, meshes),
+                    pool.imap_unordered(solvensave_with_opts, meshes),
                     total=len(meshes),
                     desc="🚀 Generating solution datasets",
                     ncols=100,

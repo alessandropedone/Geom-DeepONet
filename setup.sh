@@ -21,7 +21,7 @@ conda activate pacs
 
 # Install packages from conda-forge
 echo -e "${GREEN}Installing core scientific packages from conda-forge...${NC}"
-conda install -c conda-forge fenics-dolfinx mpich pyvista numpy scipy matplotlib pandas tensorflow ipython compilers plotly -y
+conda install -c conda-forge fenics-dolfinx mpich pyvista numpy scipy matplotlib pandas tensorflow ipython compilers -y
 
 # Install GMSH and Python bindings
 echo -e "${GREEN}Installing GMSH and Python bindings...${NC}"

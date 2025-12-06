@@ -11,8 +11,8 @@ from functools import partial
 
 ##
 # @param file_path (str): Path to the .geo file.
-# @param mesh_path (str): Path to the directory where .msh files will be saved.
-def generate_mesh_from_geo(file_path: str, mesh_path: str = "data/msh") -> None:
+# @param data_folder (str): Path to the data folder.
+def generate_mesh_from_geo(file_path: str, data_folder: str = "data") -> None:
     """Generate a mesh from a .geo file using gmsh."""
 
     # Load the .geo file
@@ -22,7 +22,7 @@ def generate_mesh_from_geo(file_path: str, mesh_path: str = "data/msh") -> None:
     gmsh.model.mesh.generate(2)
       
     # Create mesh folder if it doesn't exist
-    msh_output_folder = Path(mesh_path)
+    msh_output_folder = Path(f"{data_folder}/msh")
     msh_output_folder.mkdir(parents=True, exist_ok=True)
     base_name = os.path.splitext(os.path.basename(file_path))[0]
     msh_path = os.path.join(msh_output_folder, base_name + ".msh")
@@ -35,13 +35,13 @@ def generate_mesh_from_geo(file_path: str, mesh_path: str = "data/msh") -> None:
 # @param i (int): Index of the geometry.
 # @param geometry_path (str): Path to the directory containing .geo files.
 # @param mesh_path (str): Path to the directory where .msh files will be saved.
-def generate_mesh(i: int, geometry_path: str = "data/geo", mesh_path: str = "data/msh") -> None:
+def generate_mesh(i: int, data_folder: str = "data") -> None:
     """
     Generate a mesh for a given geometry index.
     """
     # Generate the mesh for each geometry
-    geo_path = f"{geometry_path}/{i}.geo"
-    generate_mesh_from_geo(geo_path, mesh_path)
+    geo_path = f"{data_folder}/geo/{i}.geo"
+    generate_mesh_from_geo(geo_path, data_folder)
 
 
 ##
@@ -102,7 +102,7 @@ def generate_meshes(data_folder: str = "data", use_multiprocessing: bool = True,
         else:
             num_workers = max(1, multiprocessing.cpu_count() - 1)  # leave one core free
         
-        generate_mesh_with_opts = partial(generate_mesh, geometry_path=f"{data_folder}/geo", mesh_path=f"{data_folder}/msh")
+        generate_mesh_with_opts = partial(generate_mesh, data_folder=data_folder)
 
         with multiprocessing.Pool(num_workers) as pool:
             # Fancy progress bar

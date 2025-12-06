@@ -36,17 +36,14 @@ def get_domain_from_mesh(mesh_path: str) -> None:
 
 ## 
 # @param domain: The computational domain containing mesh information.
-# @param facet_tags: The facet tags associated with the domain.
+# @param boundary_facets: The boundary facets associated with the domain.
 # @return tuple: normals (np.ndarray), midpoints (np.ndarray)
-def compute_boundary_normals_and_midpoints(domain, facet_tags) -> tuple:
+def compute_boundary_normals_and_midpoints(domain, boundary_facets) -> tuple:
     """
     Compute boundary normals and midpoints for the facets of the upper plate (tags 10 and 11).
     """
     # 2D: facet dimension
     fdim = domain.topology.dim - 1
-
-    # Combine facets 10 and 11
-    boundary_facets = np.concatenate([facet_tags.find(10), facet_tags.find(11)])
 
     # Connectivity: facets -> vertices
     facet_vertices = domain.topology.connectivity(fdim, 0)
@@ -85,9 +82,9 @@ def compute_boundary_normals_and_midpoints(domain, facet_tags) -> tuple:
 # @param mesh (str): path to the mesh file.
 # @param bc_lower_plate (float): Dirichlet BC value for the lower plate.
 # @param bc_upper_plate (float): Dirichlet BC value for the upper plate.
-# @return tuple: x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints
-# @note We return also the coordinate x_plate, y_plate, at which the gradient on the plate is computed,
-# but can consider the midpoints instead, since the gradient is constant on each facet (we chose DG0).
+# @return tuple: x, y, cells, potential, grad_x, grad_y, grad_x_plate, grad_y_plate, normals, midpoints
+# @note We return the midpoints of the facets of the upper plate boundary 
+# since the gradient is constant on each cell (we chose DG0).
 # @note Thanks to this, to get the normal derivative on the plate we can just use the normals in the mid points. 
 # So one just needs to write grad_x_plate * normals[:,0] + grad_y_plate * normals[:,1].
 def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> tuple:
@@ -180,32 +177,36 @@ def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> 
 
         ## EXTRACT AND RETURN RELEVANT DATA ##
 
+        # Find all dofs in the function spaces
+        dofs_uh = np.arange(V.dofmap.index_map.size_local)
+
+        # Find the dofs of the upper plate
+        boundary_facets = facets_rect1
+        dofs1011 = locate_dofs_topological(V, fdim, boundary_facets)
+
+        # Extract all x and y coordinates
+        dofs_c = V.tabulate_dof_coordinates()[dofs_uh]
+        x = np.array(dofs_c[:, 0])
+        y = np.array(dofs_c[:, 1])
+
+        # Extract the potential values
+        potential = np.array(uh.x.array[dofs_uh])
+
         # Extract gradient components
         dim = domain.geometry.dim
         grad_x = grad_uh.x.array[0::dim]
         grad_y = grad_uh.x.array[1::dim]
 
-        # Get gradient values at tag 10, 11 facets (upper plate)
-        boundary_facets = np.concatenate([facet_tags.find(10), facet_tags.find(11)])
-        dofs1011 = locate_dofs_topological(V, fdim, boundary_facets)
+        # Extract gradient components on the upper plate
+        boundary_cells = []
+        for f in boundary_facets:
+            # get the cell connected to this facet
+            connected_cell = domain.topology.connectivity(fdim, tdim).links(f)[0]
+            boundary_cells.append(connected_cell)
+        grad_x_plate = grad_x[boundary_cells]
+        grad_y_plate = grad_y[boundary_cells]
         
-        # Extract the x-coordinates and the y-coordinates of the DOFs
-        x_dofs = V.tabulate_dof_coordinates()[dofs1011]
-        x_plate = x_dofs[:, 0]
-        y_plate = x_dofs[:, 1]
-
-        # Evaluate grad_uh at those DOFs
-        grad_x_plate = grad_x[dofs1011]
-        grad_y_plate = grad_y[dofs1011]
-        
-        # Find all dofs in the function spaces
-        dofs_uh = np.arange(V.dofmap.index_map.size_local)
-
-        # Get potential values, coordinates and connectivity
-        potential = np.array(uh.x.array[dofs_uh])
-        dofs_c = V.tabulate_dof_coordinates()[dofs_uh]
-        x = np.array(dofs_c[:, 0])
-        y = np.array(dofs_c[:, 1])
+        # Extract cell connectivity
         cells = domain.topology.connectivity(domain.topology.dim, 0).array.reshape(-1, domain.geometry.dim + 1)
 
         # Plot potential distribution and gradient components
@@ -214,9 +215,10 @@ def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> 
         # plot(x, y, cells, grad_x, title="Gradient X Component", colorbar_label="Gradient X", sharp_color_range=(-0.7, -0.5))
         # plot(x, y, cells, grad_y, title="Gradient Y Component", colorbar_label="Gradient Y", sharp_color_range=(-0.7, -0.5))
 
-        normals, midpoints = compute_boundary_normals_and_midpoints(domain, facet_tags)
+        # Extract the normal vectors the upper plate boundary with corresponding midpoints
+        normals, midpoints = compute_boundary_normals_and_midpoints(domain, boundary_facets)
         
-        return x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints
+        return x, y, cells, potential, grad_x, grad_y, grad_x_plate, grad_y_plate, normals, midpoints
 
 
 ##
@@ -227,7 +229,7 @@ def solvensave(mesh: str, data_folder: str = "data"):
     Full order model that solves the PDE and saves the output in an .h5 file.
     """
     if mesh.is_file() and mesh.suffix == ".msh":
-        x, y, cells, potential, grad_x, grad_y, x_plate, y_plate, grad_x_plate, grad_y_plate, normals, midpoints = fom(mesh) 
+        x, y, cells, potential, grad_x, grad_y, grad_x_plate, grad_y_plate, normals, midpoints = fom(mesh) 
         # Save the results in a .h5 file
         results_folder = Path(data_folder) / "results"
         base_name = os.path.splitext(os.path.basename(mesh))[0]
@@ -239,8 +241,6 @@ def solvensave(mesh: str, data_folder: str = "data"):
             file.create_dataset("potential", data=potential)
             file.create_dataset("grad_x", data=grad_x)
             file.create_dataset("grad_y", data=grad_y)
-            file.create_dataset("x_plate", data=x_plate)
-            file.create_dataset("y_plate", data=y_plate)
             file.create_dataset("grad_x_plate", data=grad_x_plate)
             file.create_dataset("grad_y_plate", data=grad_y_plate)
             file.create_dataset("normals", data=normals)

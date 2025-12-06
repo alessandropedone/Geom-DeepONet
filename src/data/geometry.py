@@ -7,6 +7,25 @@ import numpy as np
 from itertools import product
 from tqdm import tqdm
 from clean import setup_data
+import csv
+
+
+## 
+# @param file_path (str): Path to the data file.
+def read_data_file(file_path: str = "data.txt"):
+    """Read the data file and return names, ranges, and num_points."""
+    names = []
+    ranges = []
+    num_points = []
+
+    with open(file_path) as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            names.append(row['name'])
+            ranges.append((float(row['min']), float(row['max'])))
+            num_points.append(int(row['num_points']))
+
+    return names, ranges, num_points
 
 
 ##
@@ -54,34 +73,48 @@ def modify_quantity(input_path: str, output_path: str, name: str, quantity: str,
 
 
 ## 
-# @param overetch_range (tuple): Range of overetch values (min, max).
-# @param distance_range (tuple): Range of distance values (min, max).
-# @param coeff_range (tuple): Range of deformation coefficient values (min, max).
+# @param names (list[str]): List of the names, that appear in the geometry file of the quantities.
+# @param ranges (list[tuple]): List of ranges for each quantity.
+# @param num_points (list[int]): List of number of points to generate within the specified ranges for each quantity.
 # @param geometry_input (str): Path to the input geometry file.
-# @param data_folder (str): Path to the data folder to save parameters.
-def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_range: tuple, geometry_input: str = "geometry.geo", data_folder: str = "data"):
+# @param data_folder (str): Path to the data folder.
+# @param ignore_data (bool): Whether to ignore existing other data present in data_folder. 
+# For example you may want to set this equal to TRUE if you have more data in that folder, 
+# or already computed solutions, and for some reason you want to generate the geomteries 
+# in that folder avoid touching every file except the "geo" subfolder the parameters file.
+# @note As output you get a series of geometry files in data_folder/geo and a parameters.csv file in data_folder.
+def generate_geometries(names: list[str],
+                        ranges: list[tuple],
+                        num_points: list[int],
+                        geometry_input: str,
+                        data_folder: str = "data",
+                        parameters_file_name: str = "parameters.csv",
+                        ignore_data: bool = False):
     """
-    Generate geometries by modifying the distance, overetch, and coefficients of deformation of the plates.
+    Generate geometries by modifying the list of quantities over specified ranges.
     This function creates a series of geometry files with different parameters.
     """
-    overetches = np.linspace(overetch_range[0], overetch_range[1], 5)
-    distances = np.linspace(distance_range[0], distance_range[1], 5)
-    coeff1 = np.linspace(coeff_range[0], coeff_range[1], 5)
-    coeff2 = np.linspace(coeff_range[0], coeff_range[1], 5)
-    coeff3 = np.linspace(coeff_range[0], coeff_range[1], 5)
-    coeff4 = np.linspace(coeff_range[0], coeff_range[1], 5)
-
-    # Ensure the parameters.csv file is empty before writing
-    with open(os.path.join(data_folder, "parameters.csv"), "w") as csv_file:
-        csv_file.write("ID ,Overetch,Distance,Coeff1,Coeff2,Coeff3,Coeff4\n")
-        csv_file.truncate()
+    # Ensure the provided lists are of the same length
+    if not (len(ranges) == len(names) == len(num_points)):
+        raise ValueError("The lengths of ranges, names, and num_points must be the same.")
     
-    setup_data(data_folder=data_folder)
-    params = list(product(overetches, distances, coeff1, coeff2, coeff3, coeff4))
+    # Create the quantities matrix: list of np.linspace for each range
+    quantities = []
+    for i in range(len(ranges)):
+        quantities.append(np.linspace(ranges[i][0], ranges[i][1], num_points[i]))
+
+    # Setup data_folder directory
+    setup_data(parameters_head= f"ID," + ",".join(names) + "\n", 
+               parameters_file_name=parameters_file_name,
+               ignore_data=ignore_data,
+               data_folder=data_folder)
+
+    # Generate all combinations of quantities
+    params = list(product(*quantities))
     total = len(params)
 
     j = 1
-    for o, d, c1, c2, c3, c4 in tqdm(
+    for param in tqdm(
                 params,
                 total=total,
                 desc="🚀 Generating geometries",
@@ -90,17 +123,16 @@ def generate_geometries(overetch_range: tuple, distance_range: tuple, coeff_rang
                 colour='blue'
             ):
         
-        modify_quantity(geometry_input, os.path.join(data_folder, "geo"), str(j), "overetch", o)
+        # Modify the jth geometry
+        geo_folder = os.path.join(data_folder, "geo")
         geo_path = os.path.join(data_folder, "geo", f"{j}.geo")
+        modify_quantity(geometry_input, geo_folder, str(j), names[0], param[0])
+        for i in range(1, len(names)):
+            modify_quantity(geo_path, geo_folder, str(j), names[i], param[i])
 
-        modify_quantity(geo_path, os.path.join(data_folder, "geo"), str(j), "distance", d)
-        modify_quantity(geo_path, os.path.join(data_folder, "geo"), str(j), "coeff(1)", c1)
-        modify_quantity(geo_path, os.path.join(data_folder, "geo"), str(j), "coeff(2)", c2)
-        modify_quantity(geo_path, os.path.join(data_folder, "geo"), str(j), "coeff(3)", c3)
-        modify_quantity(geo_path, os.path.join(data_folder, "geo"), str(j), "coeff(4)", c4)
-
-        with open(os.path.join(data_folder, "parameters.csv"), "a") as csv_file:
-            csv_file.write(f"{j},{o},{d},{c1},{c2},{c3},{c4}\n")
+        # Save the corresponding geometric parameters
+        with open(os.path.join(data_folder, parameters_file_name), "a") as csv_file:
+            csv_file.write(f"{j}," + ",".join([str(p) for p in param]) + "\n")
 
         j += 1
                                     

@@ -1,18 +1,26 @@
 ## @file main.py
-# @brief Main script to generate geometries, meshes, datasets, and plot results.
+## @brief Main script to generate geometries, meshes, datasets, and plot results.
 
+data_folder = "test"
 
-from geometry import generate_geometries
-#generate_geometries(overetch_range=(0.0, 0.5), distance_range=(1.5, 2.5), coeff_range=(-0.15, 0.15))
+from geometry import read_data_file
+names, ranges, num_points = read_data_file("test.csv")
 
+from test import test
+test(
+    names=names,
+    ranges=ranges,
+    num_points=num_points,
+    geometry_input="geometry.geo",
+    parameters_file_name="parameters.csv",
+    data_folder=data_folder,
+    plot_number=1
+)
 
+# from clean import remove_msh_files
+# remove_msh_files(data_folder=data_folder)
 
-from mesh import generate_meshes
-generate_meshes(empty_mesh_folder=False)
+# Delete data_folder
+# import shutil
+# shutil.rmtree(data_folder)
 
-
-from dataset import generate_datasets
-generate_datasets(use_multiprocessing=True, empty_results_folder=False)
-
-from clean import remove_msh_files
-remove_msh_files()
