@@ -19,6 +19,7 @@ from matplotlib.colors import BoundaryNorm
 # @param colorbar_label (str): Label for the color bar.
 # @param cmap (str): Colormap to use for plotting.
 # @param sharp_color_range (tuple): Optional range to create sharp color transitions.
+# @param outside_sharpness (int): Number of color levels outside the sharp color range.
 # @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
 # @note Add optional arguments for customizing the plot (e.g., color map, title, labels).
@@ -32,6 +33,7 @@ def cells_plot(x: np.ndarray,
                colorbar_label: str ="Quantity",
                cmap: str ='RdBu_r',
                sharp_color_range: tuple = None,
+               outside_sharpness: int = 50,
                plot_triangulation: bool = True,
                postpone_show: bool = False) -> None:
     """It plots the provided solution over the domain using cell-based data."""
@@ -43,9 +45,9 @@ def cells_plot(x: np.ndarray,
     if sharp_color_range is not None:
         # Define custom color normalization with sharp transitions in specified range
         bounds = np.concatenate([
-            np.linspace(sol.min(), sharp_color_range[0], 50, endpoint=False),
+            np.linspace(sol.min(), sharp_color_range[0], outside_sharpness, endpoint=False),
             np.linspace(sharp_color_range[0], sharp_color_range[1], 150),
-            np.linspace(sharp_color_range[1], sol.max(), 50)
+            np.linspace(sharp_color_range[1], sol.max(), outside_sharpness)
         ])
         norm = BoundaryNorm(boundaries=bounds, ncolors=256, clip=True)
         plt.tripcolor(
@@ -84,6 +86,7 @@ def cells_plot(x: np.ndarray,
 # @param colorbar_label (str): Label for the color bar.
 # @param cmap (str): Colormap to use for plotting.
 # @param sharp_color_range (tuple): Optional range to create sharp color transitions.
+# @param outside_sharpness (int): Number of color levels outside the sharp color range.
 # @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
 # @note Add optional arguments for customizing the plot (e.g., color map, title, labels).
@@ -97,6 +100,7 @@ def vertices_plot(x: np.ndarray,
                   colorbar_label: str ="Quantity",
                   cmap: str ='RdBu_r',
                   sharp_color_range: tuple = None, 
+                  outside_sharpness: int = 50,
                   plot_triangulation: bool = True,
                   postpone_show: bool = False) -> None:
     """It plots the specified solution over the domain using vertex-based data."""
@@ -105,9 +109,9 @@ def vertices_plot(x: np.ndarray,
 
     if sharp_color_range is not None:
         bounds = np.concatenate([
-            np.linspace(sol.min(), sharp_color_range[0], 50, endpoint=False),
+            np.linspace(sol.min(), sharp_color_range[0], outside_sharpness, endpoint=False),
             np.linspace(sharp_color_range[0], sharp_color_range[1], 150),
-            np.linspace(sharp_color_range[1], sol.max(), 50)
+            np.linspace(sharp_color_range[1], sol.max(), outside_sharpness)
         ])
         norm = BoundaryNorm(boundaries=bounds, ncolors=256, clip=True)
         plt.tricontourf(
@@ -212,6 +216,7 @@ def plot(x: np.ndarray,
          colorbar_label: str ="Quantity",
          cmap: str ='RdBu_r',
          sharp_color_range: tuple = None,
+         outside_sharpness: int = 50,
          plot_triangulation: bool = True,
          postpone_show: bool = False) -> None:
     """It plots the provided solution over the domain."""
@@ -237,10 +242,10 @@ def plot(x: np.ndarray,
         domain_plot(x, y, cells, title, xlabel, ylabel, plot_triangulation, postpone_show)
     elif len(cells) % len(sol) == 0:
         # Plot using the cells
-        cells_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, plot_triangulation, postpone_show)
+        cells_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
     else:
         # Plot using the vertices
-        vertices_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, plot_triangulation, postpone_show)
+        vertices_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
 
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -260,7 +265,7 @@ def plot_domain(file, postpone_show=False):
          plot_triangulation = True,
          postpone_show = postpone_show)
     ax = plt.gca()
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
 
 ## 
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -280,7 +285,7 @@ def plot_potential(file, postpone_show=False):
          plot_triangulation = True,
          postpone_show = postpone_show)
     ax = plt.gca()
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
 
 ## 
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -296,9 +301,12 @@ def plot_error(file, postpone_show=False):
          ylabel ="y", 
          colorbar_label ="Squared Error",
          cmap ='RdBu_r',
-         sharp_color_range = None,
+         sharp_color_range = (np.min(file["se"][:]) + 1e-8, 5e-2),
+         outside_sharpness = 1,
          plot_triangulation = True,
          postpone_show = True)
+    ax = plt.gca()
+    ax.set_aspect('equal', adjustable='datalim')
     plot(x = file["x"][:], 
          y = file["y"][:], 
          cells = file["cells"][:], 
@@ -308,11 +316,12 @@ def plot_error(file, postpone_show=False):
          ylabel ="y", 
          colorbar_label ="Absolute Error",
          cmap ='RdBu_r',
-         sharp_color_range = None,
+         sharp_color_range = (np.min(file["ae"][:]) + 1e-8, 5e-2),
+         outside_sharpness = 1,
          plot_triangulation = True,
          postpone_show = postpone_show)
     ax = plt.gca()
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
 
 ## 
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -332,7 +341,7 @@ def plot_potential_pred(file, postpone_show=False):
          plot_triangulation = True,
          postpone_show = postpone_show)
     ax = plt.gca()
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
     
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -352,7 +361,7 @@ def plot_grad_x(file, postpone_show=False):
          plot_triangulation = True,
          postpone_show = postpone_show)
     ax = plt.gca()
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
 
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -374,7 +383,7 @@ def plot_grad_y(file, postpone_show=False):
     ax = plt.gca()
     ax.set_xlim(-55, 55)
     ax.set_ylim(-25, 25)
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
     
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -394,7 +403,7 @@ def plot_normal_derivative(file, postpone_show=False):
     ax = plt.gca()
     ax.set_xlim(-55, 55)
     ax.set_ylim(-25, 25)
-    ax.set_aspect('equal', adjustable='box')
+    ax.set_aspect('equal', adjustable='datalim')
     if not postpone_show:
         plt.show()
 

@@ -1,7 +1,7 @@
 name,min,max,num_points
-overetch,0.0,0.5,10
-distance,1.5,2.5,10
-coeff(1),-0.15,0.15,1
-coeff(2),-0.15,0.15,1
-coeff(3),-0.15,0.15,1
-coeff(4),-0.15,0.15,1
+overetch,0.0,0.5,5
+distance,1.5,2.5,5
+coeff(1),-0.15,0.15,3
+coeff(2),-0.15,0.15,3
+coeff(3),0.0,0.0,1
+coeff(4),0.0,0.0,1

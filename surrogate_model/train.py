@@ -57,7 +57,7 @@ def train(model_path: str,
     branch = DenseNetwork(
         normalization_layer=True,
         input_neurons = p, 
-        n_neurons = [32], 
+        n_neurons = [32, 32], 
         activation = 'relu', 
         output_neurons = r, 
         output_activation = 'linear', 
@@ -76,7 +76,7 @@ def train(model_path: str,
     trunk = DenseNetwork(
         normalization_layer=True,
         input_neurons = d, 
-        n_neurons = [32], 
+        n_neurons = [32, 32], 
         activation = 'relu', 
         output_neurons = r, 
         output_activation = 'linear', 
@@ -156,5 +156,4 @@ y = np.array(potential)
 
 # Train the model
 from .gpu import run_on_device
-from .train import train
 run_on_device(train, model_path="models/model.keras", r=20, x=x, y=y, mu=mu)
