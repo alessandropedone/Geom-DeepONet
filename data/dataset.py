@@ -6,8 +6,10 @@ from pathlib import Path
 import multiprocessing
 from multiprocessing import cpu_count
 from tqdm import tqdm
-from fom import solvensave
 from functools import partial
+
+from .fom import solvensave
+
 
 ##
 # @param data_folder (str): path to the data folder.

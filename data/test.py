@@ -1,11 +1,12 @@
 ## @package test
 # @brief 
 
-from geometry import generate_geometries
-from mesh import generate_meshes
-from dataset import generate_datasets
 import h5py
-from plot import summary_plot
+
+from .geometry import generate_geometries
+from .mesh import generate_meshes
+from .dataset import generate_datasets
+from .plot import summary_plot
 
 ##
 # @param names (list[str]): List of the names, that appear in the geometry file of the quantities.

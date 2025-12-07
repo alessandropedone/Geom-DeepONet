@@ -6,8 +6,9 @@ import os
 import numpy as np
 from itertools import product
 from tqdm import tqdm
-from clean import setup_data
 import csv
+
+from .clean import setup_data
 
 
 ## 

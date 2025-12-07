@@ -3,10 +3,10 @@
 
 data_folder = "test"
 
-from geometry import read_data_file
+from .geometry import read_data_file
 names, ranges, num_points = read_data_file("test.csv")
 
-from test import test
+from .test import test
 test(
     names=names,
     ranges=ranges,
@@ -17,10 +17,7 @@ test(
     plot_number=1
 )
 
-# from clean import remove_msh_files
-# remove_msh_files(data_folder=data_folder)
 
-# Delete data_folder
-# import shutil
-# shutil.rmtree(data_folder)
+
+
 

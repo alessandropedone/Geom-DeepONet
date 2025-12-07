@@ -5,6 +5,7 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # "0" = all logs, "1" = filter INFO, "2" = filter INFO & WARNING, "3" = only ERRORs
 # suppress XLA-related logs
 os.environ["XLA_FLAGS"] = "--xla_gpu_cuda_data_dir="  # Prevent CUDA libdevice warnings
+
 # disable absl logs
 import absl.logging
 absl.logging.set_verbosity(absl.logging.ERROR)

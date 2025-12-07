@@ -7,7 +7,6 @@ from shapely import Point
 import numpy as np
 
 from mpi4py import MPI
-import gmsh
 
 from dolfinx.io import gmshio
 from dolfinx import fem

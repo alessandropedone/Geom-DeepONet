@@ -1,8 +1,12 @@
 import tensorflow as tf
 import pandas as pd
 import numpy as np
-from model import DenseNetwork, FourierFeatures, LogUniformFreqInitializer, EinsumLayer, DeepONet
-from surrogate_model.losses import masked_mse, masked_mae
+
+import matplotlib.pyplot as plt
+from scipy.interpolate import griddata
+
+from .model import DenseNetwork, FourierFeatures, LogUniformFreqInitializer, EinsumLayer, DeepONet
+from .losses import masked_mse, masked_mae
 
 ##
 # @param x (numpy.ndarray): The input data for the model.
@@ -104,12 +108,6 @@ def plot_random_prediction(model_path: str, don: bool = False) -> None:
 
     plot_prediction(x_sample, y_sample, model_path=model_path, don=don)
 
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from scipy.interpolate import griddata
 
 def plot_comparison(x, y, z_real, z_approx, title="Function Comparison"):
     """
