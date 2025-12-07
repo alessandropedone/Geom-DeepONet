@@ -9,7 +9,7 @@ import os
   
 ## 
 # @param data_folder (str): Path to the data folder.
-def load(data_folder: str = "data"):
+def load(data_folder: str = "test"):
     """
     Load data from all HDF5 files in the results folder and return as numpy arrays.
     """

@@ -13,7 +13,7 @@ from .fom import solvensave
 
 ##
 # @param data_folder (str): path to the data folder.
-def reset_results(data_folder: str = "data"):
+def reset_results(data_folder: str = "test"):
     """Emtpy the results folder by removing all files inside it."""
     # Ensure the results folder is empty before running the script
     results_folder = Path(data_folder) / "results"
@@ -29,7 +29,7 @@ def reset_results(data_folder: str = "data"):
 # @param use_multiprocessing (bool): Whether to use multiprocessing for parallel processing.
 # @param use_all_cores (bool): Whether to use all CPU cores for multiprocessing.
 # @param empty_results_folder (bool): Whether to empty the results folder before generating new datasets.
-def generate_datasets(data_folder: str = "data", use_multiprocessing: bool = True, use_all_cores: bool = False, empty_results_folder: bool = True):
+def generate_datasets(data_folder: str = "test", use_multiprocessing: bool = True, use_all_cores: bool = False, empty_results_folder: bool = True):
     """Generate datasets by processing all mesh files in parallel and saving the results."""
     # Set up the environment
     if empty_results_folder:

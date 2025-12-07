@@ -274,7 +274,59 @@ def plot_potential(file, postpone_show=False):
          title ="Electrostatic potential", 
          xlabel ="x", 
          ylabel ="y", 
-         colorbar_label ="Electrostatic potential",
+         colorbar_label ="Potential",
+         cmap ='RdBu_r',
+         sharp_color_range = None,
+         plot_triangulation = True,
+         postpone_show = postpone_show)
+    ax = plt.gca()
+    ax.set_aspect('equal', adjustable='box')
+
+## 
+# @param file (h5py.File): h5py file object containing the solution data.
+# @param postpone_show (bool): Whether to postpone the plt.show() call.
+def plot_error(file, postpone_show=False):
+    """It plots the electrostatic potential over the domain."""
+    plot(x = file["x"][:], 
+         y = file["y"][:], 
+         cells = file["cells"][:], 
+         sol = file["se"][:],
+         title ="Squared error in electrostatic potential prediction (RMSE {:.2e})".format(np.sqrt(np.mean(file["se"][:]))), 
+         xlabel ="x", 
+         ylabel ="y", 
+         colorbar_label ="Squared Error",
+         cmap ='RdBu_r',
+         sharp_color_range = None,
+         plot_triangulation = True,
+         postpone_show = True)
+    plot(x = file["x"][:], 
+         y = file["y"][:], 
+         cells = file["cells"][:], 
+         sol = file["ae"][:],
+         title ="Absolute error in electrostatic potential prediction (MAE {:.2e})".format(np.mean(file["ae"][:])),
+         xlabel ="x", 
+         ylabel ="y", 
+         colorbar_label ="Absolute Error",
+         cmap ='RdBu_r',
+         sharp_color_range = None,
+         plot_triangulation = True,
+         postpone_show = postpone_show)
+    ax = plt.gca()
+    ax.set_aspect('equal', adjustable='box')
+
+## 
+# @param file (h5py.File): h5py file object containing the solution data.
+# @param postpone_show (bool): Whether to postpone the plt.show() call.
+def plot_potential_pred(file, postpone_show=False):
+    """It plots the electrostatic potential over the domain."""
+    plot(x = file["x"][:], 
+         y = file["y"][:], 
+         cells = file["cells"][:], 
+         sol = file["potential_pred"][:],
+         title ="Predicted electrostatic potential", 
+         xlabel ="x", 
+         ylabel ="y", 
+         colorbar_label ="Potential",
          cmap ='RdBu_r',
          sharp_color_range = None,
          plot_triangulation = True,
@@ -294,7 +346,7 @@ def plot_grad_x(file, postpone_show=False):
          title ="x component of the gradient of the electrostatic potential", 
          xlabel ="x", 
          ylabel ="y", 
-         colorbar_label ="Potential",
+         colorbar_label ="grad_x",
          cmap ='RdBu_r',
          sharp_color_range =  None,
          plot_triangulation = True,
@@ -314,7 +366,7 @@ def plot_grad_y(file, postpone_show=False):
          title ="y component of the gradient of the electrostatic potential", 
          xlabel ="x", 
          ylabel ="y", 
-         colorbar_label ="Potential",
+         colorbar_label ="grad_y",
          cmap ='RdBu_r',
          sharp_color_range = (-0.7, -0.5),
          plot_triangulation = True,

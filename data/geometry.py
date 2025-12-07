@@ -13,7 +13,7 @@ from .clean import setup_data
 
 ## 
 # @param file_path (str): Path to the data file.
-def read_data_file(file_path: str = "data.txt"):
+def read_data_file(file_path: str = "test.csv"):
     """Read the data file and return names, ranges, and num_points."""
     names = []
     ranges = []
@@ -88,7 +88,7 @@ def generate_geometries(names: list[str],
                         ranges: list[tuple],
                         num_points: list[int],
                         geometry_input: str,
-                        data_folder: str = "data",
+                        data_folder: str = "test",
                         parameters_file_name: str = "parameters.csv",
                         ignore_data: bool = False):
     """

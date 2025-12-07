@@ -1,6 +1,7 @@
 ## @package losses
 
 import tensorflow as tf
+from keras.utils import register_keras_serializable
 
 # Be very careful about precision, since here tf.reduce_sum(mask) 
 # can be very big if the number of points in a batch is large.
@@ -9,12 +10,14 @@ import tensorflow as tf
 # when the number of points is less than 3.4e38.
 # Using mixed precision with float16 would lead to overflow
 # when the number of points in batch is larger than ~6e4.
+@register_keras_serializable()
 def masked_mse(y_true, y_pred):
     mask = tf.cast(~tf.math.is_nan(y_true), y_pred.dtype)
     y_true = tf.where(tf.math.is_nan(y_true), 0.0, y_true)
     y_true = tf.cast(y_true, y_pred.dtype)
     return tf.reduce_sum(mask * tf.square(y_pred - y_true)) / tf.reduce_sum(mask)
 
+@register_keras_serializable()
 def masked_mae(y_true, y_pred):
     mask = tf.cast(~tf.math.is_nan(y_true), y_pred.dtype)
     y_true = tf.where(tf.math.is_nan(y_true), 0.0, y_true)

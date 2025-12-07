@@ -224,7 +224,7 @@ def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> 
 ##
 # @param mesh (str): path to the mesh file.
 # @param data_folder (str): path to the data folder.
-def solvensave(mesh: str, data_folder: str = "data"):
+def solvensave(mesh: str, data_folder: str = "test"):
     """
     Full order model that solves the PDE and saves the output in an .h5 file.
     """

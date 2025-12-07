@@ -1,4 +1,4 @@
-## @file main.py
+## @file generate.py
 ## @brief Main script to generate geometries, meshes, datasets, and plot results.
 
 data_folder = "test"

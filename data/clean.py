@@ -9,7 +9,7 @@ import contextlib
 
 ## 
 # @param data_folder (str): Path to the data folder containing the msh subfolder.
-def remove_msh_files(data_folder: str = "data"):
+def remove_msh_files(data_folder: str = "test"):
     """
     Remove all .msh files in the subfolder msh of the specified data folder.
     """
@@ -33,7 +33,7 @@ def remove_msh_files(data_folder: str = "data"):
 def setup_data(parameters_head : str, 
                parameters_file_name: str, 
                ignore_data: bool = False,
-               data_folder: str = "data"):
+               data_folder: str = "test"):
     """
     Reset the data folder silently.
     """

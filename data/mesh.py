@@ -12,7 +12,7 @@ from functools import partial
 ##
 # @param file_path (str): Path to the .geo file.
 # @param data_folder (str): Path to the data folder.
-def generate_mesh_from_geo(file_path: str, data_folder: str = "data") -> None:
+def generate_mesh_from_geo(file_path: str, data_folder: str = "test") -> None:
     """Generate a mesh from a .geo file using gmsh."""
 
     # Load the .geo file
@@ -35,7 +35,7 @@ def generate_mesh_from_geo(file_path: str, data_folder: str = "data") -> None:
 # @param i (int): Index of the geometry.
 # @param geometry_path (str): Path to the directory containing .geo files.
 # @param mesh_path (str): Path to the directory where .msh files will be saved.
-def generate_mesh(i: int, data_folder: str = "data") -> None:
+def generate_mesh(i: int, data_folder: str = "test") -> None:
     """
     Generate a mesh for a given geometry index.
     """
@@ -52,7 +52,7 @@ def generate_mesh(i: int, data_folder: str = "data") -> None:
 # @note We added empty_mesh_folder since the generation of the meshes could take too long, or could be interrupted for some reason. 
 # In those cases you might want to keep the existing meshes and start again the procedure, but only generating the missing ones.
 # @note While we are using multiprocessing to speed up the mesh generation, gmsh doesn't support gpus, so the speedup will be limited by the CPU capabilities.
-def generate_meshes(data_folder: str = "data", use_multiprocessing: bool = True, use_all_cores: bool = False, empty_mesh_folder: bool = True) -> None:
+def generate_meshes(data_folder: str = "test", use_multiprocessing: bool = True, use_all_cores: bool = False, empty_mesh_folder: bool = True) -> None:
     """
     Generate meshes for all geometries present in the specified directory using multiprocessing.
     Displays a fancy animated progress bar.
