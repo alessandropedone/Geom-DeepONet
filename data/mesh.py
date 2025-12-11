@@ -9,6 +9,27 @@ from pathlib import Path
 from tqdm import tqdm
 from functools import partial
 
+from .fom import solvensave
+
+
+
+## 
+# @param data_folder (str): Path to the data folder containing the msh subfolder.
+def remove_msh_files(data_folder: str = "test"):
+    """
+    Remove all .msh files in the subfolder msh of the specified data folder.
+    """
+    msh_folder = os.path.join(data_folder, "msh")
+    for root, _, files in os.walk(msh_folder):
+        for file in files:
+            if file.endswith('.msh'):
+                file_path = os.path.join(root, file)
+                try:
+                    os.remove(file_path)
+                    print(f"Removed: {file_path}")
+                except Exception as e:
+                    print(f"Error removing {file_path}: {e}")
+
 ##
 # @param file_path (str): Path to the .geo file.
 # @param data_folder (str): Path to the data folder.
@@ -118,3 +139,5 @@ def generate_meshes(data_folder: str = "test", use_multiprocessing: bool = True,
 
     # Finalize gmsh
     gmsh.finalize()
+
+

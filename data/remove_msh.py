@@ -1,4 +1,4 @@
-from clean import remove_msh_files
+from .mesh import remove_msh_files
 import argparse
 
 parser = argparse.ArgumentParser()

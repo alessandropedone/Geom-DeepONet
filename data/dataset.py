@@ -52,7 +52,7 @@ def generate_datasets(data_folder: str = "test", use_multiprocessing: bool = Tru
             bar_format="{desc} |{bar}| {percentage:3.0f}% [{n}/{total}] ⏱️ {elapsed} ETA {remaining}",
             colour='blue'
         ):
-            solvensave(mesh)
+            solvensave(mesh, data_folder=data_folder)
     else:
         if use_all_cores:
             num_workers = cpu_count()  # max cores

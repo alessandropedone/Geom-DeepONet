@@ -11,7 +11,7 @@ SetFactory("OpenCASCADE");
 //---------------------------------------
 
 // Overetch of the upper plate
-overetch = 0.5;
+overetch = 0.0;
 
 // Distance between the plates
 distance = 2.0;

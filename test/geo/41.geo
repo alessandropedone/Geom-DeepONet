@@ -14,7 +14,7 @@ SetFactory("OpenCASCADE");
 overetch = 0.0;
 
 // Distance between the plates
-distance = 2.5;
+distance = 1.5;
 
 // Discretization over the x axis (for the deformation)
 nx = 50; 
