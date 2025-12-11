@@ -322,6 +322,9 @@ def plot_error(file, postpone_show=False):
          postpone_show = postpone_show)
     ax = plt.gca()
     ax.set_aspect('equal', adjustable='datalim')
+    if not postpone_show:
+        plt.show()
+
 
 ## 
 # @param file (h5py.File): h5py file object containing the solution data.
@@ -396,11 +399,97 @@ def plot_normal_derivative(file, postpone_show=False):
     normals = file["normal_vectors_plate"][:]
     U = normal_derivative * normals[:, 0]
     V = normal_derivative * normals[:, 1]
-    # Add the plot arrows from midpoints in the direction of the normals scaled by the normal derivative
+    lengths = np.sqrt(U**2 + V**2)
+    norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
+    cmap = plt.cm.seismic
     for i in range(len(points)):
-        plt.arrow(points[i, 0], points[i, 1], U[i], V[i], head_width=0.05, head_length=0.05, fc='r', ec='r')
-    plt.title("Normal derivative of the potential on the upper plate")
+        color = cmap(norm[i])
+        plt.arrow(
+            points[i, 0], points[i, 1],
+            U[i], V[i],
+            head_width=0.05, head_length=0.05,
+            fc=color, ec=color
+        )
+    sm = plt.cm.ScalarMappable(
+    cmap=cmap,
+    norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
+    )
+    sm.set_array([])
     ax = plt.gca()
+    plt.colorbar(sm, ax=ax, label="Derivative modulus")
+    ax.set_title("Normal derivative of the potential on the upper plate")
+    ax.set_xlim(-55, 55)
+    ax.set_ylim(-25, 25)
+    ax.set_aspect('equal', adjustable='datalim')
+    if not postpone_show:
+        plt.show()
+
+##
+# @param file (h5py.File): h5py file object containing the solution data.
+# @param postpone_show (bool): Whether to postpone the plt.show() call.
+def plot_normal_derivative_pred(file, postpone_show=False):   
+    """It plots the normal derivative of the potential on the upper plate as arrows.""" 
+    plot_domain(file, postpone_show=True)
+    normal_derivative = file["normal_derivative_pred"][:]
+    points = file["midpoints_plate"][:]
+    normals = file["normal_vectors_plate"][:]
+    U = normal_derivative * normals[:, 0]
+    V = normal_derivative * normals[:, 1]
+    lengths = np.sqrt(U**2 + V**2)
+    norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
+    cmap = plt.cm.seismic
+    for i in range(len(points)):
+        color = cmap(norm[i])
+        plt.arrow(
+            points[i, 0], points[i, 1],
+            U[i], V[i],
+            head_width=0.05, head_length=0.05,
+            fc=color, ec=color
+        )
+    sm = plt.cm.ScalarMappable(
+    cmap=cmap,
+    norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
+    )
+    sm.set_array([])
+    ax = plt.gca()
+    ax.set_title("Predicted normal derivative of the potential on the upper plate")
+    ax.set_xlim(-55, 55)
+    ax.set_ylim(-25, 25)
+    ax.set_aspect('equal', adjustable='datalim')
+    if not postpone_show:
+        plt.show()
+
+
+def plot_normal_derivative_error(file, postpone_show=False):
+    """It plots the error on the boundary of the predicted normal derivative of the potential."""
+    plot_domain(file, postpone_show=True)
+    normal_derivative = file["normal_derivatives_plate"][:]
+    pred_normal_derivative = file["normal_derivative_pred"][:]
+    error = pred_normal_derivative - normal_derivative
+    points = file["midpoints_plate"][:]
+    normals = file["normal_vectors_plate"][:]
+    U = error * normals[:, 0]
+    V = error * normals[:, 1]
+    lengths = np.sqrt(U**2 + V**2)
+    norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
+    cmap = plt.cm.seismic
+    for i in range(len(points)):
+        color = cmap(norm[i])
+        plt.arrow(
+            points[i, 0], points[i, 1],
+            U[i], V[i],
+            head_width=0.05, head_length=0.05,
+            fc=color, ec=color
+        )
+    sm = plt.cm.ScalarMappable(
+    cmap=cmap,
+    norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
+    )
+    sm.set_array([])
+    ax = plt.gca()
+    se = file["normal_se"][:]
+    mae = file["normal_ae"][:]
+    ax.set_title("Error in normal derivative prediction (RMSE {:.2e}, MAE {:.2e})".format(np.sqrt(np.mean(se)), np.mean(mae)))
     ax.set_xlim(-55, 55)
     ax.set_ylim(-25, 25)
     ax.set_aspect('equal', adjustable='datalim')

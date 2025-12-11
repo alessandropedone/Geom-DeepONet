@@ -116,23 +116,48 @@ print(f"\033[38;2;0;175;6m\n\nSaving prediction and plotting results for test sa
 print(f"Results file: {os.path.join(data_folder, 'results', f'{idx}.h5')}")
 print(f"\033[38;2;0;175;6m\n\nPlotting prediction and error.\033[0m")
 print("\n\n")
-import h5py
-from data.plot import plot_error, plot_potential, plot_potential_pred
-import matplotlib.pyplot as plt
-fom_file = os.path.join(data_folder, "results", f"{idx}.h5")
-with h5py.File(fom_file, 'a') as file:
-    # use x[0] to dectect and remove nan values in y_pred
-    nan_mask = ~np.isnan(y_sample[0])
-    if "potential_pred" in file:
-        del file["potential_pred"]
-    file["potential_pred"] = y_pred[0][nan_mask]
-    if "se" in file:
-        del file["se"]
-    file["se"] = (y_pred[0][nan_mask] - file["potential"][:])**2
-    if "ae" in file:
-        del file["ae"]
-    file["ae"] = np.abs(y_pred[0][nan_mask] - file["potential"][:])
-    plot_potential(file, postpone_show=True)
-    plot_error(file, postpone_show=True)
-    plot_potential_pred(file, postpone_show=True)
-    plt.show()
+
+
+if target == "potential":
+    import h5py
+    from data.plot import plot_error, plot_potential, plot_potential_pred
+    import matplotlib.pyplot as plt
+    fom_file = os.path.join(data_folder, "results", f"{idx}.h5")
+    with h5py.File(fom_file, 'a') as file:
+        # use x[0] to dectect and remove nan values in y_pred
+        nan_mask = ~np.isnan(y_sample[0])
+        if "potential_pred" in file:
+            del file["potential_pred"]
+        file["potential_pred"] = y_pred[0][nan_mask]
+        if "se" in file:
+            del file["se"]
+        file["se"] = (y_pred[0][nan_mask] - file["potential"][:])**2
+        if "ae" in file:
+            del file["ae"]
+        file["ae"] = np.abs(y_pred[0][nan_mask] - file["potential"][:])
+        plot_potential(file, postpone_show=True)
+        plot_error(file, postpone_show=True)
+        plot_potential_pred(file, postpone_show=True)
+        plt.show()
+
+elif target == "normal_derivative":
+    import h5py
+    from data.plot import plot_normal_derivative, plot_normal_derivative_pred, plot_normal_derivative_error
+    import matplotlib.pyplot as plt
+    fom_file = os.path.join(data_folder, "results", f"{idx}.h5")
+    with h5py.File(fom_file, 'a') as file:
+        # use x[0] to dectect and remove nan values in y_pred
+        nan_mask = ~np.isnan(y_sample[0])
+        if "normal_derivative_pred" in file:
+            del file["normal_derivative_pred"]
+        file["normal_derivative_pred"] = y_pred[0][nan_mask]
+        if "normal_se" in file:
+            del file["normal_se"]
+        file["normal_se"] = (y_pred[0][nan_mask] - file["normal_derivatives_plate"][:])**2
+        if "normal_ae" in file:
+            del file["normal_ae"]
+        file["normal_ae"] = np.abs(y_pred[0][nan_mask] - file["normal_derivatives_plate"][:])
+        plot_normal_derivative(file, postpone_show=True)
+        plot_normal_derivative_pred(file, postpone_show=True)
+        plot_normal_derivative_error(file, postpone_show=True)
+        plt.show()
