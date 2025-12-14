@@ -158,7 +158,7 @@ elif target == "normal_derivative":
         if "normal_ae" in file:
             del file["normal_ae"]
         file["normal_ae"] = np.abs(y_pred[0][nan_mask] - file["normal_derivatives_plate"][:])
-        plot_normal_derivative(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)])
-        plot_normal_derivative(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True)
-        plot_normal_derivative(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], pred = True)
+        plot_normal_derivative(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)])
+        plot_normal_derivative(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True)
+        plot_normal_derivative(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)], pred = True)
         plt.show()
