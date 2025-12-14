@@ -135,15 +135,15 @@ if target == "potential":
         if "ae" in file:
             del file["ae"]
         file["ae"] = np.abs(y_pred[0][nan_mask] - file["potential"][:])
-        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
-        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], error = True, error_type='ae')
-        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], error = True, error_type='se')
-        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], pred = True)
+        plot_potential(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)])
+        plot_potential(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True, error_type='ae')
+        plot_potential(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True, error_type='se')
+        plot_potential(file, postpone_show=True, zoom=[ 5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], pred = True)
         plt.show()
 
 elif target == "normal_derivative":
     import h5py
-    from data.plot import plot_normal_derivative, plot_normal_derivative_pred, plot_normal_derivative_error
+    from data.plot import plot_normal_derivative
     import matplotlib.pyplot as plt
     fom_file = os.path.join(data_folder, "results", f"{idx}.h5")
     with h5py.File(fom_file, 'a') as file:
@@ -158,7 +158,7 @@ elif target == "normal_derivative":
         if "normal_ae" in file:
             del file["normal_ae"]
         file["normal_ae"] = np.abs(y_pred[0][nan_mask] - file["normal_derivatives_plate"][:])
-        plot_normal_derivative(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
-        plot_normal_derivative(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], error = True)
-        plot_normal_derivative(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], pred = True)
+        plot_normal_derivative(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)])
+        plot_normal_derivative(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True)
+        plot_normal_derivative(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], pred = True)
         plt.show()

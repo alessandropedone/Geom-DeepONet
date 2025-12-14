@@ -287,7 +287,7 @@ def plot_domain(file, postpone_show=False, zoom: list[int] = None, center_points
             y=file["y"][:],
             cells=file["cells"][:],
             sol=None,
-            title="Domain and mesh (zoom level {})".format(zoom[i]) if zoom is not None else "Domain and mesh",
+            title="Domain and mesh (zoom {})".format(zoom[i]) if zoom is not None else "Domain and mesh",
             xlabel="x",
             ylabel="y",
             colorbar_label="",
@@ -343,7 +343,7 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                 y = file["y"][:],
                 cells = file["cells"][:],
                 sol = sol,
-                title ="Electrostatic potential (zoom level {})".format(zoom[i]) if zoom is not None else "Electrostatic potential", 
+                title ="Electrostatic potential (zoom {})".format(zoom[i]) if zoom is not None else "Electrostatic potential", 
                 xlabel ="x",
                 ylabel ="y",
                 colorbar_label ="Potential",
@@ -358,6 +358,9 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                 y0=center_points[i][1] if center_points is not None else 0,
                 zoom=zoom[i] if zoom is not None else 1
             )
+            # specifcy its a prediction
+            if pred:
+                axes[i].set_title("Predicted electrostatic potential (zoom {})".format(zoom[i]) if zoom is not None else "Predicted potential")
             axes[i].set_aspect('equal', adjustable='datalim')
     else:
         if n > 1:
@@ -380,12 +383,12 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                     y = file["y"][:],
                     cells = file["cells"][:],
                     sol = file["se"][:],
-                    title ="Squared error (RMSE {:.2e}) (zoom level {})".format(np.sqrt(np.mean(file["se"][:])), zoom[i]) if zoom is not None else "Squared error (RMSE {:.2e})".format(np.sqrt(np.mean(file["se"][:]))), 
+                    title ="Squared error (RMSE {:.2e}) (zoom {})".format(np.sqrt(np.mean(file["se"][:])), zoom[i]) if zoom is not None else "Squared error (RMSE {:.2e})".format(np.sqrt(np.mean(file["se"][:]))), 
                     xlabel ="x",
                     ylabel ="y",
                     colorbar_label ="Squared Error",
                     cmap ='RdBu_r',
-                    sharp_color_range = (np.min(file["se"][:]) + 1e-8, 5e-2),
+                    sharp_color_range = None,
                     plot_triangulation = True,
                     postpone_show = postpone_show
                 )
@@ -404,12 +407,12 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                     y = file["y"][:],
                     cells = file["cells"][:],
                     sol = file["ae"][:],
-                    title ="Absolute error (MAE {:.2e}) (zoom level {})".format(np.mean(file["ae"][:]), zoom[i]) if zoom is not None else "Absolute error (MAE {:.2e})".format(np.mean(file["ae"][:])),
+                    title ="Absolute error (MAE {:.2e}) (zoom {})".format(np.mean(file["ae"][:]), zoom[i]) if zoom is not None else "Absolute error (MAE {:.2e})".format(np.mean(file["ae"][:])),
                     xlabel ="x",
                     ylabel ="y",
                     colorbar_label ="Absolute Error",
                     cmap ='RdBu_r',
-                    sharp_color_range = (np.min(file["ae"][:]) + 1e-8, 5e-2),
+                    sharp_color_range = None,
                     plot_triangulation = True,
                     postpone_show = postpone_show
                 )
@@ -454,7 +457,7 @@ def plot_grad(file, postpone_show=False, zoom: list[int] = None, center_points: 
                 y = file["y"][:],
                 cells = file["cells"][:],
                 sol = file["grad_x"][:],
-                title ="x component of the gradient of the electrostatic potential (zoom level {})".format(zoom[i]) if zoom is not None else "x component of the gradient of the electrostatic potential", 
+                title ="grad_x (zoom {})".format(zoom[i]) if zoom is not None else "grad_x", 
                 xlabel ="x",
                 ylabel ="y",
                 colorbar_label ="grad_x",
@@ -469,7 +472,7 @@ def plot_grad(file, postpone_show=False, zoom: list[int] = None, center_points: 
                 y = file["y"][:],
                 cells = file["cells"][:],
                 sol = file["grad_y"][:],
-                title ="y component of the gradient of the electrostatic potential (zoom level {})".format(zoom[i]) if zoom is not None else "y component of the gradient of the electrostatic potential", 
+                title ="grad_y (zoom {})".format(zoom[i]) if zoom is not None else "grad_y", 
                 xlabel ="x",
                 ylabel ="y",
                 colorbar_label ="grad_y",
@@ -512,7 +515,26 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
         raise ValueError("Length of center_points must match number of zoom levels.")
     for i in range(n):
         plt.sca(axes[i])
-        plot_domain(file, postpone_show=True, zoom=[zoom[i]], center_points=[center_points[i]] if center_points is not None else None)
+        plot(
+            x=file["x"][:],
+            y=file["y"][:],
+            cells=file["cells"][:],
+            sol=None,
+            title="Domain and mesh (zoom {})".format(zoom[i]) if zoom is not None else "Domain and mesh",
+            xlabel="x",
+            ylabel="y",
+            colorbar_label="",
+            cmap='RdBu_r',
+            sharp_color_range=None,
+            plot_triangulation=True,
+            postpone_show=postpone_show
+        )
+        zoom_around(
+            axes[i],
+            x0=center_points[i][0] if center_points is not None else 0,
+            y0=center_points[i][1] if center_points is not None else 0,
+            zoom=zoom[i] if zoom is not None else 1
+        )
         axes[i].set_aspect('equal', adjustable='datalim')
         if pred and error:
             raise ValueError("Cannot set both pred and error to True.")
@@ -544,9 +566,13 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
         sm.set_array([])
         ax = plt.gca()
         plt.colorbar(sm, ax=ax, label="Derivative modulus")
-        ax.set_title("Normal derivative of the potential on the upper plate (zoom level {})".format(zoom[i]) if zoom is not None else "Normal derivative of the potential on the upper plate")
-        ax.set_xlim(-55, 55)
-        ax.set_ylim(-25, 25)
+        if pred:
+            ax.set_title("Predicted normal derivative (zoom {})".format(zoom[i]) if zoom is not None else "Predicted normal derivative")
+        elif error:
+            ax.set_title("Normal derivative error (zoom {})".format(zoom[i]) if zoom is not None else "Normal derivative error")
+        else:
+            ax.set_title("Normal derivative (zoom {})".format(zoom[i]) if zoom is not None else "Normal derivative")
+
     plt.tight_layout()
     if not postpone_show:
         plt.show()
