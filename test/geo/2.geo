@@ -14,7 +14,7 @@ SetFactory("OpenCASCADE");
 overetch = 0.0;
 
 // Distance between the plates
-distance = 1.5;
+distance = 2.5;
 
 // Discretization over the x axis (for the deformation)
 nx = 50; 
@@ -38,7 +38,7 @@ coeff(3) = -0.15;
 beta(3) = 2.50025 * 3.1415926535 / L;
 
 // 4th mode coefficient
-coeff(4) = 0.0;
+coeff(4) = -0.15;
 beta(4) = 3.49999 * 3.1415926535 / L;
 
 

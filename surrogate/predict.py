@@ -120,7 +120,7 @@ print("\n\n")
 
 if target == "potential":
     import h5py
-    from data.plot import plot_error, plot_potential, plot_potential_pred
+    from data.plot import plot_potential
     import matplotlib.pyplot as plt
     fom_file = os.path.join(data_folder, "results", f"{idx}.h5")
     with h5py.File(fom_file, 'a') as file:
@@ -135,9 +135,10 @@ if target == "potential":
         if "ae" in file:
             del file["ae"]
         file["ae"] = np.abs(y_pred[0][nan_mask] - file["potential"][:])
-        plot_potential(file, postpone_show=True)
-        plot_error(file, postpone_show=True)
-        plot_potential_pred(file, postpone_show=True)
+        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
+        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], error = True, error_type='ae')
+        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], error = True, error_type='se')
+        plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], pred = True)
         plt.show()
 
 elif target == "normal_derivative":
@@ -157,7 +158,7 @@ elif target == "normal_derivative":
         if "normal_ae" in file:
             del file["normal_ae"]
         file["normal_ae"] = np.abs(y_pred[0][nan_mask] - file["normal_derivatives_plate"][:])
-        plot_normal_derivative(file, postpone_show=True)
-        plot_normal_derivative_pred(file, postpone_show=True)
-        plot_normal_derivative_error(file, postpone_show=True)
+        plot_normal_derivative(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
+        plot_normal_derivative(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], error = True)
+        plot_normal_derivative(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], pred = True)
         plt.show()

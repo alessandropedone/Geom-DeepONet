@@ -5,8 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.tri as tri
 from matplotlib.colors import BoundaryNorm
-
-
+import math
 
 ##
 # @param x (np.ndarray): x coordinates of the vertices.
@@ -235,8 +234,6 @@ def plot(x: np.ndarray,
                 return
         return
     
-    plt.figure()
-    
     if sol is None:
         # Plot only the domain
         domain_plot(x, y, cells, title, xlabel, ylabel, plot_triangulation, postpone_show)
@@ -247,252 +244,310 @@ def plot(x: np.ndarray,
         # Plot using the vertices
         vertices_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
 
+
+##
+# @param ax (matplotlib.axes.Axes): The axes object to apply the zoom on
+# @param x0 (float): x coordinate of the zoom center.
+# @param y0 (float): y coordinate of the zoom center.
+# @param zoom (float): Zoom factor.
+def zoom_around(ax, x0, y0, zoom):
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+
+    width  = (x_max - x_min) / zoom
+    height = (y_max - y_min) / zoom
+
+    ax.set_xlim(x0 - width/2,  x0 + width/2)
+    ax.set_ylim(y0 - height/2, y0 + height/2)
+
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_domain(file, postpone_show=False):
+# @param zoom (list[int]): List of zoom levels for different subplots.
+# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
+def plot_domain(file, postpone_show=False, zoom: list[int] = None, center_points: list[tuple] = None):
     """It plots the domain and the mesh."""
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = None,
-         title ="Domain and mesh", 
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="",
-         cmap ='RdBu_r',
-         sharp_color_range = None,
-         plot_triangulation = True,
-         postpone_show = postpone_show)
-    ax = plt.gca()
-    ax.set_aspect('equal', adjustable='datalim')
+    n = 1 if zoom is None else len(zoom)
+    if n > 1:
+        rows = max(1, math.floor(math.sqrt(n) * 0.75))
+        cols = math.ceil(n / rows)
+        fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 5 * rows))
+        axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+    else:
+        fig, ax = plt.subplots(figsize=(5, 5))
+        axes = [ax]
+
+    if center_points is not None and len(center_points) != n:
+        raise ValueError("Length of center_points must match number of zoom levels.")
+
+    for i in range(n):
+        plt.sca(axes[i])
+        plot(
+            x=file["x"][:],
+            y=file["y"][:],
+            cells=file["cells"][:],
+            sol=None,
+            title="Domain and mesh (zoom level {})".format(zoom[i]) if zoom is not None else "Domain and mesh",
+            xlabel="x",
+            ylabel="y",
+            colorbar_label="",
+            cmap='RdBu_r',
+            sharp_color_range=None,
+            plot_triangulation=True,
+            postpone_show=postpone_show
+        )
+        zoom_around(
+            axes[i],
+            x0=center_points[i][0] if center_points is not None else 0,
+            y0=center_points[i][1] if center_points is not None else 0,
+            zoom=zoom[i] if zoom is not None else 1
+        )
+        axes[i].set_aspect('equal', adjustable='datalim')
+
+    plt.tight_layout()
+    if not postpone_show:
+        plt.show()
+    
 
 ## 
 # @param file (h5py.File): h5py file object containing the solution data.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_potential(file, postpone_show=False):
+# @param zoom (list[int]): List of zoom levels for different subplots.
+# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
+# @param pred (bool): Whether to plot the predicted potential.
+# @param error (bool): Whether to plot the error in potential prediction.
+def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_points: list[tuple] = None, pred: bool = False, error: bool = False, error_type: str ="se"):
     """It plots the electrostatic potential over the domain."""
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = file["potential"][:],
-         title ="Electrostatic potential", 
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="Potential",
-         cmap ='RdBu_r',
-         sharp_color_range = None,
-         plot_triangulation = True,
-         postpone_show = postpone_show)
-    ax = plt.gca()
-    ax.set_aspect('equal', adjustable='datalim')
+    n = 1 if zoom is None else len(zoom)
+    if pred and error:
+        raise ValueError("Cannot set both pred and error to True.")
+    if not error:
+        if n > 1:
+            rows = max(1, math.floor(math.sqrt(n) * 0.75))
+            cols = math.ceil(n / rows)
+            fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 5 * rows))
+            axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+        else:
+            fig, ax = plt.subplots(figsize=(5, 5))
+            axes = [ax]
+        if center_points is not None and len(center_points) != n:
+            raise ValueError("Length of center_points must match number of zoom levels.")
+        for i in range(n):
+            plt.sca(axes[i])
+            if pred:
+                sol = file["potential_pred"][:]
+            else:
+                sol = file["potential"][:]
+            plot(
+                x = file["x"][:],
+                y = file["y"][:],
+                cells = file["cells"][:],
+                sol = sol,
+                title ="Electrostatic potential (zoom level {})".format(zoom[i]) if zoom is not None else "Electrostatic potential", 
+                xlabel ="x",
+                ylabel ="y",
+                colorbar_label ="Potential",
+                cmap ='RdBu_r',
+                sharp_color_range = None,
+                plot_triangulation = True,
+                postpone_show = postpone_show
+            )
+            zoom_around(
+                axes[i],
+                x0=center_points[i][0] if center_points is not None else 0,
+                y0=center_points[i][1] if center_points is not None else 0,
+                zoom=zoom[i] if zoom is not None else 1
+            )
+            axes[i].set_aspect('equal', adjustable='datalim')
+    else:
+        if n > 1:
+            rows = max(1, math.floor(math.sqrt(n) * 0.75))
+            cols = math.ceil(n / rows)
+            fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 5 * rows))
+            axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+        else:
+            fig, ax = plt.subplots(figsize=(5, 5))
+            axes = [ax]
+        if center_points is not None and len(center_points) != n:
+            raise ValueError("Length of center_points must match number of zoom levels.")
+        if error_type not in ["se", "ae"]:
+            raise ValueError("error_type must be either 'se' (squared error) or 'ae' (absolute error).")
+        if error_type == "se":
+            for i in range(n):
+                plt.sca(axes[i])
+                plot(
+                    x = file["x"][:],
+                    y = file["y"][:],
+                    cells = file["cells"][:],
+                    sol = file["se"][:],
+                    title ="Squared error (RMSE {:.2e}) (zoom level {})".format(np.sqrt(np.mean(file["se"][:])), zoom[i]) if zoom is not None else "Squared error (RMSE {:.2e})".format(np.sqrt(np.mean(file["se"][:]))), 
+                    xlabel ="x",
+                    ylabel ="y",
+                    colorbar_label ="Squared Error",
+                    cmap ='RdBu_r',
+                    sharp_color_range = (np.min(file["se"][:]) + 1e-8, 5e-2),
+                    plot_triangulation = True,
+                    postpone_show = postpone_show
+                )
+                zoom_around(
+                    axes[i],
+                    x0=center_points[i][0] if center_points is not None else 0,
+                    y0=center_points[i][1] if center_points is not None else 0,
+                    zoom=zoom[i] if zoom is not None else 1
+                )
+                axes[i].set_aspect('equal', adjustable='datalim')
+        else:
+            for i in range(n):
+                plt.sca(axes[i])
+                plot(
+                    x = file["x"][:],
+                    y = file["y"][:],
+                    cells = file["cells"][:],
+                    sol = file["ae"][:],
+                    title ="Absolute error (MAE {:.2e}) (zoom level {})".format(np.mean(file["ae"][:]), zoom[i]) if zoom is not None else "Absolute error (MAE {:.2e})".format(np.mean(file["ae"][:])),
+                    xlabel ="x",
+                    ylabel ="y",
+                    colorbar_label ="Absolute Error",
+                    cmap ='RdBu_r',
+                    sharp_color_range = (np.min(file["ae"][:]) + 1e-8, 5e-2),
+                    plot_triangulation = True,
+                    postpone_show = postpone_show
+                )
+                zoom_around(
+                    axes[i],
+                    x0=center_points[i][0] if center_points is not None else 0,
+                    y0=center_points[i][1] if center_points is not None else 0,
+                    zoom=zoom[i] if zoom is not None else 1
+                )
+                axes[i].set_aspect('equal', adjustable='datalim')
 
-## 
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_error(file, postpone_show=False):
-    """It plots the electrostatic potential over the domain."""
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = file["se"][:],
-         title ="Squared error in electrostatic potential prediction (RMSE {:.2e})".format(np.sqrt(np.mean(file["se"][:]))), 
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="Squared Error",
-         cmap ='RdBu_r',
-         sharp_color_range = (np.min(file["se"][:]) + 1e-8, 5e-2),
-         outside_sharpness = 1,
-         plot_triangulation = True,
-         postpone_show = True)
-    ax = plt.gca()
-    ax.set_aspect('equal', adjustable='datalim')
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = file["ae"][:],
-         title ="Absolute error in electrostatic potential prediction (MAE {:.2e})".format(np.mean(file["ae"][:])),
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="Absolute Error",
-         cmap ='RdBu_r',
-         sharp_color_range = (np.min(file["ae"][:]) + 1e-8, 5e-2),
-         outside_sharpness = 1,
-         plot_triangulation = True,
-         postpone_show = postpone_show)
-    ax = plt.gca()
-    ax.set_aspect('equal', adjustable='datalim')
+    plt.tight_layout()
     if not postpone_show:
         plt.show()
 
-
-## 
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_potential_pred(file, postpone_show=False):
-    """It plots the electrostatic potential over the domain."""
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = file["potential_pred"][:],
-         title ="Predicted electrostatic potential", 
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="Potential",
-         cmap ='RdBu_r',
-         sharp_color_range = None,
-         plot_triangulation = True,
-         postpone_show = postpone_show)
-    ax = plt.gca()
-    ax.set_aspect('equal', adjustable='datalim')
+    
     
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_grad_x(file, postpone_show=False):
+# @param zoom (list[int]): List of zoom levels for different subplots.
+# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
+# @param component (str): Component of the gradient to plot ("x" or "y").
+def plot_grad(file, postpone_show=False, zoom: list[int] = None, center_points: list[tuple] = None, component: str ="x"):
     """It plots the x component of the gradient of the electrostatic potential."""
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = file["grad_x"][:],
-         title ="x component of the gradient of the electrostatic potential", 
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="grad_x",
-         cmap ='RdBu_r',
-         sharp_color_range =  None,
-         plot_triangulation = True,
-         postpone_show = postpone_show)
-    ax = plt.gca()
-    ax.set_aspect('equal', adjustable='datalim')
-
-##
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_grad_y(file, postpone_show=False):
-    """It plots the y component of the gradient of the electrostatic potential."""
-    plot(x = file["x"][:], 
-         y = file["y"][:], 
-         cells = file["cells"][:], 
-         sol = file["grad_y"][:],
-         title ="y component of the gradient of the electrostatic potential", 
-         xlabel ="x", 
-         ylabel ="y", 
-         colorbar_label ="grad_y",
-         cmap ='RdBu_r',
-         sharp_color_range = (-0.7, -0.5),
-         plot_triangulation = True,
-         postpone_show = postpone_show)
-    ax = plt.gca()
-    ax.set_xlim(-55, 55)
-    ax.set_ylim(-25, 25)
-    ax.set_aspect('equal', adjustable='datalim')
+    n = 1 if zoom is None else len(zoom)
+    if n > 1:
+        rows = max(1, math.floor(math.sqrt(n) * 0.75))
+        cols = math.ceil(n / rows)
+        fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 5 * rows))
+        axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+    else:
+        fig, ax = plt.subplots(figsize=(5, 5))
+        axes = [ax]
+    if center_points is not None and len(center_points) != n:
+        raise ValueError("Length of center_points must match number of zoom levels.")
+    for i in range(n):
+        plt.sca(axes[i])
+        if component == "x":
+            plot(
+                x = file["x"][:],
+                y = file["y"][:],
+                cells = file["cells"][:],
+                sol = file["grad_x"][:],
+                title ="x component of the gradient of the electrostatic potential (zoom level {})".format(zoom[i]) if zoom is not None else "x component of the gradient of the electrostatic potential", 
+                xlabel ="x",
+                ylabel ="y",
+                colorbar_label ="grad_x",
+                cmap ='RdBu_r',
+                sharp_color_range = None,
+                plot_triangulation = True,
+                postpone_show = postpone_show
+            )
+        else:
+             plot(
+                x = file["x"][:],
+                y = file["y"][:],
+                cells = file["cells"][:],
+                sol = file["grad_y"][:],
+                title ="y component of the gradient of the electrostatic potential (zoom level {})".format(zoom[i]) if zoom is not None else "y component of the gradient of the electrostatic potential", 
+                xlabel ="x",
+                ylabel ="y",
+                colorbar_label ="grad_y",
+                cmap ='RdBu_r',
+                sharp_color_range = None,
+                plot_triangulation = True,
+                postpone_show = postpone_show
+            )
+        zoom_around(
+            axes[i],
+            x0=center_points[i][0] if center_points is not None else 0,
+            y0=center_points[i][1] if center_points is not None else 0,
+            zoom=zoom[i] if zoom is not None else 1
+        )
+        axes[i].set_aspect('equal', adjustable='datalim')
+    plt.tight_layout()
+    if not postpone_show:
+        plt.show()
     
 ##
 # @param file (h5py.File): h5py file object containing the solution data.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_normal_derivative(file, postpone_show=False):   
+# @param pred (bool): Whether to plot the predicted normal derivative.
+# @param error (bool): Whether to plot the error in normal derivative prediction.
+# @param zoom (list[int]): List of zoom levels for different subplots.
+# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
+# @note If both pred and error are True, a ValueError is raised.
+def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, zoom: list[int] = None, center_points: list[tuple] = None):   
     """It plots the normal derivative of the potential on the upper plate as arrows.""" 
-    plot_domain(file, postpone_show=True)
-    normal_derivative = file["normal_derivatives_plate"][:]
-    points = file["midpoints_plate"][:]
-    normals = file["normal_vectors_plate"][:]
-    U = normal_derivative * normals[:, 0]
-    V = normal_derivative * normals[:, 1]
-    lengths = np.sqrt(U**2 + V**2)
-    norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
-    cmap = plt.cm.seismic
-    for i in range(len(points)):
-        color = cmap(norm[i])
-        plt.arrow(
-            points[i, 0], points[i, 1],
-            U[i], V[i],
-            head_width=0.05, head_length=0.05,
-            fc=color, ec=color
+    n = 1 if zoom is None else len(zoom)
+    if n > 1:
+        rows = max(1, math.floor(math.sqrt(n) * 0.75))
+        cols = math.ceil(n / rows)
+        fig, axes = plt.subplots(rows, cols, figsize=(5 * cols, 5 * rows))
+        axes = axes.flatten() if isinstance(axes, np.ndarray) else [axes]
+    else:
+        fig, ax = plt.subplots(figsize=(5, 5))
+        axes = [ax]
+    if center_points is not None and len(center_points) != n:
+        raise ValueError("Length of center_points must match number of zoom levels.")
+    for i in range(n):
+        plt.sca(axes[i])
+        plot_domain(file, postpone_show=True, zoom=[zoom[i]], center_points=[center_points[i]] if center_points is not None else None)
+        axes[i].set_aspect('equal', adjustable='datalim')
+        if pred and error:
+            raise ValueError("Cannot set both pred and error to True.")
+        if pred:
+            normal_derivative = file["normal_derivative_pred"][:]
+        elif error:
+            normal_derivative = file["normal_derivative_pred"][:] - file["normal_derivatives_plate"][:]
+        else:
+            normal_derivative = file["normal_derivatives_plate"][:]
+        points = file["midpoints_plate"][:]
+        normals = file["normal_vectors_plate"][:]
+        U = normal_derivative * normals[:, 0]
+        V = normal_derivative * normals[:, 1]
+        lengths = np.sqrt(U**2 + V**2)
+        norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
+        cmap = plt.cm.seismic
+        for j in range(len(points)):
+            color = cmap(norm[j])
+            plt.arrow(
+                points[j, 0], points[j, 1],
+                U[j], V[j],
+                head_width=0.05, head_length=0.05,
+                fc=color, ec=color
+            )
+        sm = plt.cm.ScalarMappable(
+        cmap=cmap,
+        norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
         )
-    sm = plt.cm.ScalarMappable(
-    cmap=cmap,
-    norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
-    )
-    sm.set_array([])
-    ax = plt.gca()
-    plt.colorbar(sm, ax=ax, label="Derivative modulus")
-    ax.set_title("Normal derivative of the potential on the upper plate")
-    ax.set_xlim(-55, 55)
-    ax.set_ylim(-25, 25)
-    ax.set_aspect('equal', adjustable='datalim')
-    if not postpone_show:
-        plt.show()
-
-##
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-def plot_normal_derivative_pred(file, postpone_show=False):   
-    """It plots the normal derivative of the potential on the upper plate as arrows.""" 
-    plot_domain(file, postpone_show=True)
-    normal_derivative = file["normal_derivative_pred"][:]
-    points = file["midpoints_plate"][:]
-    normals = file["normal_vectors_plate"][:]
-    U = normal_derivative * normals[:, 0]
-    V = normal_derivative * normals[:, 1]
-    lengths = np.sqrt(U**2 + V**2)
-    norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
-    cmap = plt.cm.seismic
-    for i in range(len(points)):
-        color = cmap(norm[i])
-        plt.arrow(
-            points[i, 0], points[i, 1],
-            U[i], V[i],
-            head_width=0.05, head_length=0.05,
-            fc=color, ec=color
-        )
-    sm = plt.cm.ScalarMappable(
-    cmap=cmap,
-    norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
-    )
-    sm.set_array([])
-    ax = plt.gca()
-    ax.set_title("Predicted normal derivative of the potential on the upper plate")
-    ax.set_xlim(-55, 55)
-    ax.set_ylim(-25, 25)
-    ax.set_aspect('equal', adjustable='datalim')
-    if not postpone_show:
-        plt.show()
-
-
-def plot_normal_derivative_error(file, postpone_show=False):
-    """It plots the error on the boundary of the predicted normal derivative of the potential."""
-    plot_domain(file, postpone_show=True)
-    normal_derivative = file["normal_derivatives_plate"][:]
-    pred_normal_derivative = file["normal_derivative_pred"][:]
-    error = pred_normal_derivative - normal_derivative
-    points = file["midpoints_plate"][:]
-    normals = file["normal_vectors_plate"][:]
-    U = error * normals[:, 0]
-    V = error * normals[:, 1]
-    lengths = np.sqrt(U**2 + V**2)
-    norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
-    cmap = plt.cm.seismic
-    for i in range(len(points)):
-        color = cmap(norm[i])
-        plt.arrow(
-            points[i, 0], points[i, 1],
-            U[i], V[i],
-            head_width=0.05, head_length=0.05,
-            fc=color, ec=color
-        )
-    sm = plt.cm.ScalarMappable(
-    cmap=cmap,
-    norm=plt.Normalize(vmin=lengths.min(), vmax=lengths.max())
-    )
-    sm.set_array([])
-    ax = plt.gca()
-    se = file["normal_se"][:]
-    mae = file["normal_ae"][:]
-    ax.set_title("Error in normal derivative prediction (RMSE {:.2e}, MAE {:.2e})".format(np.sqrt(np.mean(se)), np.mean(mae)))
-    ax.set_xlim(-55, 55)
-    ax.set_ylim(-25, 25)
-    ax.set_aspect('equal', adjustable='datalim')
+        sm.set_array([])
+        ax = plt.gca()
+        plt.colorbar(sm, ax=ax, label="Derivative modulus")
+        ax.set_title("Normal derivative of the potential on the upper plate (zoom level {})".format(zoom[i]) if zoom is not None else "Normal derivative of the potential on the upper plate")
+        ax.set_xlim(-55, 55)
+        ax.set_ylim(-25, 25)
+    plt.tight_layout()
     if not postpone_show:
         plt.show()
 
@@ -500,9 +555,9 @@ def plot_normal_derivative_error(file, postpone_show=False):
 # @param file (h5py.File): h5py file object containing the solution data.
 def summary_plot(file):
     """It creates a summary plot with all relevant plots."""
-    plot_domain(file, postpone_show=True)
-    plot_potential(file, postpone_show=True)
-    plot_grad_x(file, postpone_show=True)
-    plot_grad_y(file, postpone_show=True)
-    plot_normal_derivative(file, postpone_show=True)
+    plot_domain(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
+    plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
+    plot_grad(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], component="x")
+    plot_grad(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], component="y")
+    plot_normal_derivative(file, postpone_show=True, zoom=[5, 7], center_points=[(0,0), (-40,0)])
     plt.show()

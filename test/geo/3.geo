@@ -11,7 +11,7 @@ SetFactory("OpenCASCADE");
 //---------------------------------------
 
 // Overetch of the upper plate
-overetch = 0.0;
+overetch = 0.5;
 
 // Distance between the plates
 distance = 1.5;
@@ -38,7 +38,7 @@ coeff(3) = -0.15;
 beta(3) = 2.50025 * 3.1415926535 / L;
 
 // 4th mode coefficient
-coeff(4) = 0.15;
+coeff(4) = -0.15;
 beta(4) = 3.49999 * 3.1415926535 / L;
 
 
