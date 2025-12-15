@@ -1,5 +1,7 @@
 ## @package predict
 # @brief Functions to test surrogate models for geometry-to-solution mapping.
+# @note If you sample from the test set, ensure that the splitting seed matches that used during training. 
+# If you are using the model we trained just keep the default value of 40.
 
 # Read input arguments
 import argparse
@@ -8,13 +10,15 @@ parser.add_argument("--folder", type=str, default="test", help="Path to the data
 parser.add_argument("--model_path", type=str, default="models/model.keras", help="Path to save the trained model.")
 parser.add_argument("--splitting_seed", type=int, default=40, help="Random seed for data splitting.")
 parser.add_argument("--target", choices=["potential", "normal_derivative"], default="potential", help="Target quantity to predict.")
-parser.add_argument("--prediction_seed", type=int, default=40, help="Random seed for test sample selection.")
+parser.add_argument("--prediction_seed", type=int, default=43, help="Random seed for test sample selection.")
+parser.add_argument("--sample_from_test_set", action="store_true", help="If set, sample from the test set; otherwise, sample from the entire dataset.")
 args = parser.parse_args()
 data_folder = args.folder
 seed = args.splitting_seed
 seed2 = args.prediction_seed
 target = args.target
 model_path = args.model_path
+use_test_set = args.sample_from_test_set
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
@@ -31,22 +35,32 @@ elif target == "normal_derivative":
     x = np.stack((x_plate, y_plate), axis=2)
     y = np.array(normal_derivatives_plate)
 
-# Split the dataset into training, validation, and test sets as in the training script
-from sklearn.model_selection import train_test_split
-ns = mu.shape[0]
-idx = np.arange(ns)
-idx_trainval, idx_test = train_test_split(idx, test_size=0.2, random_state=seed)
-# Split train+val indices into train and val sets
-idx_train, idx_val = train_test_split(idx_trainval, test_size=0.2, random_state=seed)
-# Use indices to split the arrays along the first dimension
-mu_train, mu_val, mu_test = mu[idx_train], mu[idx_val], mu[idx_test]
-x_train, x_val, x_test = x[idx_train], x[idx_val], x[idx_test]
-y_train, y_val, y_test = y[idx_train], y[idx_val], y[idx_test]
+if use_test_set:
+    # Split the dataset into training, validation, and test sets as in the training script
+    from sklearn.model_selection import train_test_split
+    ns = mu.shape[0]
+    idx = np.arange(ns)
+    idx_trainval, idx_test = train_test_split(idx, test_size=0.2, random_state=seed)
+    # Split train+val indices into train and val sets
+    idx_train, idx_val = train_test_split(idx_trainval, test_size=0.2, random_state=seed)
+    # Use indices to split the arrays along the first dimension
+    mu_train, mu_val, mu_test = mu[idx_train], mu[idx_val], mu[idx_test]
+    x_train, x_val, x_test = x[idx_train], x[idx_val], x[idx_test]
+    y_train, y_val, y_test = y[idx_train], y[idx_val], y[idx_test]
+    # Identify the index of a random test sample
+    import random
+    random.seed(seed2)
+    test_sample_index = random.choice(idx_test)
+else:
+    # Use the entire dataset for choosing the test sample
+    x_test = x
+    y_test = y
+    mu_test = mu
+    # Identify the index of a random sample from the entire dataset
+    import random
+    random.seed(seed2)
+    test_sample_index = random.randint(0, mu.shape[0]-1)
 
-# Identify the index of a random test sample
-import random
-random.seed(seed2)
-test_sample_index = random.choice(idx_test)
 # Extract the corresponding input and output data
 x_sample = x[test_sample_index:test_sample_index+1]
 y_sample = y[test_sample_index:test_sample_index+1]
@@ -85,7 +99,7 @@ print("Trunk output shape: ", trunk_output.shape)
 # Open parameters.csv to find the index of the test sample that has the corresponding mu
 import csv
 
-def find_id(mu: np.ndarray, 
+def _find_id(mu: np.ndarray, 
             data_folder: str = "data") -> int:
     parameters_file = os.path.join(data_folder, "parameters.csv")
     with open(parameters_file, 'r') as f:
@@ -108,13 +122,13 @@ def find_id(mu: np.ndarray,
         raise ValueError("Test sample mu not found in parameters.csv")
     return test_sample_number
 
-idx = find_id(mu=mu_sample[0], data_folder=data_folder)
+idx = _find_id(mu=mu_sample[0], data_folder=data_folder)
 
 
 # Read the corresponding .h5 file in data_folder/results and plot the error
 print(f"\033[38;2;0;175;6m\n\nSaving prediction and plotting results for test sample index {idx}.\033[0m")
 print(f"Results file: {os.path.join(data_folder, 'results', f'{idx}.h5')}")
-print(f"\033[38;2;0;175;6m\n\nPlotting prediction and error.\033[0m")
+print(f"\033[38;2;0;175;6m\n\nPlotting prediction and error in the case mu = {mu_sample[0]}.\033[0m")
 print("\n\n")
 
 
@@ -135,10 +149,10 @@ if target == "potential":
         if "ae" in file:
             del file["ae"]
         file["ae"] = np.abs(y_pred[0][nan_mask] - file["potential"][:])
-        plot_potential(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)])
-        plot_potential(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True, error_type='ae')
-        plot_potential(file, postpone_show=True, zoom=[5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True, error_type='se')
-        plot_potential(file, postpone_show=True, zoom=[ 5, 15, 15], center_points=[(0,0), (-50,0), (50,0)], pred = True)
+        plot_potential(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)])
+        plot_potential(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True, error_type='ae')
+        plot_potential(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)], error = True, error_type='se')
+        plot_potential(file, postpone_show=True, zoom=[4, 15, 15], center_points=[(0,0), (-50,0), (50,0)], pred = True)
         plt.show()
 
 elif target == "normal_derivative":

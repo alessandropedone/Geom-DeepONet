@@ -23,7 +23,7 @@ import h5py
 ##
 # @brief Read the mesh from the .msh file and return the computational domain.
 # @param mesh (str): path to the mesh file.
-def get_domain_from_mesh(mesh_path: str) -> None:
+def _get_domain_from_mesh(mesh_path: str) -> None:
     """
     Read the mesh from the .msh file and return the computational domain.
     """
@@ -37,7 +37,7 @@ def get_domain_from_mesh(mesh_path: str) -> None:
 # @param domain: The computational domain containing mesh information.
 # @param boundary_facets: The boundary facets associated with the domain.
 # @return tuple: normals (np.ndarray), midpoints (np.ndarray)
-def compute_boundary_normals_and_midpoints(domain, boundary_facets) -> tuple:
+def _compute_boundary_normals_and_midpoints(domain, boundary_facets) -> tuple:
     """
     Compute boundary normals and midpoints for the facets of the upper plate (tags 10 and 11).
     """
@@ -84,7 +84,7 @@ def compute_boundary_normals_and_midpoints(domain, boundary_facets) -> tuple:
 # @return tuple: x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate
 # @note We return the midpoints of the facets of the upper plate boundary
 # since the gradient is constant on each cell (we chose DG0).
-def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> tuple:
+def _fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> tuple:
     """
     Full order model that solves the PDE with given boundary conditions and computes the solutions and its gradient.
     It returns also the mesh data (x, y, cells) along with the solution (potential) and its gradient (grad_x, grad_y).
@@ -213,7 +213,7 @@ def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> 
         # plot(x, y, cells, grad_y, title="Gradient Y Component", colorbar_label="Gradient Y", sharp_color_range=(-0.7, -0.5))
 
         # Extract the normal vectors the upper plate boundary with corresponding midpoints
-        normal_vectors_plate, midpoints_plate = compute_boundary_normals_and_midpoints(domain, boundary_facets)
+        normal_vectors_plate, midpoints_plate = _compute_boundary_normals_and_midpoints(domain, boundary_facets)
 
         # Compute the normal derivative on the plate
         normal_derivatives_plate = grad_x_plate * normal_vectors_plate[:,0] + grad_y_plate * normal_vectors_plate[:,1]
@@ -229,7 +229,7 @@ def solvensave(mesh: str, data_folder: str = "test"):
     Full order model that solves the PDE and saves the output in an .h5 file.
     """
     if mesh.is_file() and mesh.suffix == ".msh":
-        x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate = fom(mesh) 
+        x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate = _fom(mesh) 
         # Save the results in a .h5 file
         results_folder = Path(data_folder) / "results"
         base_name = os.path.splitext(os.path.basename(mesh))[0]

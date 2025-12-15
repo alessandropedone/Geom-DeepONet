@@ -13,6 +13,7 @@ parser.add_argument("--data_file", type=str, default="test.csv", help="Path to t
 parser.add_argument("--parameters_file_name", type=str, default="parameters.csv", help="Name of the parameters file to save the generated parameters.")
 parser.add_argument("--geometry_input", type=str, default="geometry.geo", help="Path to the input geometry file.")
 parser.add_argument("--plot_number", type=int, default=1, help="Number of the solution to plot.")
+parser.add_argument("--workers", type=int, default=1, help="Number of worker processes to use for parallel mesh generation.")
 
 data_folder = parser.parse_args().folder
 empty_old_mesh = not parser.parse_args().keep_old_mesh
@@ -21,6 +22,7 @@ data_file = parser.parse_args().data_file
 parameters_file_name = parser.parse_args().parameters_file_name
 geometry_input = parser.parse_args().geometry_input
 plot_number = parser.parse_args().plot_number
+workers = parser.parse_args().workers
 
 from .geometry import read_data_file
 names, ranges, num_points = read_data_file(data_file)
@@ -35,7 +37,8 @@ test(
     data_folder=data_folder,
     plot_number=plot_number,
     empty_old_mesh=empty_old_mesh,
-    empty_old_results=empty_old_results
+    empty_old_results=empty_old_results,
+    workers=workers,
 )
 
 

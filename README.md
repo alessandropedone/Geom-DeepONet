@@ -20,3 +20,6 @@ pacs-project
 ├── surrogate_model.keras
 └── test (...)
 ```
+
+## Test cases
+You can find how to run them in the readme in the `test` folder.

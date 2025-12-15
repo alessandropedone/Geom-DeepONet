@@ -8,6 +8,7 @@ from itertools import product
 from tqdm import tqdm
 import csv
 import contextlib
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 ##
@@ -16,7 +17,7 @@ import contextlib
 # @param ignore_data (bool): Whether to ignore existing other data present in data_folder.
 # @param data_folder (str): Path to the data folder to reset.
 # @note In any case, this function ensures the necessary subfolders and parameters file are set up.
-def setup_data(parameters_head : str, 
+def _setup_data(parameters_head : str, 
                parameters_file_name: str, 
                ignore_data: bool = False,
                data_folder: str = "test"):
@@ -96,7 +97,7 @@ def read_data_file(file_path: str = "test.csv"):
 # @param name (str): Name for the new geometry file (e.g., test).
 # @param quantity(str): Quantity to modify (e.g., 'distance', 'overetch', 'coeff(1)', etc.).
 # @param value (float): New quantity value to set (e.g., 2.0).
-def modify_quantity(input_path: str, output_path: str, name: str, quantity: str, value: float):
+def _modify_quantity(input_path: str, output_path: str, name: str, quantity: str, value: float):
     """Modify the geometry file to change the distance between the plates."""
     # Open the geometry.geo file to read the lines
     with open(str(input_path), "r") as f:
@@ -133,6 +134,22 @@ def modify_quantity(input_path: str, output_path: str, name: str, quantity: str,
     #print(f"Geometry updated setting {quantity} to {value}. Saved to {file_path}")
 
 
+def _generate_single_geometry(j: int, param: tuple, geometry_input: str, names: list, data_folder: str) -> str:
+    """
+    Generate a single geometry and return the CSV row string.
+    """
+    geo_folder = os.path.join(data_folder, "geo")
+    geo_path = os.path.join(geo_folder, f"{j}.geo")
+    
+    # Modify the first quantity using geometry_input
+    _modify_quantity(geometry_input, geo_folder, str(j), names[0], param[0])
+    
+    # Modify the rest
+    for i in range(1, len(names)):
+        _modify_quantity(geo_path, geo_folder, str(j), names[i], param[i])
+    
+    # Return CSV row as string
+    return f"{j}," + ",".join([str(p) for p in param]) + "\n"
 
 ## 
 # @param names (list[str]): List of the names, that appear in the geometry file of the quantities.
@@ -141,6 +158,7 @@ def modify_quantity(input_path: str, output_path: str, name: str, quantity: str,
 # @param geometry_input (str): Path to the input geometry file.
 # @param data_folder (str): Path to the data folder.
 # @param ignore_data (bool): Whether to ignore existing other data present in data_folder. 
+# @param max_workers (int): Maximum number of worker processes to use for parallel geometry generation.
 # For example you may want to set this equal to TRUE if you have more data in that folder, 
 # or already computed solutions, and for some reason you want to generate the geomteries 
 # in that folder avoid touching every file except the "geo" subfolder the parameters file.
@@ -151,50 +169,42 @@ def generate_geometries(names: list[str],
                         geometry_input: str,
                         data_folder: str = "test",
                         parameters_file_name: str = "parameters.csv",
-                        ignore_data: bool = False):
+                        ignore_data: bool = False,
+                        max_workers: int = 1):
     """
     Generate geometries by modifying the list of quantities over specified ranges.
     This function creates a series of geometry files with different parameters.
     """
-    # Ensure the provided lists are of the same length
     if not (len(ranges) == len(names) == len(num_points)):
         raise ValueError("The lengths of ranges, names, and num_points must be the same.")
     
-    # Create the quantities matrix: list of np.linspace for each range
-    quantities = []
-    for i in range(len(ranges)):
-        quantities.append(np.linspace(ranges[i][0], ranges[i][1], num_points[i]))
-
-    # Setup data_folder directory
-    setup_data(parameters_head= f"ID," + ",".join(names) + "\n", 
+    # Create quantities matrix
+    quantities = [np.linspace(r[0], r[1], n) for r, n in zip(ranges, num_points)]
+    
+    # Setup data folder
+    _setup_data(parameters_head=f"ID,{','.join(names)}\n",
                parameters_file_name=parameters_file_name,
                ignore_data=ignore_data,
                data_folder=data_folder)
 
-    # Generate all combinations of quantities
+    # Generate all parameter combinations
     params = list(product(*quantities))
-    total = len(params)
-
-    j = 1
-    for param in tqdm(
-                params,
-                total=total,
-                desc="🚀 Generating geometries",
-                ncols=100,
-                bar_format="{desc} |{bar}| {percentage:3.0f}% [{n}/{total}] ⏱️ {elapsed} ETA {remaining}",
-                colour='blue'
-            ):
+    
+    # Prepare CSV rows in parallel
+    results = []
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(_generate_single_geometry, j+1, param, geometry_input, names, data_folder): j+1
+                   for j, param in enumerate(params)}
         
-        # Modify the jth geometry
-        geo_folder = os.path.join(data_folder, "geo")
-        geo_path = os.path.join(data_folder, "geo", f"{j}.geo")
-        modify_quantity(geometry_input, geo_folder, str(j), names[0], param[0])
-        for i in range(1, len(names)):
-            modify_quantity(geo_path, geo_folder, str(j), names[i], param[i])
+        for f in tqdm(as_completed(futures),
+                      total=len(futures),
+                      desc="🚀 Generating geometries",
+                      ncols=100,
+                      bar_format="{desc} |{bar}| {percentage:3.0f}% [{n}/{total}] ⏱️ {elapsed} ETA {remaining}",
+                      colour='blue'):
+            results.append(f.result())
 
-        # Save the corresponding geometric parameters
-        with open(os.path.join(data_folder, parameters_file_name), "a") as csv_file:
-            csv_file.write(f"{j}," + ",".join([str(p) for p in param]) + "\n")
-
-        j += 1
+    # Write all CSV rows at once
+    with open(os.path.join(data_folder, parameters_file_name), "a") as csv_file:
+        csv_file.writelines(results)
                                     

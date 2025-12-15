@@ -28,7 +28,8 @@ def test(names: list[str],
         data_folder: str = "test", 
         plot_number: int = None,
         empty_old_mesh: bool = True,
-        empty_old_results: bool = True) -> None:
+        empty_old_results: bool = True,
+        workers: int = 1) -> None:
     
     if empty_old_mesh and empty_old_results:
         generate_geometries(
@@ -38,12 +39,13 @@ def test(names: list[str],
             geometry_input=geometry_input,
             data_folder=data_folder,
             parameters_file_name=parameters_file_name,
-            ignore_data=True
+            ignore_data=True,
+            max_workers=workers
         )
 
-    generate_meshes(data_folder=data_folder, empty_mesh_folder=empty_old_mesh)
+    generate_meshes(data_folder=data_folder, empty_mesh_folder=empty_old_mesh, max_workers=workers)
 
-    generate_datasets(data_folder=data_folder, use_multiprocessing=True, empty_results_folder=empty_old_results)
+    generate_datasets(data_folder=data_folder, empty_results_folder=empty_old_results)
 
     if plot_number is not None:
         path = data_folder + f"/results/{plot_number}.h5"

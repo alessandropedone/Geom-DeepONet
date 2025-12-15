@@ -22,7 +22,7 @@ import math
 # @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
 # @note Add optional arguments for customizing the plot (e.g., color map, title, labels).
-def cells_plot(x: np.ndarray,
+def _cells_plot(x: np.ndarray,
                y: np.ndarray, 
                cells: np.ndarray, 
                sol: np.ndarray, 
@@ -69,7 +69,6 @@ def cells_plot(x: np.ndarray,
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.legend()
     plt.colorbar(label=colorbar_label)
     if not postpone_show:
         plt.show()
@@ -89,7 +88,7 @@ def cells_plot(x: np.ndarray,
 # @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
 # @param postpone_show (bool): Whether to postpone the plt.show() call.
 # @note Add optional arguments for customizing the plot (e.g., color map, title, labels).
-def vertices_plot(x: np.ndarray, 
+def _vertices_plot(x: np.ndarray, 
                   y: np.ndarray,
                   cells: np.ndarray,
                   sol: np.ndarray,
@@ -134,7 +133,6 @@ def vertices_plot(x: np.ndarray,
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.legend()
     plt.colorbar(label=colorbar_label)
     if not postpone_show:
         plt.show()
@@ -187,7 +185,6 @@ def domain_plot(x: np.ndarray,
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.legend()
     if not postpone_show:
         plt.show()
 
@@ -239,10 +236,10 @@ def plot(x: np.ndarray,
         domain_plot(x, y, cells, title, xlabel, ylabel, plot_triangulation, postpone_show)
     elif len(cells) % len(sol) == 0:
         # Plot using the cells
-        cells_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
+        _cells_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
     else:
         # Plot using the vertices
-        vertices_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
+        _vertices_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
 
 
 ##
@@ -250,7 +247,7 @@ def plot(x: np.ndarray,
 # @param x0 (float): x coordinate of the zoom center.
 # @param y0 (float): y coordinate of the zoom center.
 # @param zoom (float): Zoom factor.
-def zoom_around(ax, x0, y0, zoom):
+def _zoom_around(ax, x0, y0, zoom):
     x_min, x_max = ax.get_xlim()
     y_min, y_max = ax.get_ylim()
 
@@ -296,7 +293,7 @@ def plot_domain(file, postpone_show=False, zoom: list[int] = None, center_points
             plot_triangulation=True,
             postpone_show=postpone_show
         )
-        zoom_around(
+        _zoom_around(
             axes[i],
             x0=center_points[i][0] if center_points is not None else 0,
             y0=center_points[i][1] if center_points is not None else 0,
@@ -352,7 +349,7 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                 plot_triangulation = True,
                 postpone_show = postpone_show
             )
-            zoom_around(
+            _zoom_around(
                 axes[i],
                 x0=center_points[i][0] if center_points is not None else 0,
                 y0=center_points[i][1] if center_points is not None else 0,
@@ -392,7 +389,7 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                     plot_triangulation = True,
                     postpone_show = postpone_show
                 )
-                zoom_around(
+                _zoom_around(
                     axes[i],
                     x0=center_points[i][0] if center_points is not None else 0,
                     y0=center_points[i][1] if center_points is not None else 0,
@@ -416,7 +413,7 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
                     plot_triangulation = True,
                     postpone_show = postpone_show
                 )
-                zoom_around(
+                _zoom_around(
                     axes[i],
                     x0=center_points[i][0] if center_points is not None else 0,
                     y0=center_points[i][1] if center_points is not None else 0,
@@ -481,7 +478,7 @@ def plot_grad(file, postpone_show=False, zoom: list[int] = None, center_points: 
                 plot_triangulation = True,
                 postpone_show = postpone_show
             )
-        zoom_around(
+        _zoom_around(
             axes[i],
             x0=center_points[i][0] if center_points is not None else 0,
             y0=center_points[i][1] if center_points is not None else 0,
@@ -529,7 +526,7 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
             plot_triangulation=True,
             postpone_show=postpone_show
         )
-        zoom_around(
+        _zoom_around(
             axes[i],
             x0=center_points[i][0] if center_points is not None else 0,
             y0=center_points[i][1] if center_points is not None else 0,
