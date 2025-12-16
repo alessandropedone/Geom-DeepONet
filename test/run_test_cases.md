@@ -39,13 +39,19 @@ python -m surrogate.predict --folder "test/test1" --model_path "models/derivativ
 ```
 
 
-If you want you can try training the model, with the dedicated module, and you are also able exploit a GPU if you have one, but you need to fulfill the (CUDA) requirements by modifying the environment by yourself (which could not be a straightforward task).
+If you want you can try training the model, with the dedicated module.
 ```bash
 python -m surrogate.train --folder "test/test1" --model_path "models/potential.keras" --target "potential"
 ```
 
 ```bash
 python -m surrogate.train --folder "test/test1" --model_path "models/potential.keras" --target "normal_derivative"
+```
+
+You are also able exploit a GPU if you have one, but you need to fulfill the (CUDA) requirements by modifying the environment by yourself (which could not be a straightforward task). For example, you may want to run in the terminal something like:
+```bash
+conda activate env-name
+conda install cuda-cudart cuda-version=12 -y
 ```
 
 Logs of the training are available and you can open them in your browser using tensorboard:
