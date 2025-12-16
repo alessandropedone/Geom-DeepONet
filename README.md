@@ -23,3 +23,9 @@ pacs-project
 
 ## Test cases
 You can find how to run them in the readme in the `test` folder.
+
+## Setup
+You can run the script to setup the environment with the following command. Conda is required.
+```bash
+./setup.sh
+```
