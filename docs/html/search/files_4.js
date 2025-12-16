@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['plot_5fprediction_2epy_0',['plot_prediction.py',['../plot__prediction_8py.html',1,'']]]
+  ['load_5fsolutions_2epy_0',['load_solutions.py',['../load__solutions_8py.html',1,'']]]
 ];

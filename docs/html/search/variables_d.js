@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['s_0',['s',['../namespacemain.html#a774ea7d72ce3cfb50032980875f3d5e9',1,'main']]]
+  ['ranges_0',['ranges',['../namespacemain.html#ad11a1805dd4f6710e9566106c6f795f2',1,'main']]]
 ];

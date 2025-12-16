@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['random_5fstate_0',['random_state',['../namespacesurrogate__model.html#af7d930ad2e49fbcb2875d45bf38fd141',1,'surrogate_model']]],
-  ['regularizer_1',['regularizer',['../namespacesurrogate__model.html#a3bb32cf268bff9a8c2c58d8b1c953e5c',1,'surrogate_model']]],
-  ['regularizers_2',['regularizers',['../namespacesurrogate__model.html#a4a15cd0e5b17023545c87b8427f90507',1,'surrogate_model']]]
+  ['parameters_5ffile_5fname_0',['parameters_file_name',['../namespacemain.html#ae1e27c1662a071a2fb564336bcf689e5',1,'main']]],
+  ['plot_5fnumber_1',['plot_number',['../namespacemain.html#ae821d47b9d5cb5ac1e8c50e1e2d0bf1e',1,'main']]],
+  ['positional_5fencoding_5ffrequencies_2',['positional_encoding_frequencies',['../classmodel_1_1DenseNetwork.html#a0a0ca8bf596b36edd2123f2cc77855b0',1,'model::DenseNetwork']]]
 ];

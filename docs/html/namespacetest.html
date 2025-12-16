@@ -70,49 +70,85 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">test Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_1_1PyClass.html">PyClass</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentation for a class.  <a href="classtest_1_1PyClass.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3a13488ce67033113c283032c206cf89" id="r_a3a13488ce67033113c283032c206cf89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetest.html#a3a13488ce67033113c283032c206cf89">func</a> (a)</td></tr>
-<tr class="memdesc:a3a13488ce67033113c283032c206cf89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Documentation for a function.  <br /></td></tr>
-<tr class="separator:a3a13488ce67033113c283032c206cf89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada2e3cbf54beaacf75b8eb9f6ab3d643" id="r_ada2e3cbf54beaacf75b8eb9f6ab3d643"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetest.html#ada2e3cbf54beaacf75b8eb9f6ab3d643">test</a> (list[str] names, list[tuple] ranges, list[int] num_points, str geometry_input, str parameters_file_name=&quot;parameters.csv&quot;, str data_folder=&quot;test&quot;, int plot_number=None)</td></tr>
+<tr class="separator:ada2e3cbf54beaacf75b8eb9f6ab3d643"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a3a13488ce67033113c283032c206cf89" name="a3a13488ce67033113c283032c206cf89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a13488ce67033113c283032c206cf89">&#9670;&#160;</a></span>func()</h2>
+<a id="ada2e3cbf54beaacf75b8eb9f6ab3d643" name="ada2e3cbf54beaacf75b8eb9f6ab3d643"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada2e3cbf54beaacf75b8eb9f6ab3d643">&#9670;&#160;</a></span>test()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">test.func </td>
+          <td class="memname">test </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>a</em></td><td>)</td>
+          <td class="paramtype">list[str]&#160;</td>
+          <td class="paramname"><em>names</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">list[tuple]&#160;</td>
+          <td class="paramname"><em>ranges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">list[int]&#160;</td>
+          <td class="paramname"><em>num_points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>geometry_input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>parameters_file_name</em> = <code>&quot;parameters.csv&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>data_folder</em> = <code>&quot;test&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>plot_number</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Documentation for a function. </p>
-<p>More details. </p><dl class="params"><dt>Parameters</dt><dd>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">a</td><td>The first parameter. </td></tr>
+    <tr><td class="paramname">names</td><td>(list[str]): List of the names, that appear in the geometry file of the quantities. </td></tr>
+    <tr><td class="paramname">ranges</td><td>(list[tuple]): List of ranges for each quantity. </td></tr>
+    <tr><td class="paramname">num_points</td><td>(list[int]): List of number of points to generate within the specified ranges for each quantity. </td></tr>
+    <tr><td class="paramname">geometry_input</td><td>(str): Path to the input geometry file. </td></tr>
+    <tr><td class="paramname">parameters_file_name</td><td>(str): name of the parameters file to save the generated parameters. </td></tr>
+    <tr><td class="paramname">data_folder</td><td>(str): path to the data folder. </td></tr>
+    <tr><td class="paramname">plot_number</td><td>(int): number of the solution to plot. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The return value. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If plot_number is None, no plots are generated. </dd></dl>
 
 </div>
 </div>

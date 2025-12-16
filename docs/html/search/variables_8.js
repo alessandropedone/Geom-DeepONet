@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['metrics_0',['metrics',['../namespacesurrogate__model.html#a7000337e0c579748d16d0d946cbf8747',1,'surrogate_model']]],
-  ['model_1',['model',['../classtemp_1_1NN__Model.html#ae70b673feb442d04b597baebc945422e',1,'temp.NN_Model.model'],['../namespacesurrogate__model.html#a0c8d709c0ab1febfa27ab9df3726a6a9',1,'surrogate_model.model']]]
+  ['l1_5fcoeff_0',['l1_coeff',['../classmodel_1_1DenseNetwork.html#a10f6259fd9b2d16beaf63f9dcd60285f',1,'model::DenseNetwork']]],
+  ['l2_5fcoeff_1',['l2_coeff',['../classmodel_1_1DenseNetwork.html#a4bb00c986cb851a31e3011c75ce6c985',1,'model::DenseNetwork']]],
+  ['layer_5fnormalization_2',['layer_normalization',['../classmodel_1_1DenseNetwork.html#a020d3d36b94bfffb34bec9cb3e76bd83',1,'model::DenseNetwork']]],
+  ['leaky_5frelu_5falpha_3',['leaky_relu_alpha',['../classmodel_1_1DenseNetwork.html#ab11505e982bcbd4f759b28ac932fa275',1,'model::DenseNetwork']]],
+  ['learnable_4',['learnable',['../classmodel_1_1FourierFeatures.html#af3cb91bccbaf738c97e087b588733df7',1,'model::FourierFeatures']]]
 ];

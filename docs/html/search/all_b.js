@@ -1,7 +1,16 @@
 var searchData=
 [
-  ['nn_5fmodel_0',['NN_Model',['../classtemp_1_1NN__Model.html',1,'temp']]],
-  ['norm_5flayer_1',['norm_layer',['../namespacesurrogate__model.html#a184966ef2414e40f63ecbabbf2c0b925',1,'surrogate_model']]],
-  ['normal_5fderivative_2',['normal_derivative',['../namespacesurrogate__model.html#af9ba194ec45f4e553da1361c210e521e',1,'surrogate_model']]],
-  ['normal_5fderivatives_3',['normal_derivatives',['../namespacemain.html#a6dab7e31254931afb087ec248ea8aff3',1,'main']]]
+  ['main_0',['main',['../namespacemain.html',1,'']]],
+  ['main_2epy_1',['main.py',['../main_8py.html',1,'']]],
+  ['masked_5flosses_2',['masked_losses',['../namespacemasked__losses.html',1,'']]],
+  ['masked_5flosses_2epy_3',['masked_losses.py',['../masked__losses_8py.html',1,'']]],
+  ['masked_5fmae_4',['masked_mae',['../namespacemasked__losses.html#adb7e0a3a40b223e8924e2e62aa99eef7',1,'masked_losses']]],
+  ['masked_5fmse_5',['masked_mse',['../namespacemasked__losses.html#a1cb385461aa385fe86faa52a16811b29',1,'masked_losses']]],
+  ['max_5fexp_6',['max_exp',['../classmodel_1_1LogUniformFreqInitializer.html#ab0e43d7e7dd432026d81e31858b74a3e',1,'model::LogUniformFreqInitializer']]],
+  ['mesh_7',['mesh',['../namespacemesh.html',1,'']]],
+  ['mesh_2epy_8',['mesh.py',['../mesh_8py.html',1,'']]],
+  ['min_5fexp_9',['min_exp',['../classmodel_1_1LogUniformFreqInitializer.html#acc549f62600727278dcacfa85c18004e',1,'model::LogUniformFreqInitializer']]],
+  ['model_10',['model',['../namespacemodel.html',1,'']]],
+  ['model_2epy_11',['model.py',['../model_8py.html',1,'']]],
+  ['modify_5fquantity_12',['modify_quantity',['../namespacegeometry.html#abc3ceb100ab8fc056d1e07bcf6540b76',1,'geometry']]]
 ];

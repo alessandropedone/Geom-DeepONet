@@ -77,20 +77,77 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aba14bc2f19ea848b2d702b43d4a2deb1" id="r_aba14bc2f19ea848b2d702b43d4a2deb1"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplot__prediction.html#aba14bc2f19ea848b2d702b43d4a2deb1">plot_prediction</a> (np.ndarray x, np.ndarray y, str model_path)</td></tr>
-<tr class="separator:aba14bc2f19ea848b2d702b43d4a2deb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4c9969bbdf198a41879a9cd448abef1" id="r_aa4c9969bbdf198a41879a9cd448abef1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplot__prediction.html#aa4c9969bbdf198a41879a9cd448abef1">plot_random_prediction</a> (str model_path)</td></tr>
-<tr class="separator:aa4c9969bbdf198a41879a9cd448abef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af784c678d1f9b24bb06ff42b11304509" id="r_af784c678d1f9b24bb06ff42b11304509"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplot__prediction.html#af784c678d1f9b24bb06ff42b11304509">plot_prediction</a> (np.ndarray x, np.ndarray y, str model_path, bool don=False)</td></tr>
+<tr class="separator:af784c678d1f9b24bb06ff42b11304509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa57990bc14f2c6b107256e87d3830f53" id="r_aa57990bc14f2c6b107256e87d3830f53"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplot__prediction.html#aa57990bc14f2c6b107256e87d3830f53">plot_random_prediction</a> (str model_path, bool don=False)</td></tr>
+<tr class="separator:aa57990bc14f2c6b107256e87d3830f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b378b506f2dc6846c80aa4640f47b7" id="r_a39b378b506f2dc6846c80aa4640f47b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplot__prediction.html#a39b378b506f2dc6846c80aa4640f47b7">plot_comparison</a> (x, y, z_real, z_approx, title=&quot;Function Comparison&quot;)</td></tr>
+<tr class="separator:a39b378b506f2dc6846c80aa4640f47b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e478505455a80f82fcebcd2f1cddc4a" id="r_a8e478505455a80f82fcebcd2f1cddc4a"><td class="memItemLeft" align="right" valign="top">None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceplot__prediction.html#a8e478505455a80f82fcebcd2f1cddc4a">plot_prediction_2D</a> (np.array mu, np.ndarray x, np.ndarray y, np.ndarray z, str model_path)</td></tr>
+<tr class="separator:a8e478505455a80f82fcebcd2f1cddc4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aba14bc2f19ea848b2d702b43d4a2deb1" name="aba14bc2f19ea848b2d702b43d4a2deb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba14bc2f19ea848b2d702b43d4a2deb1">&#9670;&#160;</a></span>plot_prediction()</h2>
+<a id="a39b378b506f2dc6846c80aa4640f47b7" name="a39b378b506f2dc6846c80aa4640f47b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b378b506f2dc6846c80aa4640f47b7">&#9670;&#160;</a></span>plot_comparison()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"> None plot_prediction.plot_prediction </td>
+          <td class="memname">plot_comparison </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z_real</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z_approx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>title</em> = <code>&quot;Function&#160;Comparison&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Plot comparison between real function and approximation in 3D
+
+Parameters:
+x, y: 1D arrays of point coordinates
+z_real: real function values at points
+z_approx: approximated function values at points
+title: plot title
+</pre> 
+</div>
+</div>
+<a id="af784c678d1f9b24bb06ff42b11304509" name="af784c678d1f9b24bb06ff42b11304509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af784c678d1f9b24bb06ff42b11304509">&#9670;&#160;</a></span>plot_prediction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None plot_prediction </td>
           <td>(</td>
           <td class="paramtype">np.ndarray&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -105,7 +162,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>model_path</em>&#160;</td>
+          <td class="paramname"><em>model_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>don</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -127,18 +190,74 @@ Plot the prediction from the surrogate model.
 </pre> 
 </div>
 </div>
-<a id="aa4c9969bbdf198a41879a9cd448abef1" name="aa4c9969bbdf198a41879a9cd448abef1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4c9969bbdf198a41879a9cd448abef1">&#9670;&#160;</a></span>plot_random_prediction()</h2>
+<a id="a8e478505455a80f82fcebcd2f1cddc4a" name="a8e478505455a80f82fcebcd2f1cddc4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e478505455a80f82fcebcd2f1cddc4a">&#9670;&#160;</a></span>plot_prediction_2D()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">plot_prediction.plot_random_prediction </td>
+          <td class="memname"> None plot_prediction_2D </td>
+          <td>(</td>
+          <td class="paramtype">np.array&#160;</td>
+          <td class="paramname"><em>mu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>model_path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa57990bc14f2c6b107256e87d3830f53" name="aa57990bc14f2c6b107256e87d3830f53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa57990bc14f2c6b107256e87d3830f53">&#9670;&#160;</a></span>plot_random_prediction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> None plot_random_prediction </td>
           <td>(</td>
           <td class="paramtype">str&#160;</td>
-          <td class="paramname"><em>model_path</em></td><td>)</td>
+          <td class="paramname"><em>model_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>don</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

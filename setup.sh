@@ -29,7 +29,8 @@ conda install -c conda-forge gmsh python-gmsh -y
 
 # Install Python packages with pip
 echo -e "${YELLOW}Installing additional Python packages with pip...${NC}"
-pip install scikit-learn meshio
+pip install scikit-learn meshio alphashape
+conda install tqdm
 
 # Install CUDA toolkit
 echo -e "${GREEN}Installing CUDA toolkit...${NC}"

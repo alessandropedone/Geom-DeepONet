@@ -1,4 +1,5 @@
 *.msh
+*.h5
 **/__pycache__/
 libdevice.10.bc
 logs/

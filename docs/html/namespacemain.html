@@ -77,258 +77,114 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a6dab7e31254931afb087ec248ea8aff3" id="r_a6dab7e31254931afb087ec248ea8aff3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a6dab7e31254931afb087ec248ea8aff3">normal_derivatives</a> = pd.read_csv('data/normal_derivative_potential.csv')</td></tr>
-<tr class="separator:a6dab7e31254931afb087ec248ea8aff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff1da3d713d6224ead434af140f18e0c" id="r_aff1da3d713d6224ead434af140f18e0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#aff1da3d713d6224ead434af140f18e0c">coordinates</a> = pd.read_csv('data/coordinates.csv')</td></tr>
-<tr class="separator:aff1da3d713d6224ead434af140f18e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad32592b28f6f86098ef4d5e8e41480b7" id="r_ad32592b28f6f86098ef4d5e8e41480b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ad32592b28f6f86098ef4d5e8e41480b7">values</a> = normal_derivatives.iloc[i, 4:].astype(float)</td></tr>
-<tr class="separator:ad32592b28f6f86098ef4d5e8e41480b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae09d75418ce368e75e2b1f42ce0ae071" id="r_ae09d75418ce368e75e2b1f42ce0ae071"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ae09d75418ce368e75e2b1f42ce0ae071">coords</a> = coordinates.iloc[i, 4:].astype(float)</td></tr>
-<tr class="separator:ae09d75418ce368e75e2b1f42ce0ae071"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aced2f0e5b178381f9f0a0bf045d8b11d" id="r_aced2f0e5b178381f9f0a0bf045d8b11d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#aced2f0e5b178381f9f0a0bf045d8b11d">label</a></td></tr>
-<tr class="separator:aced2f0e5b178381f9f0a0bf045d8b11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd5a73d049a188d4068ab446d75ceba8" id="r_acd5a73d049a188d4068ab446d75ceba8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#acd5a73d049a188d4068ab446d75ceba8">idx</a> = i * 10</td></tr>
-<tr class="separator:acd5a73d049a188d4068ab446d75ceba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a158c1e3e959d1e70bd19d15e42f317b6" id="r_a158c1e3e959d1e70bd19d15e42f317b6"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a158c1e3e959d1e70bd19d15e42f317b6">path</a> = 'data/results/1_solution.h5'</td></tr>
-<tr class="separator:a158c1e3e959d1e70bd19d15e42f317b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4b1e3efc2d153540df634a233363a7b" id="r_af4b1e3efc2d153540df634a233363a7b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#af4b1e3efc2d153540df634a233363a7b">coordinates_x</a> = file['coord_x'][:]</td></tr>
-<tr class="separator:af4b1e3efc2d153540df634a233363a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d7fc58e52cdc19de3bbc9ab588bf415" id="r_a5d7fc58e52cdc19de3bbc9ab588bf415"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a5d7fc58e52cdc19de3bbc9ab588bf415">coordinates_y</a> = file['coord_y'][:]</td></tr>
-<tr class="separator:a5d7fc58e52cdc19de3bbc9ab588bf415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe4c267a63409b1b7cd9c6aaf0779b4a" id="r_abe4c267a63409b1b7cd9c6aaf0779b4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#abe4c267a63409b1b7cd9c6aaf0779b4a">potential</a> = file['potential'][:]</td></tr>
-<tr class="separator:abe4c267a63409b1b7cd9c6aaf0779b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8614a79a4b8c3223d34302e4982ae5fe" id="r_a8614a79a4b8c3223d34302e4982ae5fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a8614a79a4b8c3223d34302e4982ae5fe">grad_x</a> = file['grad_x'][:]</td></tr>
-<tr class="separator:a8614a79a4b8c3223d34302e4982ae5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6614cb2e43d868a292cdbf926e0a0c6" id="r_af6614cb2e43d868a292cdbf926e0a0c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#af6614cb2e43d868a292cdbf926e0a0c6">grad_y</a> = file['grad_y'][:]</td></tr>
-<tr class="separator:af6614cb2e43d868a292cdbf926e0a0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad759577e53e2ce061239002d8a592cc5" id="r_ad759577e53e2ce061239002d8a592cc5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ad759577e53e2ce061239002d8a592cc5">c</a></td></tr>
-<tr class="separator:ad759577e53e2ce061239002d8a592cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc1dacfb4a7a4585f28206418afa7c25" id="r_adc1dacfb4a7a4585f28206418afa7c25"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#adc1dacfb4a7a4585f28206418afa7c25">cmap</a></td></tr>
-<tr class="separator:adc1dacfb4a7a4585f28206418afa7c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a774ea7d72ce3cfb50032980875f3d5e9" id="r_a774ea7d72ce3cfb50032980875f3d5e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a774ea7d72ce3cfb50032980875f3d5e9">s</a></td></tr>
-<tr class="separator:a774ea7d72ce3cfb50032980875f3d5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61a7486a18fe01a7b980543dfc251247" id="r_a61a7486a18fe01a7b980543dfc251247"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a61a7486a18fe01a7b980543dfc251247">alpha</a></td></tr>
-<tr class="separator:a61a7486a18fe01a7b980543dfc251247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942bea598b93c974c0d84f133ad351df" id="r_a942bea598b93c974c0d84f133ad351df"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a942bea598b93c974c0d84f133ad351df">data_folder</a> = &quot;test&quot;</td></tr>
+<tr class="separator:a942bea598b93c974c0d84f133ad351df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9df0b08f5a808d295f7a8335151070" id="r_a7d9df0b08f5a808d295f7a8335151070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a7d9df0b08f5a808d295f7a8335151070">names</a></td></tr>
+<tr class="separator:a7d9df0b08f5a808d295f7a8335151070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad11a1805dd4f6710e9566106c6f795f2" id="r_ad11a1805dd4f6710e9566106c6f795f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ad11a1805dd4f6710e9566106c6f795f2">ranges</a></td></tr>
+<tr class="separator:ad11a1805dd4f6710e9566106c6f795f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4660142d9668daf7fe0984e1c0d2e0ff" id="r_a4660142d9668daf7fe0984e1c0d2e0ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a4660142d9668daf7fe0984e1c0d2e0ff">num_points</a></td></tr>
+<tr class="separator:a4660142d9668daf7fe0984e1c0d2e0ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a709f05e2d3a36579959b4fc62f720dea" id="r_a709f05e2d3a36579959b4fc62f720dea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#a709f05e2d3a36579959b4fc62f720dea">geometry_input</a></td></tr>
+<tr class="separator:a709f05e2d3a36579959b4fc62f720dea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1e27c1662a071a2fb564336bcf689e5" id="r_ae1e27c1662a071a2fb564336bcf689e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ae1e27c1662a071a2fb564336bcf689e5">parameters_file_name</a></td></tr>
+<tr class="separator:ae1e27c1662a071a2fb564336bcf689e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae821d47b9d5cb5ac1e8c50e1e2d0bf1e" id="r_ae821d47b9d5cb5ac1e8c50e1e2d0bf1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemain.html#ae821d47b9d5cb5ac1e8c50e1e2d0bf1e">plot_number</a></td></tr>
+<tr class="separator:ae821d47b9d5cb5ac1e8c50e1e2d0bf1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a61a7486a18fe01a7b980543dfc251247" name="a61a7486a18fe01a7b980543dfc251247"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61a7486a18fe01a7b980543dfc251247">&#9670;&#160;</a></span>alpha</h2>
+<a id="a942bea598b93c974c0d84f133ad351df" name="a942bea598b93c974c0d84f133ad351df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a942bea598b93c974c0d84f133ad351df">&#9670;&#160;</a></span>data_folder</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.alpha</td>
+          <td class="memname">data_folder = &quot;test&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ad759577e53e2ce061239002d8a592cc5" name="ad759577e53e2ce061239002d8a592cc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad759577e53e2ce061239002d8a592cc5">&#9670;&#160;</a></span>c</h2>
+<a id="a709f05e2d3a36579959b4fc62f720dea" name="a709f05e2d3a36579959b4fc62f720dea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a709f05e2d3a36579959b4fc62f720dea">&#9670;&#160;</a></span>geometry_input</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.c</td>
+          <td class="memname">geometry_input</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="adc1dacfb4a7a4585f28206418afa7c25" name="adc1dacfb4a7a4585f28206418afa7c25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc1dacfb4a7a4585f28206418afa7c25">&#9670;&#160;</a></span>cmap</h2>
+<a id="a7d9df0b08f5a808d295f7a8335151070" name="a7d9df0b08f5a808d295f7a8335151070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d9df0b08f5a808d295f7a8335151070">&#9670;&#160;</a></span>names</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.cmap</td>
+          <td class="memname">names</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aff1da3d713d6224ead434af140f18e0c" name="aff1da3d713d6224ead434af140f18e0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff1da3d713d6224ead434af140f18e0c">&#9670;&#160;</a></span>coordinates</h2>
+<a id="a4660142d9668daf7fe0984e1c0d2e0ff" name="a4660142d9668daf7fe0984e1c0d2e0ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4660142d9668daf7fe0984e1c0d2e0ff">&#9670;&#160;</a></span>num_points</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.coordinates = pd.read_csv('data/coordinates.csv')</td>
+          <td class="memname">num_points</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af4b1e3efc2d153540df634a233363a7b" name="af4b1e3efc2d153540df634a233363a7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4b1e3efc2d153540df634a233363a7b">&#9670;&#160;</a></span>coordinates_x</h2>
+<a id="ae1e27c1662a071a2fb564336bcf689e5" name="ae1e27c1662a071a2fb564336bcf689e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1e27c1662a071a2fb564336bcf689e5">&#9670;&#160;</a></span>parameters_file_name</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.coordinates_x = file['coord_x'][:]</td>
+          <td class="memname">parameters_file_name</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5d7fc58e52cdc19de3bbc9ab588bf415" name="a5d7fc58e52cdc19de3bbc9ab588bf415"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d7fc58e52cdc19de3bbc9ab588bf415">&#9670;&#160;</a></span>coordinates_y</h2>
+<a id="ae821d47b9d5cb5ac1e8c50e1e2d0bf1e" name="ae821d47b9d5cb5ac1e8c50e1e2d0bf1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae821d47b9d5cb5ac1e8c50e1e2d0bf1e">&#9670;&#160;</a></span>plot_number</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.coordinates_y = file['coord_y'][:]</td>
+          <td class="memname">plot_number</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae09d75418ce368e75e2b1f42ce0ae071" name="ae09d75418ce368e75e2b1f42ce0ae071"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae09d75418ce368e75e2b1f42ce0ae071">&#9670;&#160;</a></span>coords</h2>
+<a id="ad11a1805dd4f6710e9566106c6f795f2" name="ad11a1805dd4f6710e9566106c6f795f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad11a1805dd4f6710e9566106c6f795f2">&#9670;&#160;</a></span>ranges</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">main.coords = coordinates.iloc[i, 4:].astype(float)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8614a79a4b8c3223d34302e4982ae5fe" name="a8614a79a4b8c3223d34302e4982ae5fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8614a79a4b8c3223d34302e4982ae5fe">&#9670;&#160;</a></span>grad_x</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.grad_x = file['grad_x'][:]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af6614cb2e43d868a292cdbf926e0a0c6" name="af6614cb2e43d868a292cdbf926e0a0c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6614cb2e43d868a292cdbf926e0a0c6">&#9670;&#160;</a></span>grad_y</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.grad_y = file['grad_y'][:]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="acd5a73d049a188d4068ab446d75ceba8" name="acd5a73d049a188d4068ab446d75ceba8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd5a73d049a188d4068ab446d75ceba8">&#9670;&#160;</a></span>idx</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int main.idx = i * 10</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aced2f0e5b178381f9f0a0bf045d8b11d" name="aced2f0e5b178381f9f0a0bf045d8b11d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aced2f0e5b178381f9f0a0bf045d8b11d">&#9670;&#160;</a></span>label</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.label</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6dab7e31254931afb087ec248ea8aff3" name="a6dab7e31254931afb087ec248ea8aff3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6dab7e31254931afb087ec248ea8aff3">&#9670;&#160;</a></span>normal_derivatives</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.normal_derivatives = pd.read_csv('data/normal_derivative_potential.csv')</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a158c1e3e959d1e70bd19d15e42f317b6" name="a158c1e3e959d1e70bd19d15e42f317b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a158c1e3e959d1e70bd19d15e42f317b6">&#9670;&#160;</a></span>path</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">str main.path = 'data/results/1_solution.h5'</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abe4c267a63409b1b7cd9c6aaf0779b4a" name="abe4c267a63409b1b7cd9c6aaf0779b4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe4c267a63409b1b7cd9c6aaf0779b4a">&#9670;&#160;</a></span>potential</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.potential = file['potential'][:]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a774ea7d72ce3cfb50032980875f3d5e9" name="a774ea7d72ce3cfb50032980875f3d5e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a774ea7d72ce3cfb50032980875f3d5e9">&#9670;&#160;</a></span>s</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.s</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad32592b28f6f86098ef4d5e8e41480b7" name="ad32592b28f6f86098ef4d5e8e41480b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad32592b28f6f86098ef4d5e8e41480b7">&#9670;&#160;</a></span>values</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">main.values = normal_derivatives.iloc[i, 4:].astype(float)</td>
+          <td class="memname">ranges</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['remove_5fmsh_5ffiles_0',['remove_msh_files',['../namespaceremove.html#afda99427833529cd4e4eb94b76fb42be',1,'remove']]],
-  ['reset_5fdata_1',['reset_data',['../namespacegeometry__generation.html#a60cc4d28cb6d5560f18c9ee9d170abc4',1,'geometry_generation']]],
-  ['reset_5fenvironment_2',['reset_environment',['../namespaceremove.html#a92ddd6b34bd453f1809b8c5d8b566d22',1,'remove']]],
-  ['rotate_5fupper_5fplate_3',['rotate_upper_plate',['../namespacegeometry__generation.html#a69fded3ee1a62055c9f050966f8fafd9',1,'geometry_generation']]]
+  ['masked_5fmae_0',['masked_mae',['../namespacemasked__losses.html#adb7e0a3a40b223e8924e2e62aa99eef7',1,'masked_losses']]],
+  ['masked_5fmse_1',['masked_mse',['../namespacemasked__losses.html#a1cb385461aa385fe86faa52a16811b29',1,'masked_losses']]],
+  ['modify_5fquantity_2',['modify_quantity',['../namespacegeometry.html#abc3ceb100ab8fc056d1e07bcf6540b76',1,'geometry']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['plot_5fprediction_0',['plot_prediction',['../namespaceplot__prediction.html',1,'']]]
+  ['load_5fsolutions_0',['load_solutions',['../namespaceload__solutions.html',1,'']]]
 ];

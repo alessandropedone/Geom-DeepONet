@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['accuracy_0',['accuracy',['../namespacesurrogate__model.html#aef0b3e2df05b659a5f0aff98015d4608',1,'surrogate_model']]],
-  ['alpha_1',['alpha',['../namespacemain.html#a61a7486a18fe01a7b980543dfc251247',1,'main']]]
+  ['activation_0',['activation',['../classmodel_1_1DenseNetwork.html#afb48c77b940e72202e88467ffd2e33ae',1,'model::DenseNetwork']]],
+  ['all_5flayers_1',['all_layers',['../classmodel_1_1DenseNetwork.html#a2dbc5db513b38892f940a3dbd5a93135',1,'model::DenseNetwork']]]
 ];

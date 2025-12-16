@@ -1,14 +1,9 @@
 var searchData=
 [
-  ['c_0',['c',['../namespacemain.html#ad759577e53e2ce061239002d8a592cc5',1,'main']]],
-  ['callbacks_1',['callbacks',['../namespacesurrogate__model.html#aaedbf1d6cbd642783e755fbe8abb1378',1,'surrogate_model']]],
-  ['cmap_2',['cmap',['../namespacemain.html#adc1dacfb4a7a4585f28206418afa7c25',1,'main']]],
-  ['combine_5ftemp_5ffiles_3',['combine_temp_files',['../namespacedataset__generation.html#a979325b77a0b13ec44dfef9d98202175',1,'dataset_generation']]],
-  ['convergence_4',['convergence',['../namespaceconvergence.html',1,'']]],
-  ['convergence_2epy_5',['convergence.py',['../convergence_8py.html',1,'']]],
-  ['coordinates_6',['coordinates',['../namespacemain.html#aff1da3d713d6224ead434af140f18e0c',1,'main.coordinates'],['../namespacesurrogate__model.html#a8e044be4e62fda4d771f579503f17533',1,'surrogate_model.coordinates']]],
-  ['coordinates_5fx_7',['coordinates_x',['../namespacemain.html#af4b1e3efc2d153540df634a233363a7b',1,'main']]],
-  ['coordinates_5fy_8',['coordinates_y',['../namespacemain.html#a5d7fc58e52cdc19de3bbc9ab588bf415',1,'main']]],
-  ['coords_9',['coords',['../namespacemain.html#ae09d75418ce368e75e2b1f42ce0ae071',1,'main']]],
-  ['coupling_20traditional_20solvers_20and_20dl_20roms_10',['Coupling Traditional solvers and DL-ROMs',['../index.html',1,'']]]
+  ['call_0',['call',['../classmodel_1_1FourierFeatures.html#a0abc876e31e2f4f486f3842695f70fbd',1,'model.FourierFeatures.call()'],['../classmodel_1_1DenseNetwork.html#a0abc876e31e2f4f486f3842695f70fbd',1,'model.DenseNetwork.call()'],['../classmodel_1_1EinsumLayer.html#a76bf60b97d053984f875ea69afd0c998',1,'model.EinsumLayer.call()'],['../classmodel_1_1DeepONet.html#a81585f1b999a8c892584a71244b8c358',1,'model.DeepONet.call()']]],
+  ['cells_5fplot_1',['cells_plot',['../namespaceplot.html#a8edb656307ca930dc4bb5036b13bd630',1,'plot']]],
+  ['clean_2',['clean',['../namespaceclean.html',1,'']]],
+  ['clean_2epy_3',['clean.py',['../clean_8py.html',1,'']]],
+  ['compute_5fboundary_5fnormals_5fand_5fmidpoints_4',['compute_boundary_normals_and_midpoints',['../namespacefom.html#a13069abf83a275590e833fadfe7e3281',1,'fom']]],
+  ['coupling_20traditional_20solvers_20and_20dl_20roms_5',['Coupling Traditional solvers and DL-ROMs',['../index.html',1,'']]]
 ];

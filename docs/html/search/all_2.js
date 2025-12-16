@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['batch_5fsize_0',['batch_size',['../namespacesurrogate__model.html#ab11f74943d259fca6170e631cf1a6d72',1,'surrogate_model']]],
-  ['build_5fmodel_1',['build_model',['../classtemp_1_1NN__Model.html#a0d0060640900fdf47d5e5969a9bee908',1,'temp::NN_Model']]]
+  ['batch_5fnormalization_0',['batch_normalization',['../classmodel_1_1DenseNetwork.html#a44151a1eb1ee5c9acb0c1d2f866c73c1',1,'model::DenseNetwork']]],
+  ['branch_1',['branch',['../classmodel_1_1DeepONet.html#af2f6c220bf91a336389b049116e4700a',1,'model::DeepONet']]],
+  ['build_2',['build',['../classmodel_1_1FourierFeatures.html#adc427e05d89905a0c5369162b24f900c',1,'model.FourierFeatures.build()'],['../classmodel_1_1DenseNetwork.html#adc427e05d89905a0c5369162b24f900c',1,'model.DenseNetwork.build()'],['../classmodel_1_1DeepONet.html#adc427e05d89905a0c5369162b24f900c',1,'model.DeepONet.build()']]]
 ];

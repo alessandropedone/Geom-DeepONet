@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['norm_5flayer_0',['norm_layer',['../namespacesurrogate__model.html#a184966ef2414e40f63ecbabbf2c0b925',1,'surrogate_model']]],
-  ['normal_5fderivative_1',['normal_derivative',['../namespacesurrogate__model.html#af9ba194ec45f4e553da1361c210e521e',1,'surrogate_model']]],
-  ['normal_5fderivatives_2',['normal_derivatives',['../namespacemain.html#a6dab7e31254931afb087ec248ea8aff3',1,'main']]]
+  ['max_5fexp_0',['max_exp',['../classmodel_1_1LogUniformFreqInitializer.html#ab0e43d7e7dd432026d81e31858b74a3e',1,'model::LogUniformFreqInitializer']]],
+  ['min_5fexp_1',['min_exp',['../classmodel_1_1LogUniformFreqInitializer.html#acc549f62600727278dcacfa85c18004e',1,'model::LogUniformFreqInitializer']]]
 ];
