@@ -191,7 +191,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../data.html">data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../surrogate.html">Surrogate package</a></li>
 </ul>
 
 </div>
@@ -225,22 +227,42 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for surrogate.losses</h1><div class="highlight"><pre>
-<span></span><span class="c1">## @package losses</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module implements masked loss functions for handling NaN values in the target data.</span>
+<span class="sd">These loss functions can be used in TensorFlow/Keras models to ignore NaN values during training</span>
+<span class="sd">and evaluation.</span>
+
+<span class="sd">.. note::</span>
+<span class="sd">    </span>
+<span class="sd">    Be very careful about precision, since here tf.reduce_sum(mask) </span>
+<span class="sd">    can be very big if the number of points in a batch is large.</span>
+<span class="sd">    Here we use float32 globally to avoid issues, </span>
+<span class="sd">    that ensure that we don&#39;t get overflow in the summation </span>
+<span class="sd">    when the number of points is less than 3.4e38.</span>
+<span class="sd">    Using mixed precision with float16 would lead to overflow</span>
+<span class="sd">    when the number of points in batch is larger than ~6e4.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">keras.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_keras_serializable</span>
 
-<span class="c1"># Be very careful about precision, since here tf.reduce_sum(mask) </span>
-<span class="c1"># can be very big if the number of points in a batch is large.</span>
-<span class="c1"># Here we use float32 globally to avoid issues, </span>
-<span class="c1"># that ensure that we don&#39;t get overflow in the summation </span>
-<span class="c1"># when the number of points is less than 3.4e38.</span>
-<span class="c1"># Using mixed precision with float16 would lead to overflow</span>
-<span class="c1"># when the number of points in batch is larger than ~6e4.</span>
+
 <div class="viewcode-block" id="masked_mse">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.losses.masked_mse">[docs]</a>
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">masked_mse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">masked_mse</span><span class="p">(</span><span class="n">y_true</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        Compute the masked mean squared error (MSE) between the true and predicted values,</span>
+<span class="sd">        ignoring NaN values in the true data.</span>
+<span class="sd">    </span>
+<span class="sd">    :param y_true: The ground truth values.</span>
+<span class="sd">    :param y_pred: The predicted values.</span>
+
+<span class="sd">    :returns:</span>
+<span class="sd">        - loss (``tf.Tensor``) -- The computed masked mean squared error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="o">~</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -250,7 +272,19 @@
 <div class="viewcode-block" id="masked_mae">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.losses.masked_mae">[docs]</a>
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">masked_mae</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">masked_mae</span><span class="p">(</span><span class="n">y_true</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        Compute the masked mean absolute error (MAE) between the true and predicted values,</span>
+<span class="sd">        ignoring NaN values in the true data.</span>
+<span class="sd">    </span>
+<span class="sd">    :param y_true: The ground truth values.</span>
+<span class="sd">    :param y_pred: The predicted values.</span>
+
+<span class="sd">    :returns:</span>
+<span class="sd">        - loss (``tf.Tensor``) -- The computed masked mean absolute error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mask</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="o">~</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y_true</span><span class="p">)</span>
     <span class="n">y_true</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
