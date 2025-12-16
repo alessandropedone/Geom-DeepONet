@@ -5,13 +5,13 @@ and evaluation.
 
 .. note::
     
-    Be very careful about precision, since here tf.reduce_sum(mask) 
+    Be very careful about precision, since here ``tf.reduce_sum(mask)``
     can be very big if the number of points in a batch is large.
-    Here we use float32 globally to avoid issues, 
+    Here we use ``float32`` globally to avoid issues, 
     that ensure that we don't get overflow in the summation 
-    when the number of points is less than 3.4e38.
-    Using mixed precision with float16 would lead to overflow
-    when the number of points in batch is larger than ~6e4.
+    when the number of points is less than :math:`3.4 \cdot 10^{38}`.
+    Using mixed precision with ``float16`` would lead to overflow
+    when the number of points in batch is larger than :math:`6 \cdot 10^{4}`.
 """
 
 import tensorflow as tf

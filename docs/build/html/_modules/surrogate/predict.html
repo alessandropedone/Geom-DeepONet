@@ -236,7 +236,7 @@
 <span class="sd">.. note::</span>
 
 <span class="sd">    If you sample from the test set, ensure that the splitting seed matches that used during training. </span>
-<span class="sd">    If you are using the model we trained just keep the default value of 40.</span>
+<span class="sd">    If you are using the model we trained just keep the default value of :math:`40`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -253,13 +253,13 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    .. admonition:: Description</span>
 
-<span class="sd">        Find the index of a test sample in the parameters.csv file based on its geometrical parameters.</span>
+<span class="sd">        Find the index of a test sample in the parameters ``.csv`` file based on its geometrical parameters.</span>
 
 <span class="sd">    :param mu: Geometrical parameters of the test sample.</span>
 <span class="sd">    :param data_folder: Path to the data folder.</span>
 
 <span class="sd">    :returns:</span>
-<span class="sd">        - test_sample_number (``int``) -- The index of the test sample in parameters.csv.</span>
+<span class="sd">        - test_sample_number (``int``) -- The index of the test sample in ``parameters.csv``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parameters_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s2">&quot;parameters.csv&quot;</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">parameters_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>

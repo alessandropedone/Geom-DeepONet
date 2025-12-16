@@ -9,9 +9,9 @@ There are several optional arguments to customize the behavior:
 
 - ``--folder``: Path to the data folder (default: "test").
 - ``--model_path``: Path to the trained model file (default: "models/model.keras").
-- ``--splitting_seed``: Random seed for data splitting (default: 40).
+- ``--splitting_seed``: Random seed for data splitting (default: :math:`40`).
 - ``--target``: Target quantity to predict, either "potential" or "normal_derivative" (default: "potential").
-- ``--prediction_seed``: Random seed for test sample selection (default: 40).
+- ``--prediction_seed``: Random seed for test sample selection (default: :math:`40`).
 - ``--using_training_set``: If set, divide the set into training, validation, and test sets as in the training script.
 
 .. note::

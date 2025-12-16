@@ -234,13 +234,13 @@
 
 <span class="sd">.. note::</span>
 <span class="sd">    </span>
-<span class="sd">    Be very careful about precision, since here tf.reduce_sum(mask) </span>
+<span class="sd">    Be very careful about precision, since here ``tf.reduce_sum(mask)``</span>
 <span class="sd">    can be very big if the number of points in a batch is large.</span>
-<span class="sd">    Here we use float32 globally to avoid issues, </span>
+<span class="sd">    Here we use ``float32`` globally to avoid issues, </span>
 <span class="sd">    that ensure that we don&#39;t get overflow in the summation </span>
-<span class="sd">    when the number of points is less than 3.4e38.</span>
-<span class="sd">    Using mixed precision with float16 would lead to overflow</span>
-<span class="sd">    when the number of points in batch is larger than ~6e4.</span>
+<span class="sd">    when the number of points is less than :math:`3.4 \cdot 10^{38}`.</span>
+<span class="sd">    Using mixed precision with ``float16`` would lead to overflow</span>
+<span class="sd">    when the number of points in batch is larger than :math:`6 \cdot 10^{4}`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>

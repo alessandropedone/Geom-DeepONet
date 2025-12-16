@@ -7,9 +7,9 @@ def load(data_folder: str = "test") -> tuple[np.ndarray, np.ndarray, np.ndarray,
     """
     .. admonition:: Description
         
-        Load data from all .h5 files in the specified data folder. 
-        The function reads the geometrical parameters from a CSV 
-        file and loads the corresponding solution data from HDF5 files. 
+        Load data from all ``.h5`` files in the specified data folder. 
+        The function reads the geometrical parameters from a ``.csv`` 
+        file and loads the corresponding solution data from ``.h5`` files. 
         It pads the data arrays to ensure uniform lengths across all samples.
 
     :param data_folder: Path to the data folder.

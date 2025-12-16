@@ -7,7 +7,7 @@ model (FOM) results.
 .. note::
 
     If you sample from the test set, ensure that the splitting seed matches that used during training. 
-    If you are using the model we trained just keep the default value of 40.
+    If you are using the model we trained just keep the default value of :math:`40`.
 """
 import numpy as np
 import os
@@ -22,13 +22,13 @@ def _find_id(mu: np.ndarray,
     """
     .. admonition:: Description
 
-        Find the index of a test sample in the parameters.csv file based on its geometrical parameters.
+        Find the index of a test sample in the parameters ``.csv`` file based on its geometrical parameters.
 
     :param mu: Geometrical parameters of the test sample.
     :param data_folder: Path to the data folder.
 
     :returns:
-        - test_sample_number (``int``) -- The index of the test sample in parameters.csv.
+        - test_sample_number (``int``) -- The index of the test sample in ``parameters.csv``.
     """
     parameters_file = os.path.join(data_folder, "parameters.csv")
     with open(parameters_file, 'r') as f:

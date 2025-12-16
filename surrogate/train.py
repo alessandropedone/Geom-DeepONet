@@ -1,5 +1,19 @@
-## @package train
-# @brief Functions to train surrogate models for geometry-to-solution mapping.
+"""
+This module implements the training procedure for a DeepONet surrogate model
+that learns the mapping from geometrical parameters and spatial coordinates
+to the solution of a physical problem.
+
+Example usage::
+
+    python -m surrogate.train --folder "test/test1" --model_path "models/potential.keras" --target "potential"
+
+There are several optional arguments to customize the behavior:
+- ``--folder``: Path to the data folder (default: "test").
+- ``--model_path``: Path to save the trained model (default: "models/model.keras").
+- ``--r``: Low-rank dimension of the DeepONet (default: :math:`20`).
+- ``--seed``: Random seed for data splitting (default: :math:`40`).
+- ``--target``: Target quantity to predict, either "potential" or "normal_derivative" (default: "potential").
+"""
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
@@ -8,9 +22,13 @@ os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
 import numpy as np
+import argparse
 
 from .model import DenseNetwork, DeepONet
 from .losses import masked_mse, masked_mae
+from .loader import load
+
+
 
 
 def train(model_path: str, 
@@ -19,7 +37,19 @@ def train(model_path: str,
           y:  np.ndarray,
           mu: np.ndarray,
           seed: int = 40) -> None:
+    """
+    .. admonition:: Description
 
+        Train a DeepONet surrogate model to learn the mapping from geometrical parameters 
+        and spatial coordinates to the solution of the physical problem.
+
+    :param model_path: Path to save the trained model.
+    :param r: Low-rank dimension of the DeepONet.
+    :param x: Input coordinates array of shape ``(ns, nh, d)``.
+    :param y: Output solution array of shape ``(ns, nh)``.
+    :param mu: Geometrical parameters array of shape ``(ns, p)``.
+    :param seed: Random seed for data splitting.
+    """
     # Hyperparameters setup ----------------------------------------------------------
     r    = r             # low-rank dimension
     p    = mu.shape[1]   # number of problem parameters = geometrical parameters
@@ -145,32 +175,35 @@ def train(model_path: str,
 
     model.plot_training_history()
 
-# Read input arguments
-import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument("--folder", type=str, default="test", help="Path to the data folder to delete.")
-parser.add_argument("--model_path", type=str, default="models/model.keras", help="Path to save the trained model.")
-parser.add_argument("--r", type=int, default=20, help="Low-rank dimension of the DeepONet.")
-parser.add_argument("--seed", type=int, default=40, help="Random seed for data splitting.")
-parser.add_argument("--target", choices=["potential", "normal_derivative"], default="potential", help="Target quantity to predict.")
-args = parser.parse_args()
-data_folder = args.folder
-model_path = args.model_path
-r = args.r
-seed = args.seed
 
-# Import coordinates dataset and solutions
-from .loader import load
-mu, x, y, potential, x_plate, y_plate, normal_derivatives_plate = load(data_folder=data_folder)
+def main():
+    # Read input arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--folder", type=str, default="test", help="Path to the data folder to delete.")
+    parser.add_argument("--model_path", type=str, default="models/model.keras", help="Path to save the trained model.")
+    parser.add_argument("--r", type=int, default=20, help="Low-rank dimension of the DeepONet.")
+    parser.add_argument("--seed", type=int, default=40, help="Random seed for data splitting.")
+    parser.add_argument("--target", choices=["potential", "normal_derivative"], default="potential", help="Target quantity to predict.")
+    args = parser.parse_args()
+    data_folder = args.folder
+    model_path = args.model_path
+    r = args.r
+    seed = args.seed
 
-# Define input and output arrays
-if args.target == "potential":
-    x = np.stack((x, y), axis=2)
-    y = np.array(potential)
-elif args.target == "normal_derivative":
-    x = np.stack((x_plate, y_plate), axis=2)
-    y = np.array(normal_derivatives_plate)
+    # Import coordinates dataset and solutions
+    mu, x, y, potential, x_plate, y_plate, normal_derivatives_plate = load(data_folder=data_folder)
 
-# Train the model
-from .gpu import run_on_device
-run_on_device(train, model_path=model_path, r=r, x=x, y=y, mu=mu, seed=seed)
+    # Define input and output arrays
+    if args.target == "potential":
+        x = np.stack((x, y), axis=2)
+        y = np.array(potential)
+    elif args.target == "normal_derivative":
+        x = np.stack((x_plate, y_plate), axis=2)
+        y = np.array(normal_derivatives_plate)
+
+    # Train the model
+    from .gpu import run_on_device
+    run_on_device(train, model_path=model_path, r=r, x=x, y=y, mu=mu, seed=seed)
+
+if __name__ == "__main__":
+    main()
