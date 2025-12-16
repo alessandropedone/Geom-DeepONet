@@ -246,9 +246,9 @@
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">--folder</span></code>: Path to the data folder (default: “test”).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--model_path</span></code>: Path to the trained model file (default: “models/model.keras”).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--splitting_seed</span></code>: Random seed for data splitting (default: 40).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--splitting_seed</span></code>: Random seed for data splitting (default: <span class="math notranslate nohighlight">\(40\)</span>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--target</span></code>: Target quantity to predict, either “potential” or “normal_derivative” (default: “potential”).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--prediction_seed</span></code>: Random seed for test sample selection (default: 40).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--prediction_seed</span></code>: Random seed for test sample selection (default: <span class="math notranslate nohighlight">\(40\)</span>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">--using_training_set</span></code>: If set, divide the set into training, validation, and test sets as in the training script.</p></li>
 </ul>
 <div class="admonition note">
@@ -293,9 +293,9 @@ It configures the necessary environment variables and TensorFlow settings to opt
 <span class="sig-prename descclassname"><span class="pre">surrogate.loader.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/loader.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.loader.load" title="Link to this definition">¶</a></dt>
 <dd><div class="admonition-description admonition">
 <p class="admonition-title">Description</p>
-<p>Load data from all .h5 files in the specified data folder.
-The function reads the geometrical parameters from a CSV
-file and loads the corresponding solution data from HDF5 files.
+<p>Load data from all <code class="docutils literal notranslate"><span class="pre">.h5</span></code> files in the specified data folder.
+The function reads the geometrical parameters from a <code class="docutils literal notranslate"><span class="pre">.csv</span></code>
+file and loads the corresponding solution data from <code class="docutils literal notranslate"><span class="pre">.h5</span></code> files.
 It pads the data arrays to ensure uniform lengths across all samples.</p>
 </div>
 <dl class="field-list simple">
@@ -324,13 +324,13 @@ These loss functions can be used in TensorFlow/Keras models to ignore NaN values
 and evaluation.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Be very careful about precision, since here tf.reduce_sum(mask)
+<p>Be very careful about precision, since here <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum(mask)</span></code>
 can be very big if the number of points in a batch is large.
-Here we use float32 globally to avoid issues,
+Here we use <code class="docutils literal notranslate"><span class="pre">float32</span></code> globally to avoid issues,
 that ensure that we don’t get overflow in the summation
-when the number of points is less than 3.4e38.
-Using mixed precision with float16 would lead to overflow
-when the number of points in batch is larger than ~6e4.</p>
+when the number of points is less than <span class="math notranslate nohighlight">\(3.4 \cdot 10^{38}\)</span>.
+Using mixed precision with <code class="docutils literal notranslate"><span class="pre">float16</span></code> would lead to overflow
+when the number of points in batch is larger than <span class="math notranslate nohighlight">\(6 \cdot 10^{4}\)</span>.</p>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="surrogate.losses.masked_mae">
@@ -889,14 +889,14 @@ model (FOM) results.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you sample from the test set, ensure that the splitting seed matches that used during training.
-If you are using the model we trained just keep the default value of 40.</p>
+If you are using the model we trained just keep the default value of <span class="math notranslate nohighlight">\(40\)</span>.</p>
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="surrogate.predict._find_id">
 <span class="sig-prename descclassname"><span class="pre">surrogate.predict.</span></span><span class="sig-name descname"><span class="pre">_find_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/predict.html#_find_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.predict._find_id" title="Link to this definition">¶</a></dt>
 <dd><div class="admonition-description admonition">
 <p class="admonition-title">Description</p>
-<p>Find the index of a test sample in the parameters.csv file based on its geometrical parameters.</p>
+<p>Find the index of a test sample in the parameters <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file based on its geometrical parameters.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -910,7 +910,7 @@ If you are using the model we trained just keep the default value of 40.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p>test_sample_number (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – The index of the test sample in parameters.csv.</p></li>
+<li><p>test_sample_number (<code class="docutils literal notranslate"><span class="pre">int</span></code>) – The index of the test sample in <code class="docutils literal notranslate"><span class="pre">parameters.csv</span></code>.</p></li>
 </ul>
 </p>
 </dd>
@@ -923,8 +923,51 @@ If you are using the model we trained just keep the default value of 40.</p>
 <dd></dd></dl>
 
 </section>
-<section id="surrogate-train">
-<h2>surrogate.train<a class="headerlink" href="#surrogate-train" title="Link to this heading">¶</a></h2>
+<section id="module-surrogate.train">
+<span id="surrogate-train"></span><h2>surrogate.train<a class="headerlink" href="#module-surrogate.train" title="Link to this heading">¶</a></h2>
+<p>This module implements the training procedure for a DeepONet surrogate model
+that learns the mapping from geometrical parameters and spatial coordinates
+to the solution of a physical problem.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">surrogate</span><span class="o">.</span><span class="n">train</span> <span class="o">--</span><span class="n">folder</span> <span class="s2">&quot;test/test1&quot;</span> <span class="o">--</span><span class="n">model_path</span> <span class="s2">&quot;models/potential.keras&quot;</span> <span class="o">--</span><span class="n">target</span> <span class="s2">&quot;potential&quot;</span>
+</pre></div>
+</div>
+<p>There are several optional arguments to customize the behavior:
+- <code class="docutils literal notranslate"><span class="pre">--folder</span></code>: Path to the data folder (default: “test”).
+- <code class="docutils literal notranslate"><span class="pre">--model_path</span></code>: Path to save the trained model (default: “models/model.keras”).
+- <code class="docutils literal notranslate"><span class="pre">--r</span></code>: Low-rank dimension of the DeepONet (default: <span class="math notranslate nohighlight">\(20\)</span>).
+- <code class="docutils literal notranslate"><span class="pre">--seed</span></code>: Random seed for data splitting (default: <span class="math notranslate nohighlight">\(40\)</span>).
+- <code class="docutils literal notranslate"><span class="pre">--target</span></code>: Target quantity to predict, either “potential” or “normal_derivative” (default: “potential”).</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="surrogate.train.main">
+<span class="sig-prename descclassname"><span class="pre">surrogate.train.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/train.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.train.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="surrogate.train.train">
+<span class="sig-prename descclassname"><span class="pre">surrogate.train.</span></span><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/train.html#train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.train.train" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-description admonition">
+<p class="admonition-title">Description</p>
+<p>Train a DeepONet surrogate model to learn the mapping from geometrical parameters
+and spatial coordinates to the solution of the physical problem.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_path</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Path to save the trained model.</p></li>
+<li><p><strong>r</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Low-rank dimension of the DeepONet.</p></li>
+<li><p><strong>x</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – Input coordinates array of shape <code class="docutils literal notranslate"><span class="pre">(ns,</span> <span class="pre">nh,</span> <span class="pre">d)</span></code>.</p></li>
+<li><p><strong>y</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – Output solution array of shape <code class="docutils literal notranslate"><span class="pre">(ns,</span> <span class="pre">nh)</span></code>.</p></li>
+<li><p><strong>mu</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></span>) – Geometrical parameters array of shape <code class="docutils literal notranslate"><span class="pre">(ns,</span> <span class="pre">p)</span></code>.</p></li>
+<li><p><strong>seed</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Random seed for data splitting.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -1035,7 +1078,11 @@ If you are using the model we trained just keep the default value of 40.</p>
 <li><a class="reference internal" href="#surrogate.predict.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#surrogate-train">surrogate.train</a></li>
+<li><a class="reference internal" href="#module-surrogate.train">surrogate.train</a><ul>
+<li><a class="reference internal" href="#surrogate.train.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#surrogate.train.train"><code class="docutils literal notranslate"><span class="pre">train()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
