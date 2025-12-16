@@ -13,7 +13,7 @@ First you can create the __dataset__. Some plots of the domain and the (traditio
 If you want you can play with the number of __workers__ to make the generation faster. 
 
 ```bash
-python -m data.generate --folder "test/test1" --data_file "test/test1.csv" --geometry_input "geometries/cantilever.geo" --workers 2
+python -m data.generate --folder "test/test1" --data_file "test/test1.csv" --geometry_input "geometries/cantilever1.geo" --workers 2
 ```
 
 > Note the real bottleneck of the process in this case is the mesh generation section, since the FOM (Full Order Model) is quite fast, since it's only a laplacian.
@@ -53,11 +53,16 @@ Logs of the training are available and you can open them in your browser using t
 tensorboard --logdir logs
 ```
 
+## Test 2: Bigger Deformations
 
+You can just do the same as above but with the following changes:
+- use `test2` instead of `test1`;
+- changing the reference geometry to `geometries/cantilever2.geo`; 
+- consider now the models `models/potential2.keras` and `models/derivative2.keras`.
 
 ## Test 2: Clamped-Clamped Beam
 
 You can just do the same as above but with the following changes:
-- use `test2` instead of `test1`;
-- changing the reference geometry to `geometries/cantilever.geo`; 
-- consider now the models `models/potential2.keras` and `models/derivative2.keras`.
+- use `test3` instead of `test1`;
+- changing the reference geometry to `geometries/clamed.geo`; 
+- consider now the models `models/potentia3.keras` and `models/derivative3.keras`.

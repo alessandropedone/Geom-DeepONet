@@ -10,7 +10,7 @@ parser.add_argument("--folder", type=str, default="test", help="Path to the data
 parser.add_argument("--model_path", type=str, default="models/model.keras", help="Path to save the trained model.")
 parser.add_argument("--splitting_seed", type=int, default=40, help="Random seed for data splitting.")
 parser.add_argument("--target", choices=["potential", "normal_derivative"], default="potential", help="Target quantity to predict.")
-parser.add_argument("--prediction_seed", type=int, default=43, help="Random seed for test sample selection.")
+parser.add_argument("--prediction_seed", type=int, default=40, help="Random seed for test sample selection.")
 parser.add_argument("--sample_from_test_set", action="store_true", help="If set, sample from the test set; otherwise, sample from the entire dataset.")
 args = parser.parse_args()
 data_folder = args.folder

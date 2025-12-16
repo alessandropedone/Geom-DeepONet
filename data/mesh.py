@@ -69,7 +69,7 @@ def _generate_mesh(i: int, data_folder: str = "test") -> None:
     """
     # Generate the mesh for each geometry
     geo_path = f"{data_folder}/geo/{i}.geo"
-    generate_mesh_from_geo(geo_path, data_folder)
+    _generate_mesh_from_geo(geo_path, data_folder)
 
 
 ##
@@ -101,7 +101,7 @@ def generate_meshes(data_folder: str = "test", empty_mesh_folder: bool = True, m
     geo_indices = [int(geo.stem) for geo in geos]
 
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(generate_mesh, idx, data_folder): idx for idx in geo_indices}
+        futures = {executor.submit(_generate_mesh, idx, data_folder): idx for idx in geo_indices}
         for f in tqdm(
             as_completed(futures),
             total=len(futures),

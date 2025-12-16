@@ -543,9 +543,9 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
             normal_derivative = file["normal_derivatives_plate"][:]
         points = file["midpoints_plate"][:]
         normals = file["normal_vectors_plate"][:]
-        U = normal_derivative * normals[:, 0]
-        V = normal_derivative * normals[:, 1]
-        lengths = np.sqrt(U**2 + V**2)
+        U = normals[:, 0]
+        V = normals[:, 1]
+        lengths = normal_derivative
         norm = (lengths - lengths.min()) / (np.ptp(lengths) + 1e-9)  
         cmap = plt.cm.seismic
         for j in range(len(points)):
@@ -578,9 +578,9 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
 # @param file (h5py.File): h5py file object containing the solution data.
 def summary_plot(file):
     """It creates a summary plot with all relevant plots."""
-    plot_domain(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
-    plot_potential(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)])
-    plot_grad(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], component="x")
-    plot_grad(file, postpone_show=True, zoom=[1, 5, 15], center_points=[(0,0), (0,0), (-50,0)], component="y")
-    plot_normal_derivative(file, postpone_show=True, zoom=[5, 7], center_points=[(0,0), (-40,0)])
+    plot_domain(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)])
+    plot_potential(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)])
+    plot_grad(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)], component="x")
+    plot_grad(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)], component="y")
+    plot_normal_derivative(file, postpone_show=True, zoom=[4], center_points=[(0,0)])
     plt.show()
