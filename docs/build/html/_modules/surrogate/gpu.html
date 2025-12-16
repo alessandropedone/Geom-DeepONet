@@ -191,7 +191,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../data.html">data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../surrogate.html">Surrogate package</a></li>
 </ul>
 
 </div>
@@ -225,23 +227,28 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for surrogate.gpu</h1><div class="highlight"><pre>
-<span></span><span class="c1">## @package gpu</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="c1"># Suppress TensorFlow debug/info logs</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>  <span class="c1"># &quot;0&quot; = all logs, &quot;1&quot; = filter INFO, &quot;2&quot; = filter INFO &amp; WARNING, &quot;3&quot; = only ERRORs</span>
-<span class="c1"># suppress XLA-related logs</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;XLA_FLAGS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;--xla_gpu_cuda_data_dir=&quot;</span>  <span class="c1"># Prevent CUDA libdevice warnings</span>
-
-<span class="c1"># disable absl logs</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">absl.logging</span>
-<span class="n">absl</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">absl</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-
 <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+
 <div class="viewcode-block" id="run_on_device">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.gpu.run_on_device">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">run_on_device</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_on_device</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="nb">callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        This function sets up TensorFlow to run on a GPU if available, otherwise falls back to CPU. </span>
+<span class="sd">        It configures the necessary environment variables and TensorFlow settings to optimize GPU usage.</span>
+
+<span class="sd">    :param func: The function to be executed on the selected device.</span>
+<span class="sd">    :param args: Positional arguments to pass to the function.</span>
+<span class="sd">    :param kwargs: Keyword arguments to pass to the function.</span>
+<span class="sd">    :return: The result of the function execution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>  <span class="c1"># Use GPU 0 only (optional)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_CPP_MIN_LOG_LEVEL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>  <span class="c1"># &quot;0&quot; = all logs, &quot;1&quot; = filter INFO, &quot;2&quot; = filter INFO &amp; WARNING, &quot;3&quot; = only ERRORs</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;XLA_FLAGS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;--xla_gpu_cuda_data_dir=&quot;</span>  <span class="c1"># Prevent CUDA libdevice warnings</span>
+    <span class="n">absl</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">set_verbosity</span><span class="p">(</span><span class="n">absl</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
 
     <span class="c1"># List GPUs and set memory growth</span>
     <span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>

@@ -1,17 +1,24 @@
-## @package load
-# @brief Script to extract and save coordinates from h5 files to get one file
-# for each parameter that contains the values from all of the meshes.
-
 import h5py
 import numpy as np
 import pandas as pd
 import os
   
-## 
-# @param data_folder (str): Path to the data folder.
-def load(data_folder: str = "test"):
+def load(data_folder: str = "test") -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
-    Load data from all HDF5 files in the results folder and return as numpy arrays.
+    .. admonition:: Description
+        
+        Load data from all .h5 files in the specified data folder. 
+        The function reads the geometrical parameters from a CSV 
+        file and loads the corresponding solution data from HDF5 files. 
+        It pads the data arrays to ensure uniform lengths across all samples.
+
+    :param data_folder: Path to the data folder.
+
+    :returns:
+        - mu (``np.ndarray``) -- Geometrical parameters.
+        - x (``np.ndarray``) -- x-coordinates of the domain points.
+        - y (``np.ndarray``) -- y-coordinates of the domain points.
+        
     """
     
     # Empty lists to collect data from all files

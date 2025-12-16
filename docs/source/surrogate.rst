@@ -24,10 +24,10 @@ surrogate.gpu
    :undoc-members:
    :show-inheritance:
 
-surrogate.load
+surrogate.loader
 ---------------------
 
-.. automodule:: surrogate.load
+.. automodule:: surrogate.loader
    :members:
    :undoc-members:
    :show-inheritance:

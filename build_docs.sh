@@ -10,10 +10,13 @@ read -r INCLUDE_PRIVATE
 cd docs/source || exit 1
 if [ "$INCLUDE_PRIVATE" = "y" ] || [ "$INCLUDE_PRIVATE" = "Y" ]; then
     echo "▶ Including private functions in the docs..."
-    sed -i "s/autodoc_default_options = {}/autodoc_default_options = { 'members': True, 'private-members': True }/" "conf.py"
-else
+    sed -i "s/private-members': *False/private-members': True/" conf.py
+elif [ "$INCLUDE_PRIVATE" = "n" ] || [ "$INCLUDE_PRIVATE" = "N" ]; then
     echo "▶ Excluding private functions from the docs..."
-    sed -i "s/autodoc_default_options = { 'members': True, 'private-members': True }/autodoc_default_options = {}/" "conf.py"
+    sed -i "s/private-members': *True/private-members': False/" conf.py
+else
+    echo "Invalid input. Please enter 'y' or 'n'."
+    exit 1
 fi
 
 

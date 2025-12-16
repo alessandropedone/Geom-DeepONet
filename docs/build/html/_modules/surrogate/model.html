@@ -191,7 +191,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../data.html">data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../surrogate.html">Surrogate package</a></li>
 </ul>
 
 </div>
@@ -235,7 +237,42 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.FourierFeatures">[docs]</a>
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">FourierFeatures</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_frequencies</span><span class="p">,</span> <span class="n">learnable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="s1">&#39;glorot_uniform&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        A Keras Layer that applies Fourier Feature Mapping to the input.</span>
+
+<span class="sd">        Fourier Feature Mapping is a technique used to embed inputs into a </span>
+<span class="sd">        higher-dimensional space using sinusoidal functions. This layer can </span>
+<span class="sd">        use either fixed or learnable frequencies.</span>
+
+<span class="sd">        Given an input tensor `x` of shape ``(batch_size, ..., input_dim)``, it computes the Fourier features as follows:</span>
+
+<span class="sd">        1. For each frequency :math:`f_i` in the set of frequencies, compute :math:`\sin(f_i x_j)` and :math:`\cos(f_i x_j)` </span>
+<span class="sd">        for each dimension :math:`x_j` of the input.</span>
+<span class="sd">        2. Concatenate all the sine and cosine features along the last dimension.</span>
+
+<span class="sd">        Thus, the output tensor will have shape ``(batch_size, ..., input_dim + 2 * input_dim * num_frequencies)``.</span>
+
+<span class="sd">    :param num_frequencies: Number of frequency bands used for encoding.</span>
+<span class="sd">    :type num_frequencies: ``int``</span>
+<span class="sd">    :param learnable: Whether the frequencies are trainable.</span>
+<span class="sd">    :type learnable: ``bool``</span>
+<span class="sd">    :param initializer: Initializer used for learnable frequencies.</span>
+<span class="sd">    :type initializer: ``str`` or ``tf.keras.initializers.Initializer``</span>
+
+<span class="sd">    :ivar freqs: Tensor containing the Fourier frequencies used for encoding.</span>
+<span class="sd">    :vartype freqs: ``tf.Variable`` or ``tf.Tensor``</span>
+<span class="sd">    :ivar num_frequencies: Number of frequency bands used for encoding.</span>
+<span class="sd">    :vartype num_frequencies: ``int``</span>
+<span class="sd">    :ivar learnable: Whether the frequencies are trainable.</span>
+<span class="sd">    :vartype learnable: ``bool``</span>
+<span class="sd">    :ivar initializer: Initializer used for learnable frequencies.</span>
+<span class="sd">    :vartype initializer: ``str`` or ``tf.keras.initializers.Initializer``</span>
+
+<span class="sd">    :raises ValueError: If ``num_frequencies`` is not a positive integer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_frequencies</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">learnable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">initializer</span> <span class="o">=</span> <span class="s1">&#39;glorot_uniform&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_frequencies</span> <span class="o">=</span> <span class="n">num_frequencies</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">learnable</span> <span class="o">=</span> <span class="n">learnable</span>
@@ -243,7 +280,12 @@
 
 <div class="viewcode-block" id="FourierFeatures.build">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.FourierFeatures.build">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">TensorShape</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the layer by initializing frequencies.</span>
+<span class="sd">        </span>
+<span class="sd">        :param input_shape: Shape of the input tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_frequencies</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">learnable</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">freqs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;freqs&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span>
@@ -255,7 +297,14 @@
 
 <div class="viewcode-block" id="FourierFeatures.call">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.FourierFeatures.call">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies Fourier Feature Mapping to the input tensor.</span>
+
+<span class="sd">        :param x: Input tensor of shape ``(batch_size, ..., input_dim)``.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - encoded (``tf.Tensor``) -- The Fourier feature encoded tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Start encoding list</span>
         <span class="n">encoded</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># Apply sinusoidal or learnable frequency encoding</span>
@@ -274,6 +323,12 @@
 <div class="viewcode-block" id="FourierFeatures.get_config">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.FourierFeatures.get_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the configuration of the layer for serialization.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - config (``dict``) -- Configuration dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
         <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
             <span class="s2">&quot;num_frequencies&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_frequencies</span><span class="p">,</span>
@@ -290,6 +345,20 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.LogUniformFreqInitializer">[docs]</a>
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">LogUniformFreqInitializer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Initializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        Initializer that generates frequencies sampled from a log-uniform distribution.</span>
+
+<span class="sd">    :param min_exp: Minimum exponent for the log-uniform distribution.</span>
+<span class="sd">    :type min_exp: ``float``</span>
+<span class="sd">    :param max_exp: Maximum exponent for the log-uniform distribution.</span>
+<span class="sd">    :type max_exp: ``float``</span>
+<span class="sd">    :ivar min_exp: Minimum exponent for the log-uniform distribution.</span>
+<span class="sd">    :vartype min_exp: ``float``</span>
+<span class="sd">    :ivar max_exp: Maximum exponent for the log-uniform distribution.</span>
+<span class="sd">    :vartype max_exp: ``float``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_exp</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">max_exp</span><span class="o">=</span><span class="mf">8.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_exp</span> <span class="o">=</span> <span class="n">min_exp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_exp</span> <span class="o">=</span> <span class="n">max_exp</span>
@@ -302,6 +371,12 @@
 <div class="viewcode-block" id="LogUniformFreqInitializer.get_config">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.LogUniformFreqInitializer.get_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the configuration of the initializer for serialization.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            - config (``dict``) -- Configuration dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;min_exp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_exp</span><span class="p">,</span> <span class="s1">&#39;max_exp&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_exp</span><span class="p">}</span></div>
 </div>
 
@@ -312,7 +387,77 @@
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">DenseNetwork</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class to build, train, and manage a neural network model using TensorFlow and Keras.</span>
+<span class="sd">    .. admonition:: Description</span>
+<span class="sd">        </span>
+<span class="sd">        A class to build, train, and manage a neural network model using TensorFlow and Keras.</span>
+
+<span class="sd">    :param normalization_layer: Whether to include a normalization layer at the input.</span>
+<span class="sd">    :type normalization_layer: ``bool``</span>
+<span class="sd">    :param input_neurons: Number of input neurons.</span>
+<span class="sd">    :type input_neurons: ``int``</span>
+<span class="sd">    :param n_neurons: List specifying the number of neurons in each hidden layer.</span>
+<span class="sd">    :type n_neurons: ``list``</span>
+<span class="sd">    :param activation: Activation function for hidden layers.</span>
+<span class="sd">    :type activation: ``str``</span>
+<span class="sd">    :param output_neurons: Number of output neurons.</span>
+<span class="sd">    :type output_neurons: ``int``</span>
+<span class="sd">    :param output_activation: Activation function for the output layer.</span>
+<span class="sd">    :type output_activation: ``str``</span>
+<span class="sd">    :param initializer: Initializer for the weights of the layers.</span>
+<span class="sd">    :type initializer: ``str``</span>
+<span class="sd">    :param l1_coeff: L1 regularization coefficient.</span>
+<span class="sd">    :type l1_coeff: ``float``</span>
+<span class="sd">    :param l2_coeff: L2 regularization coefficient.</span>
+<span class="sd">    :type l2_coeff: ``float``</span>
+<span class="sd">    :param batch_normalization: Whether to include batch normalization layers after hidden layers.</span>
+<span class="sd">    :type batch_normalization: ``bool``</span>
+<span class="sd">    :param dropout: Whether to include dropout layers after hidden layers.</span>
+<span class="sd">    :type dropout: ``bool``</span>
+<span class="sd">    :param dropout_rate: Dropout rate for dropout layers.</span>
+<span class="sd">    :type dropout_rate: ``float``</span>
+<span class="sd">    :param leaky_relu_alpha: Alpha parameter for LeakyReLU activation. If None, standard activation is used.</span>
+<span class="sd">    :type leaky_relu_alpha: ``float``</span>
+<span class="sd">    :param layer_normalization: Whether to include layer normalization after hidden layers.</span>
+<span class="sd">    :type layer_normalization: ``bool``</span>
+<span class="sd">    :param positional_encoding_frequencies: Number of frequencies for Fourier feature positional encoding.</span>
+<span class="sd">    :type positional_encoding_frequencies: ``int``</span>
+<span class="sd">    :ivar normalization_layer: Whether to include a normalization layer at the input.</span>
+<span class="sd">    :vartype normalization_layer: ``bool``</span>
+<span class="sd">    :ivar norm_layer: Keras Normalization layer.</span>
+<span class="sd">    :vartype norm_layer: ``tf.keras.layers.Normalization``</span>
+<span class="sd">    :ivar input_neurons: Number of input neurons.</span>
+<span class="sd">    :vartype input_neurons: ``int``</span>
+<span class="sd">    :ivar n_neurons: List specifying the number of neurons in each hidden layer.</span>
+<span class="sd">    :vartype n_neurons: ``list``</span>
+<span class="sd">    :ivar activation: Activation function for hidden layers.</span>
+<span class="sd">    :vartype activation: ``str``</span>
+<span class="sd">    :ivar output_neurons: Number of output neurons.</span>
+<span class="sd">    :vartype output_neurons: ``int``</span>
+<span class="sd">    :ivar output_activation: Activation function for the output layer.</span>
+<span class="sd">    :vartype output_activation: ``str``</span>
+<span class="sd">    :ivar initializer: Initializer for the weights of the layers.</span>
+<span class="sd">    :vartype initializer: ``str``</span>
+<span class="sd">    :ivar l1_coeff: L1 regularization coefficient.</span>
+<span class="sd">    :vartype l1_coeff: ``float``</span>
+<span class="sd">    :ivar l2_coeff: L2 regularization coefficient.</span>
+<span class="sd">    :vartype l2_coeff: ``float``</span>
+<span class="sd">    :ivar batch_normalization: Whether</span>
+<span class="sd">    :vartype batch_normalization: ``bool``</span>
+<span class="sd">    :ivar dropout: Whether to include dropout layers after hidden layers.</span>
+<span class="sd">    :vartype dropout: ``bool``</span>
+<span class="sd">    :ivar dropout_rate: Dropout rate for dropout layers.</span>
+<span class="sd">    :vartype dropout_rate: ``float``</span>
+<span class="sd">    :ivar leaky_relu_alpha: Alpha parameter for LeakyReLU activation. If None, standard activation is used.</span>
+<span class="sd">    :vartype leaky_relu_alpha: ``float``</span>
+<span class="sd">    :ivar layer_normalization: Whether to include layer normalization after hidden layers.</span>
+<span class="sd">    :vartype layer_normalization: ``bool``</span>
+<span class="sd">    :ivar positional_encoding_frequencies: Number of frequencies for Fourier feature positional encoding.</span>
+<span class="sd">    :vartype positional_encoding_frequencies: ``int``</span>
+<span class="sd">    :ivar all_layers: List of all layers in the model.</span>
+<span class="sd">    :vartype all_layers: ``list``</span>
+<span class="sd">    :ivar history: Training history after model training.</span>
+<span class="sd">    :vartype history: ``tf.keras.callbacks.History``</span>
+<span class="sd">    :raises ValueError: If any of the input parameters are invalid.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">##</span>
@@ -333,9 +478,6 @@
                 <span class="n">layer_normalization</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                 <span class="n">positional_encoding_frequencies</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
                 <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes the NN_Model class with an empty Sequential model and a None history.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
@@ -365,8 +507,9 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DenseNetwork.build">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Builds the model layers based on the input shape.</span>
-<span class="sd">        Called automatically when the model is first used.</span>
+<span class="sd">        Builds the neural network architecture based on the provided configuration.</span>
+
+<span class="sd">        :param input_shape: Shape of the input tensor.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">l1_l2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">regularizers</span><span class="o">.</span><span class="n">l1_l2</span>
         <span class="n">Dense</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span>
@@ -449,6 +592,13 @@
 <div class="viewcode-block" id="DenseNetwork.call">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DenseNetwork.call">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Forward pass through the neural network.</span>
+
+<span class="sd">        :param x: Input tensor.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - x (``tf.Tensor``) -- Output tensor after passing through the network.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_layers</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">layer</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">x</span></div>
@@ -457,6 +607,11 @@
 <div class="viewcode-block" id="DenseNetwork.adapt">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DenseNetwork.adapt">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">adapt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adapts the normalization layer to the data.</span>
+
+<span class="sd">        :param X: Input data for adaptation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalization_layer</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">norm_layer</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
@@ -467,6 +622,12 @@
 <div class="viewcode-block" id="DenseNetwork.get_config">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DenseNetwork.get_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the configuration of the model for serialization.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            - config (``dict``) -- Configuration dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Return the config necessary to reconstruct this model</span>
         <span class="n">base_config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DenseNetwork</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">{</span>
@@ -493,24 +654,16 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DenseNetwork.from_config">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a model instance from the configuration dictionary.</span>
+
+<span class="sd">        :param config: Configuration dictionary.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - model (``DenseNetwork``) -- Model instance created from the configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span></div>
 
         
-        
-    <span class="c1">##</span>
-    <span class="c1"># @param X (np.ndarray): The input data for training.</span>
-    <span class="c1"># @param y (np.ndarray): The target data for training.</span>
-    <span class="c1"># @param X_val (np.ndarray): The input data for validation.</span>
-    <span class="c1"># @param y_val (np.ndarray): The target data for validation.</span>
-    <span class="c1"># @param learning_rate (float): The learning rate for the optimizer.</span>
-    <span class="c1"># @param epochs (int): The number of epochs for training.</span>
-    <span class="c1"># @param batch_size (int): The size of the batches for training.</span>
-    <span class="c1"># @param loss (str): The loss function to be used during training.</span>
-    <span class="c1"># @param validation_freq (int): The frequency of validation during training.</span>
-    <span class="c1"># @param lr_schedule (Optional[Callable[[int], float]]): A function to adjust the learning rate.</span>
-    <span class="c1"># @param optimizer (str): The optimizer to be used for training. Options are &#39;adam&#39;, &#39;sgd&#39;, &#39;rmsprop&#39;.</span>
-    <span class="c1"># @return None</span>
-    <span class="c1"># @throws ValueError: If any of the input arrays are empty.</span>
 <div class="viewcode-block" id="DenseNetwork.train_model">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DenseNetwork.train_model">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">train_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
@@ -533,7 +686,26 @@
                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Trains the model on the provided dataset.</span>
-<span class="sd">        Use &quot;tensorboard --logdir logs&quot; to visualize logs (if log is set to True).</span>
+
+<span class="sd">        :param X: The input data for training.</span>
+<span class="sd">        :param y: The target data for training.</span>
+<span class="sd">        :param X_val: The input data for validation.</span>
+<span class="sd">        :param y_val: The target data for validation.</span>
+<span class="sd">        :param learning_rate: The learning rate for the optimizer.</span>
+<span class="sd">        :param epochs: The number of epochs for training.</span>
+<span class="sd">        :param batch_size: The size of the batches for training.</span>
+<span class="sd">        :param loss: The loss function to be used during training.</span>
+<span class="sd">        :param validation_freq: The frequency of validation during training.</span>
+<span class="sd">        :param lr_scheduler: A list of learning rate scheduler callbacks.</span>
+<span class="sd">        :param metrics: List of metrics to be evaluated by the model during training and testing.</span>
+<span class="sd">        :param clipnorm: Gradient clipping norm value. If None, no clipping is applied.</span>
+<span class="sd">        :param early_stopping_patience: Number of epochs with no improvement after which training will be stopped. If None, early stopping is not used.</span>
+<span class="sd">        :param log: Whether to log training progress for TensorBoard.</span>
+<span class="sd">        :param optimizer: The optimizer to be used for training. Options are &#39;adam&#39;, &#39;sgd&#39;, &#39;rmsprop&#39;.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Use ``tensorboard --logdir logs`` to visualize logs (if log is set to True).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">X_val</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y_val</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input arrays must not be empty&quot;</span><span class="p">)</span>
@@ -591,7 +763,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_training_history</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plots the training and validation loss over epochs.</span>
-<span class="sd">        This method should be called after training the model using `train_model`.</span>
+<span class="sd">        This method should be called after training the model using ``train_model``.</span>
+
+<span class="sd">        :raises ValueError: If the model has no training history.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The model has no training history. Train the model using &#39;train_model&#39; method first.&quot;</span><span class="p">)</span>
@@ -616,13 +790,30 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.EinsumLayer">[docs]</a>
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">EinsumLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ein_syntax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        A Keras Layer that performs Einstein summation on input tensors using a specified einsum syntax.</span>
+
+<span class="sd">    :param ein_syntax: The Einstein summation syntax string.</span>
+<span class="sd">    :type ein_syntax: ``str``</span>
+<span class="sd">    :ivar ein_syntax: The Einstein summation syntax string.</span>
+<span class="sd">    :vartype ein_syntax: ``str``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ein_syntax</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ein_syntax</span> <span class="o">=</span> <span class="n">ein_syntax</span>
 
 <div class="viewcode-block" id="EinsumLayer.call">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.EinsumLayer.call">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs Einstein summation on the input tensors.</span>
+
+<span class="sd">        :param inputs: A list or tuple of input tensors to be summed.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - result (``tf.Tensor``) -- The result of the Einstein summation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">coeffs</span><span class="p">,</span> <span class="n">basis</span> <span class="o">=</span> <span class="n">inputs</span>
         <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ein_syntax</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">basis</span><span class="p">)</span></div>
 
@@ -630,6 +821,12 @@
 <div class="viewcode-block" id="EinsumLayer.get_config">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.EinsumLayer.get_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the configuration of the layer for serialization.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            - config (``dict``) -- Configuration dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
         <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
             <span class="s2">&quot;ein_syntax&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ein_syntax</span><span class="p">,</span>
@@ -642,6 +839,24 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DeepONet">[docs]</a>
 <span class="nd">@register_keras_serializable</span><span class="p">()</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">DeepONet</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    .. admonition:: Description</span>
+
+<span class="sd">        A Deep Operator Network (DeepONet) model that combines a branch network and a trunk network</span>
+<span class="sd">        to approximate operators mapping functions to functions.</span>
+
+<span class="sd">    :param branch: The branch network to generate expansion coefficients.</span>
+<span class="sd">    :type branch: ``DenseNetwork``</span>
+<span class="sd">    :param trunk: The trunk network to generate the basis functions.</span>
+<span class="sd">    :type trunk: ``DenseNetwork``</span>
+<span class="sd">    :ivar branch: The branch network to generate expansion coefficients.</span>
+<span class="sd">    :vartype branch: ``DenseNetwork``</span>
+<span class="sd">    :ivar trunk: The trunk network to generate the basis functions.</span>
+<span class="sd">    :vartype trunk: ``DenseNetwork``</span>
+<span class="sd">    :ivar history: Training history after model training.</span>
+<span class="sd">    :vartype history: ``tf.keras.callbacks.History``</span>
+<span class="sd">    :raises AssertionError: If the output dimensions of the branch and trunk networks do not match</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> 
@@ -649,12 +864,6 @@
             <span class="n">trunk</span> <span class="p">:</span> <span class="n">DenseNetwork</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            branch (DenseNetwork): the branch net to generate expansion coeffs. </span>
-<span class="sd">            trunk (DenseNetwork): the trunk net to generate the basis functions.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DeepONet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">branch</span><span class="o">.</span><span class="n">output_neurons</span> <span class="o">==</span> <span class="n">trunk</span><span class="o">.</span><span class="n">output_neurons</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">branch</span> <span class="o">=</span> <span class="n">branch</span>
@@ -667,10 +876,15 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DeepONet.call">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">return_branch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_trunk</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Forward pass through the DeepONet model.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            mu: batch of parameters (dimension: B x p)</span>
-<span class="sd">            x: batch of spatial points (tensor whose last dimension is d)</span>
+<span class="sd">        :param inputs: A tuple containing (mu, x) where:</span>
+<span class="sd">            - mu: batch of parameters (dimension: B x p)</span>
+<span class="sd">            - x: batch of spatial points (tensor whose last dimension is d)</span>
+<span class="sd">        :param return_branch: If True, returns the branch output instead of the full DeepONet output.</span>
+<span class="sd">        :param return_trunk: If True, returns the trunk output instead of the full DeepONet output.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - output (``tf.Tensor``) -- The output of the DeepONet model or the branch/trunk outputs based on flags.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mu</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span>
 
@@ -706,6 +920,11 @@
 <div class="viewcode-block" id="DeepONet.build">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DeepONet.build">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the DeepONet model by initializing the branch and trunk networks.</span>
+
+<span class="sd">        :param input_shape: Shape of the input tensor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dummy_mu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">branch</span><span class="o">.</span><span class="n">input_neurons</span><span class="p">,))</span>
         <span class="n">dummy_x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trunk</span><span class="o">.</span><span class="n">input_neurons</span><span class="p">,))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">call</span><span class="p">((</span><span class="n">dummy_mu</span><span class="p">,</span> <span class="n">dummy_x</span><span class="p">))</span>
@@ -715,6 +934,12 @@
 <div class="viewcode-block" id="DeepONet.get_config">
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DeepONet.get_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the configuration of the model for serialization.</span>
+
+<span class="sd">        :returns:</span>
+<span class="sd">            - config (``dict``) -- Configuration dictionary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Return the config necessary to reconstruct this model</span>
         <span class="n">base_config</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DeepONet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_config</span><span class="p">()</span>
         <span class="k">return</span> <span class="p">{</span>
@@ -728,6 +953,13 @@
 <a class="viewcode-back" href="../../surrogate.html#surrogate.model.DeepONet.from_config">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a model instance from the configuration dictionary.</span>
+
+<span class="sd">        :param config: Configuration dictionary.</span>
+<span class="sd">        :returns:</span>
+<span class="sd">            - model (``DeepONet``) -- Model instance created from the configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">branch_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;branch&quot;</span><span class="p">)</span>
         <span class="n">trunk_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;trunk&quot;</span><span class="p">)</span>
         <span class="n">config</span><span class="p">[</span><span class="s2">&quot;branch&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">deserialize_keras_object</span><span class="p">(</span><span class="n">branch_config</span><span class="p">)</span>
@@ -760,7 +992,28 @@
                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Trains the model on the provided dataset.</span>
-<span class="sd">        Use &quot;tensorboard --logdir logs&quot; to visualize logs (if log is set to True).</span>
+
+<span class="sd">        :param X: The input data for training.</span>
+<span class="sd">        :param mu: The parameter data for training.</span>
+<span class="sd">        :param y: The target data for training.</span>
+<span class="sd">        :param X_val: The input data for validation.</span>
+<span class="sd">        :param mu_val: The parameter data for validation.</span>
+<span class="sd">        :param y_val: The target data for validation.</span>
+<span class="sd">        :param learning_rate: The learning rate for the optimizer.</span>
+<span class="sd">        :param epochs: The number of epochs for training.</span>
+<span class="sd">        :param batch_size: The size of the batches for training.</span>
+<span class="sd">        :param loss: The loss function to be used during training.</span>
+<span class="sd">        :param validation_freq: The frequency of validation during training.</span>
+<span class="sd">        :param lr_scheduler: A list of learning rate scheduler callbacks.</span>
+<span class="sd">        :param metrics: List of metrics to be evaluated by the model during training and testing.</span>
+<span class="sd">        :param clipnorm: Gradient clipping norm value. If None, no clipping is applied.</span>
+<span class="sd">        :param early_stopping_patience: Number of epochs with no improvement after which training will be stopped. If None, early stopping is not used.</span>
+<span class="sd">        :param log: Whether to log training progress for TensorBoard.</span>
+<span class="sd">        :param optimizer: The optimizer to be used for training. Options are &#39;adam&#39;, &#39;sgd&#39;, &#39;rmsprop&#39;.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            </span>
+<span class="sd">            Use ``tensorboard --logdir logs`` to visualize logs (if log is set to True).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">X_val</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">y_val</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">mu</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">mu_val</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input arrays must not be empty&quot;</span><span class="p">)</span>
@@ -818,7 +1071,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">plot_training_history</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plots the training and validation loss over epochs.</span>
-<span class="sd">        This method should be called after training the model using `train_model`.</span>
+<span class="sd">        This method should be called after training the model using ``train_model``.</span>
+<span class="sd">        </span>
+<span class="sd">        :raises ValueError: If the model has no training history.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The model has no training history. Train the model using &#39;train_model&#39; method first.&quot;</span><span class="p">)</span>

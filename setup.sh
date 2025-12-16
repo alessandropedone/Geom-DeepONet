@@ -56,7 +56,7 @@ conda install -c conda-forge \
 #      Install Pip Packages
 # =========================
 echo -e "\n${YELLOW}Installing additional Python packages with pip...${NC}"
-pip install scikit-learn==1.6.1 alphashape==1.3.1
+pip install scikit-learn==1.6.1 alphashape==1.3.1 sphinx==8.1.3 sphinx-autodoc-typehints==3.0.1 myst-parser==4.0.1 furo==2025.9.25
 
 # =========================
 #      Final Message

@@ -160,7 +160,7 @@ r = args.r
 seed = args.seed
 
 # Import coordinates dataset and solutions
-from .load import load
+from .loader import load
 mu, x, y, potential, x_plate, y_plate, normal_derivatives_plate = load(data_folder=data_folder)
 
 # Define input and output arrays
