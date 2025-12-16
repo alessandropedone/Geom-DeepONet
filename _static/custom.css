@@ -1,0 +1,7 @@
+.private-member {
+    color: red;
+    font-style: italic;
+}
+.public-member {
+    color: black;
+}
