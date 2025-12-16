@@ -1,7 +1,3 @@
-## @package geometry
-# @brief Functions to generate datasets by processing the reference geometry file.
-
-
 import os
 import numpy as np
 from itertools import product
@@ -11,18 +7,29 @@ import contextlib
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
-##
-# @param parameters_head (str): Header line for the parameters CSV file.
-# @param parameters_file_name (str): Name of the parameters CSV file.
-# @param ignore_data (bool): Whether to ignore existing other data present in data_folder.
-# @param data_folder (str): Path to the data folder to reset.
-# @note In any case, this function ensures the necessary subfolders and parameters file are set up.
 def _setup_data(parameters_head : str, 
                parameters_file_name: str, 
                ignore_data: bool = False,
-               data_folder: str = "test"):
+               data_folder: str = "test") -> None:
     """
-    Reset the data folder silently.
+    .. admonition:: Description
+
+        This function resets the data folder by either deleting all its contents
+        or only cleaning the "geo" subfolder, based on the `ignore_data` flag.
+        It also ensures the creation of necessary subfolders (i.e. "geo", "msh", "results") 
+        and initializes the parameters CSV file, containing the geometric parameters of each geometry,
+        with the provided header.
+
+    :param parameters_head: Header line for the parameters CSV file.
+    :param parameters_file_name: Name of the parameters CSV file.
+    :param ignore_data: Whether to ignore existing other data present in data_folder.
+    :param data_folder: Path to the data folder to reset.
+    :return: None
+        
+    .. note::
+
+        In any case, this function ensures the necessary subfolders
+        and parameters file are set up.
     """
     # Suppress print statements from reset_environment
     with open(os.devnull, 'w') as fnull:
@@ -75,8 +82,19 @@ def _setup_data(parameters_head : str,
 
 ## 
 # @param file_path (str): Path to the data file.
-def read_data_file(file_path: str = "test.csv"):
-    """Read the data file and return names, ranges, and num_points."""
+def read_data_file(file_path: str = "test.csv") -> tuple:
+    """
+    .. admonition:: Description
+        
+        Read a data file and extract variable metadata.
+
+    :param file_path: Path to the data file.
+    :returns:
+        - **names** (``list``) -- Variable names
+        - **ranges** (``list[tuple]``) -- Value ranges for each variable
+        - **num_points** (``list``) -- Number of points per variable
+    """
+
     names = []
     ranges = []
     num_points = []
@@ -98,7 +116,18 @@ def read_data_file(file_path: str = "test.csv"):
 # @param quantity(str): Quantity to modify (e.g., 'distance', 'overetch', 'coeff(1)', etc.).
 # @param value (float): New quantity value to set (e.g., 2.0).
 def _modify_quantity(input_path: str, output_path: str, name: str, quantity: str, value: float):
-    """Modify the geometry file to change the distance between the plates."""
+    """
+    .. admonition:: Description
+        
+        Modify the geometry file to change the distance between the plates.
+    
+    :param input_path: Path to the geometry file (e.g., geometry.geo).
+    :param output_path: Path to save the modified geometry file (e.g., ./).
+    :param name: Name for the new geometry file (e.g., test).
+    :param quantity: Quantity to modify (e.g., 'distance', 'overetch', 'coeff(1)', etc.).
+    :param value: New quantity value to set (e.g., 2.0).
+    :return: None
+    """
     # Open the geometry.geo file to read the lines
     with open(str(input_path), "r") as f:
         lines = f.readlines()
@@ -136,7 +165,16 @@ def _modify_quantity(input_path: str, output_path: str, name: str, quantity: str
 
 def _generate_single_geometry(j: int, param: tuple, geometry_input: str, names: list, data_folder: str) -> str:
     """
-    Generate a single geometry and return the CSV row string.
+    .. admonition:: Description
+        
+        Generate a single geometry and return the CSV row string.
+
+    :param j: Geometry index.
+    :param param: Tuple of parameter values for the geometry.
+    :param geometry_input: Path to the input geometry file.
+    :param names: List of quantity names.
+    :param data_folder: Path to the data folder.
+    :return: CSV row string representing the geometry parameters.
     """
     geo_folder = os.path.join(data_folder, "geo")
     geo_path = os.path.join(geo_folder, f"{j}.geo")
@@ -151,18 +189,6 @@ def _generate_single_geometry(j: int, param: tuple, geometry_input: str, names: 
     # Return CSV row as string
     return f"{j}," + ",".join([str(p) for p in param]) + "\n"
 
-## 
-# @param names (list[str]): List of the names, that appear in the geometry file of the quantities.
-# @param ranges (list[tuple]): List of ranges for each quantity.
-# @param num_points (list[int]): List of number of points to generate within the specified ranges for each quantity.
-# @param geometry_input (str): Path to the input geometry file.
-# @param data_folder (str): Path to the data folder.
-# @param ignore_data (bool): Whether to ignore existing other data present in data_folder. 
-# @param max_workers (int): Maximum number of worker processes to use for parallel geometry generation.
-# For example you may want to set this equal to TRUE if you have more data in that folder, 
-# or already computed solutions, and for some reason you want to generate the geomteries 
-# in that folder avoid touching every file except the "geo" subfolder the parameters file.
-# @note As output you get a series of geometry files in data_folder/geo and a parameters.csv file in data_folder.
 def generate_geometries(names: list[str],
                         ranges: list[tuple],
                         num_points: list[int],
@@ -172,8 +198,30 @@ def generate_geometries(names: list[str],
                         ignore_data: bool = False,
                         max_workers: int = 1):
     """
-    Generate geometries by modifying the list of quantities over specified ranges.
-    This function creates a series of geometry files with different parameters.
+    .. admonition:: Description
+
+        Generate geometries by modifying the list of quantities over specified ranges.
+        This function creates a series of geometry files with different parameters.
+
+    :param names: List of the names, that appear in the geometry file of the quantities.
+    :param ranges: List of ranges for each quantity.
+    :param num_points: List of number of points to generate within the specified ranges for each quantity.
+    :param geometry_input: Path to the input geometry file.
+    :param data_folder: Path to the data folder.
+    :param parameters_file_name: Name of the parameters file to save the generated parameters.
+    :param ignore_data: Whether to ignore existing other data present in data_folder. 
+    :param max_workers: Maximum number of worker processes to use for parallel geometry generation.
+    :return: None
+
+    .. note::
+
+        For example you may want to set this equal to TRUE if you have more data in that folder, 
+        or already computed solutions, and for some reason you want to generate the geomteries 
+        in that folder avoid touching every file except the "geo" subfolder the parameters file.
+
+    .. note::
+
+        As output you get a series of geometry files in data_folder/geo and a parameters.csv file in data_folder.
     """
     if not (len(ranges) == len(names) == len(num_points)):
         raise ValueError("The lengths of ranges, names, and num_points must be the same.")

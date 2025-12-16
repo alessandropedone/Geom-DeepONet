@@ -1,17 +1,16 @@
-## @package dataset
-# @brief Functions to generate datasets by processing mesh files in parallel 
-# and then combine the results in a single CSV file (dataset.csv).
-
 from pathlib import Path
 from tqdm import tqdm
 
 from .fom import solvensave
 
+def _reset_results(data_folder: str = "test") -> None:
+    """
+    .. admonition:: Description
+        
+        Empty the results folder by removing all files inside it.
 
-##
-# @param data_folder (str): path to the data folder.
-def _reset_results(data_folder: str = "test"):
-    """Emtpy the results folder by removing all files inside it."""
+    :param data_folder: Path to the data folder.
+    """
     # Ensure the results folder is empty before running the script
     results_folder = Path(data_folder) / "results"
     if results_folder.exists():
@@ -21,13 +20,16 @@ def _reset_results(data_folder: str = "test"):
     else:
         results_folder.mkdir(parents=True)
 
-##
-# @param data_folder (str): path to the data folder.
-# @param empty_results_folder (bool): Whether to empty the results folder before generating new datasets.
-# @note We cannot parallelize as in generation of meshes since the FOM solver uses MPI underneath, 
-# and in general we want to avoid assumptions on the FOM developed in possible extensions.
-def generate_datasets(data_folder: str = "test", empty_results_folder: bool = True):
-    """Generate datasets by processing all mesh files in parallel and saving the results."""
+
+def generate_datasets(data_folder: str = "test", empty_results_folder: bool = True) -> None:
+    """
+    .. admonition:: Description
+        
+        Generate datasets by processing all mesh files in parallel and saving the results.
+
+    :param data_folder: path to the data folder.
+    :param empty_results_folder: Whether to empty the results folder before generating new datasets.
+    """
     # Set up the environment
     if empty_results_folder:
         _reset_results(data_folder)

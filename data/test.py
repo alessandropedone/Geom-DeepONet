@@ -1,6 +1,3 @@
-## @package test
-# @brief 
-
 import h5py
 
 from .geometry import generate_geometries
@@ -8,18 +5,7 @@ from .mesh import generate_meshes
 from .dataset import generate_datasets
 from .plot import summary_plot
 
-##
-# @param names (list[str]): List of the names, that appear in the geometry file of the quantities.
-# @param ranges (list[tuple]): List of ranges for each quantity.
-# @param num_points (list[int]): List of number of points to generate within the specified ranges for each quantity.
-# @param geometry_input (str): Path to the input geometry file.
-# @param parameters_file_name (str): name of the parameters file to save the generated parameters.
-# @param data_folder (str): path to the data folder.
-# @param plot_number (int): number of the solution to plot.
-# @param empty_old_mesh (bool): whether to empty the old meshes folder before generating new meshes.
-# @param empty_old_results (bool): whether to empty the old results folder before generating new results.
-# @note If plot_number is None, no plots are generated.
-# @note The geometry generation is skipped if one of the empty_old_mesh or empty_old_results is False.
+
 def test(names: list[str],
         ranges: list[tuple],
         num_points: list[int],
@@ -30,7 +16,30 @@ def test(names: list[str],
         empty_old_mesh: bool = True,
         empty_old_results: bool = True,
         workers: int = 1) -> None:
+    """
+    .. admonition:: Description
+        
+        Test function to generate geometries, meshes, and datasets, and optionally plot a specific solution.
+        It orchestrates the entire process by calling the relevant functions from other modules.
     
+    :param names: List of the names, that appear in the geometry file of the quantities.
+    :param ranges: List of ranges for each quantity.
+    :param num_points: List of number of points to generate within the specified ranges for each quantity.
+    :param geometry_input: Path to the input geometry file.
+    :param parameters_file_name: name of the parameters file to save the generated parameters.
+    :param data_folder: path to the data folder.
+    :param plot_number: number of the solution to plot.
+    :param empty_old_mesh: whether to empty the old meshes folder before generating new meshes.
+    :param empty_old_results: whether to empty the old results folder before generating new results.
+
+    .. note:: 
+        
+        If plot_number is None, no plots are generated.
+
+    .. note:: 
+        
+        The geometry generation is skipped if one of the empty_old_mesh or empty_old_results is False.
+    """
     if empty_old_mesh and empty_old_results:
         generate_geometries(
             names=names,

@@ -1,6 +1,3 @@
-## @package fom
-# @brief Full order model that solves the PDE with given boundary conditions and returns solution, gradient, and mesh data.
-
 from pathlib import Path
 import alphashape
 from shapely import Point
@@ -20,26 +17,37 @@ import os, sys
 import h5py
 
 
-##
-# @brief Read the mesh from the .msh file and return the computational domain.
-# @param mesh (str): path to the mesh file.
-def _get_domain_from_mesh(mesh_path: str) -> None:
+def _get_domain_from_mesh(mesh_path: str):
     """
-    Read the mesh from the .msh file and return the computational domain.
+    .. admonition:: Description
+        
+        Read the mesh from the .msh file and return the computational domain.
+
+    :param mesh_path: Path to the mesh file.
+
+    :returns:
+        - **domain** (``fem.Domain``) -- The computational domain containing mesh information.
     """
     from mpi4py import MPI
     from dolfinx.io import gmshio
 
     domain, cell_tags, facet_tags = gmshio.read_from_msh(mesh_path, MPI.COMM_WORLD, 0, gdim=2)
+
     return domain
 
-## 
-# @param domain: The computational domain containing mesh information.
-# @param boundary_facets: The boundary facets associated with the domain.
-# @return tuple: normals (np.ndarray), midpoints (np.ndarray)
-def _compute_boundary_normals_and_midpoints(domain, boundary_facets) -> tuple:
+
+def _compute_boundary_normals_and_midpoints(domain, boundary_facets: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     """
-    Compute boundary normals and midpoints for the facets of the upper plate (tags 10 and 11).
+    .. admonition:: Description
+        
+        Compute boundary normals and midpoints for the facets of the upper plate (tags 10 and 11).
+
+    :param domain: The computational domain containing mesh information.
+    :param boundary_facets: The boundary facets associated with the domain.
+
+    :returns:
+        - **normals** (``np.ndarray``) -- Normal vectors at the boundary facets.
+        - **midpoints** (``np.ndarray``) -- Midpoints of the boundary facets.
     """
     # 2D: facet dimension
     fdim = domain.topology.dim - 1
@@ -77,19 +85,31 @@ def _compute_boundary_normals_and_midpoints(domain, boundary_facets) -> tuple:
 
     return normals, midpoints
 
-##
-# @param mesh (str): path to the mesh file.
-# @param bc_lower_plate (float): Dirichlet BC value for the lower plate.
-# @param bc_upper_plate (float): Dirichlet BC value for the upper plate.
-# @return tuple: x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate
-# @note We return the midpoints of the facets of the upper plate boundary
-# since the gradient is constant on each cell (we chose DG0).
-def _fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> tuple:
+
+def fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
-    Full order model that solves the PDE with given boundary conditions and computes the solutions and its gradient.
-    It returns also the mesh data (x, y, cells) along with the solution (potential) and its gradient (grad_x, grad_y).
-    But also the coordinates of the moving/deforming plate DOFs (x_plate, y_plate) and the gradient values at those DOFs.
-    We also return the boundary normals and midpoints for further computations.
+    .. admonition:: Description
+
+        Full order model that solves the PDE with given boundary conditions and computes the solutions and its gradient. 
+    
+    :param mesh: Path to the mesh file.
+    :param bc_lower_plate: Dirichlet BC value for the lower plate.
+    :param bc_upper_plate: Dirichlet BC value for the upper plate.
+    
+    :returns:
+        - **x** (``np.ndarray``) -- x coordinates of all mesh nodes.
+        - **y** (``np.ndarray``) -- y coordinates of all mesh nodes.
+        - **cells** (``np.ndarray``) -- Cell connectivity information.
+        - **potential** (``np.ndarray``) -- Potential values at all mesh nodes.
+        - **grad_x** (``np.ndarray``) -- x component of the gradient at all mesh nodes.
+        - **grad_y** (``np.ndarray``) -- y component of the gradient at all mesh nodes.
+        - **midpoints_plate** (``np.ndarray``) -- Midpoints of the facets of the upper plate boundary.
+        - **normal_derivatives_plate** (``np.ndarray``) -- Normal derivative values at the upper plate boundary midpoints.
+        - **normal_vectors_plate** (``np.ndarray``) -- Normal vectors at the upper plate boundary midpoints.
+
+    .. note::
+
+        We return the midpoints of the facets of the upper plate boundary since the gradient is constant on each cell (we chose DG0).
     """
 
     if mesh.is_file() and mesh.suffix == ".msh":
@@ -221,12 +241,14 @@ def _fom(mesh: str, bc_lower_plate: float = 1.0, bc_upper_plate: float = 0.0) ->
         return x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate
 
 
-##
-# @param mesh (str): path to the mesh file.
-# @param data_folder (str): path to the data folder.
-def solvensave(mesh: str, data_folder: str = "test"):
+def solvensave(mesh: str, data_folder: str = "test") -> None:
     """
-    Full order model that solves the PDE and saves the output in an .h5 file.
+    .. admonition:: Description
+        
+        Full order model that solves the PDE and saves the output in an .h5 file.
+    
+    :param mesh: path to the mesh file.
+    :param data_folder: path to the data folder.
     """
     if mesh.is_file() and mesh.suffix == ".msh":
         x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate = _fom(mesh) 

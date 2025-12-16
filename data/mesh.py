@@ -1,7 +1,3 @@
-
-## @package mesh
-# @brief Generate meshes from .geo files using gmsh in parallel.
-
 import gmsh
 import os
 from pathlib import Path
@@ -9,11 +5,13 @@ from tqdm import tqdm
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
-## 
-# @param data_folder (str): Path to the data folder containing the msh subfolder.
-def _remove_msh_files(data_folder: str = "test"):
+def _remove_msh_files(data_folder: str = "test") -> None:
     """
-    Remove all .msh files in the subfolder msh of the specified data folder.
+    .. admonition:: Description
+
+        Remove all .msh files from the msh folder.
+
+    :param data_folder: Path to the data folder.
     """
 
 
@@ -28,11 +26,16 @@ def _remove_msh_files(data_folder: str = "test"):
                 except Exception as e:
                     print(f"Error removing {file_path}: {e}")
 
-##
-# @param file_path (str): Path to the .geo file.
-# @param data_folder (str): Path to the data folder.
+
 def _generate_mesh_from_geo(file_path: str, data_folder: str = "test") -> None:
-    """Generate a mesh from a .geo file using gmsh."""
+    """
+    .. admonition:: Description
+        
+        Generate a mesh from a .geo file using gmsh.
+        
+    :param file_path: Path to the .geo file.
+    :param data_folder: Path to the data folder.
+    """
 
     # Initialize gmsh
     gmsh.initialize()   
@@ -59,26 +62,29 @@ def _generate_mesh_from_geo(file_path: str, data_folder: str = "test") -> None:
     gmsh.finalize()
 
 
-##
-# @param i (int): Index of the geometry.
-# @param geometry_path (str): Path to the directory containing .geo files.
-# @param mesh_path (str): Path to the directory where .msh files will be saved.
 def _generate_mesh(i: int, data_folder: str = "test") -> None:
     """
-    Generate a mesh for a given geometry index.
+    .. admonition:: Description
+        
+        Generate a mesh for a given geometry index.
+    
+    :param i: Index of the geometry.
+    :param data_folder: Path to the data folder.
     """
     # Generate the mesh for each geometry
     geo_path = f"{data_folder}/geo/{i}.geo"
     _generate_mesh_from_geo(geo_path, data_folder)
 
 
-##
-# @param data_folder (str): Path to the data folder.
-# @param empty_mesh_folder (bool): Whether to empty the mesh folder before generating new meshes.
-# @param max_workers (int): Maximum number of worker processes to use for parallel mesh generation.
 def generate_meshes(data_folder: str = "test", empty_mesh_folder: bool = True, max_workers: int = 1) -> None:
     """
-    Generate meshes for all geometries present in the specified directory using a variable number of workers.
+    .. admonition:: Description
+        
+        Generate meshes for all geometries present in the specified directory using a variable number of workers.
+
+    :param data_folder: Path to the data folder.
+    :param empty_mesh_folder: Whether to empty the mesh folder before generating new meshes.
+    :param max_workers: Maximum number of worker processes to use for parallel mesh generation.
     """
 
     msh_output_folder = Path(f"{data_folder}/msh")
@@ -93,8 +99,6 @@ def generate_meshes(data_folder: str = "test", empty_mesh_folder: bool = True, m
 
     # Get list of .geo files
     geos = [geo for geo in geo_folder_path.iterdir() if geo.suffix == ".geo"]
-    
-
 
     # Process only the geometries that don't have a corresponding mesh yet
     geos = [geo for geo in geos if not (msh_output_folder / f"{geo.stem}.msh").exists()]
@@ -111,6 +115,3 @@ def generate_meshes(data_folder: str = "test", empty_mesh_folder: bool = True, m
             colour='blue'
         ):
             _ = f.result()
-
-    
-

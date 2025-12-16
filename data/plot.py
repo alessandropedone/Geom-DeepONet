@@ -1,27 +1,11 @@
-## @package plot
-# @brief Functions for plotting solutions and gradients over a given domain.
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.tri as tri
 from matplotlib.colors import BoundaryNorm
 import math
+import h5py
 
-##
-# @param x (np.ndarray): x coordinates of the vertices.
-# @param y (np.ndarray): y coordinates of the vertices.
-# @param cells (np.ndarray): connectivity of the mesh cells.
-# @param grad (np.ndarray): quantity defined per cell to be plotted.
-# @param title (str): Title of the plot.
-# @param xlabel (str): Label for the x-axis.
-# @param ylabel (str): Label for the y-axis.
-# @param colorbar_label (str): Label for the color bar.
-# @param cmap (str): Colormap to use for plotting.
-# @param sharp_color_range (tuple): Optional range to create sharp color transitions.
-# @param outside_sharpness (int): Number of color levels outside the sharp color range.
-# @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @note Add optional arguments for customizing the plot (e.g., color map, title, labels).
+
 def _cells_plot(x: np.ndarray,
                y: np.ndarray, 
                cells: np.ndarray, 
@@ -35,7 +19,25 @@ def _cells_plot(x: np.ndarray,
                outside_sharpness: int = 50,
                plot_triangulation: bool = True,
                postpone_show: bool = False) -> None:
-    """It plots the provided solution over the domain using cell-based data."""
+    """
+    .. admonition:: Description
+        
+        It plots the provided solution over the domain using cell-based data.
+        
+    :param x: x coordinates of the vertices.
+    :param y: y coordinates of the vertices.
+    :param cells: Connectivity of the mesh cells.
+    :param sol: Quantity defined per cell to be plotted.
+    :param title: Title of the plot.
+    :param xlabel: Label for the x-axis.
+    :param ylabel: Label for the y-axis.
+    :param colorbar_label: Label for the color bar.
+    :param cmap: Colormap to use for plotting.
+    :param sharp_color_range: Optional range to create sharp color transitions.
+    :param outside_sharpness: Number of color levels outside the sharp color range.
+    :param plot_triangulation: Whether to overlay the mesh triangulation.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    """
     
     # Create triangulation object
     triang = tri.Triangulation(x, y, triangles = cells)
@@ -73,21 +75,7 @@ def _cells_plot(x: np.ndarray,
     if not postpone_show:
         plt.show()
 
-##
-# @param x (np.ndarray): x coordinates of the vertices.
-# @param y (np.ndarray): y coordinates of the vertices.
-# @param cells (np.ndarray): connectivity of the mesh cells.
-# @param sol (np.ndarray): quantity defined per vertex to be plotted.
-# @param title (str): Title of the plot.
-# @param xlabel (str): Label for the x-axis.
-# @param ylabel (str): Label for the y-axis.
-# @param colorbar_label (str): Label for the color bar.
-# @param cmap (str): Colormap to use for plotting.
-# @param sharp_color_range (tuple): Optional range to create sharp color transitions.
-# @param outside_sharpness (int): Number of color levels outside the sharp color range.
-# @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @note Add optional arguments for customizing the plot (e.g., color map, title, labels).
+
 def _vertices_plot(x: np.ndarray, 
                   y: np.ndarray,
                   cells: np.ndarray,
@@ -101,7 +89,25 @@ def _vertices_plot(x: np.ndarray,
                   outside_sharpness: int = 50,
                   plot_triangulation: bool = True,
                   postpone_show: bool = False) -> None:
-    """It plots the specified solution over the domain using vertex-based data."""
+    """
+    .. admonition:: Description
+        
+        It plots the specified solution over the domain using vertex-based data.
+        
+    :param x: x coordinates of the vertices.
+    :param y: y coordinates of the vertices.
+    :param cells: Connectivity of the mesh cells.
+    :param sol: Quantity defined per vertex to be plotted.
+    :param title: Title of the plot.
+    :param xlabel: Label for the x-axis.
+    :param ylabel: Label for the y-axis.
+    :param colorbar_label: Label for the color bar.
+    :param cmap: Colormap to use for plotting.
+    :param sharp_color_range: Optional range to create sharp color transitions.
+    :param outside_sharpness: Number of color levels outside the sharp color range.
+    :param plot_triangulation: Whether to overlay the mesh triangulation.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    """
     
     triang = tri.Triangulation(x, y, triangles = cells)
 
@@ -138,15 +144,6 @@ def _vertices_plot(x: np.ndarray,
         plt.show()
 
 
-##
-# @param x (np.ndarray): x coordinates of the vertices.
-# @param y (np.ndarray): y coordinates of the vertices.
-# @param cells (np.ndarray): connectivity of the mesh cells.
-# @param title (str): Title of the plot.
-# @param xlabel (str): Label for the x-axis.
-# @param ylabel (str): Label for the y-axis.
-# @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
 def domain_plot(x: np.ndarray, 
             y: np.ndarray,
             cells: np.ndarray,
@@ -155,7 +152,20 @@ def domain_plot(x: np.ndarray,
             ylabel: str ="y",
             plot_triangulation: bool = True,
             postpone_show: bool = False) -> None:
-    """It plots only the domain and the mesh."""
+    """
+    .. admonition:: Description
+        
+        It plots only the domain and the mesh.
+        
+    :param x: x coordinates of the vertices.
+    :param y: y coordinates of the vertices.
+    :param cells: Connectivity of the mesh cells.
+    :param title: Title of the plot.
+    :param xlabel: Label for the x-axis.
+    :param ylabel: Label for the y-axis.
+    :param plot_triangulation: Whether to overlay the mesh triangulation.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    """
     triang = tri.Triangulation(x, y, triangles = cells)
     triangles = triang.triangles
     neighbors = triang.neighbors
@@ -188,20 +198,7 @@ def domain_plot(x: np.ndarray,
     if not postpone_show:
         plt.show()
 
-##
-# @param x (np.ndarray): x coordinates of the vertices.
-# @param y (np.ndarray): y coordinates of the vertices.
-# @param cells (np.ndarray): connectivity of the mesh cells.
-# @param sol (np.ndarray): quantity defined per vertex or per cell to be plotted.
-# @param title (str): Title of the plot.
-# @param xlabel (str): Label for the x-axis.
-# @param ylabel (str): Label for the y-axis.
-# @param colorbar_label (str): Label for the color bar.
-# @param cmap (str): Colormap to use for plotting.
-# @param sharp_color_range (tuple): Optional range to create sharp color transitions.
-# @param plot_triangulation (bool): Whether to overlay the mesh triangulation.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @note If you set the solution to None you can plot only the domain.
+
 def plot(x: np.ndarray, 
          y: np.ndarray, 
          cells: np.ndarray, 
@@ -215,7 +212,29 @@ def plot(x: np.ndarray,
          outside_sharpness: int = 50,
          plot_triangulation: bool = True,
          postpone_show: bool = False) -> None:
-    """It plots the provided solution over the domain."""
+    """
+    .. admonition:: Description
+        
+        It plots the provided solution over the domain.
+
+    :param x: x coordinates of the vertices.
+    :param y: y coordinates of the vertices.
+    :param cells: Connectivity of the mesh cells.
+    :param sol: Quantity defined per vertex or per cell to be plotted.
+    :param title: Title of the plot.
+    :param xlabel: Label for the x-axis.
+    :param ylabel: Label for the y-axis.
+    :param colorbar_label: Label for the color bar.
+    :param cmap: Colormap to use for plotting.
+    :param sharp_color_range: Optional range to create sharp color transitions.
+    :param outside_sharpness: Number of color levels outside the sharp color range.
+    :param plot_triangulation: Whether to overlay the mesh triangulation.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    
+    .. note::
+        
+        If you set the solution to None you can plot only the domain.
+    """
 
     # Check validity of input data
     if len(x) == 0 or len(y) == 0 or len(cells) == 0 or (sol is not None and len(sol) == 0):
@@ -242,12 +261,17 @@ def plot(x: np.ndarray,
         _vertices_plot(x, y, cells, sol, title, xlabel, ylabel, colorbar_label, cmap, sharp_color_range, outside_sharpness, plot_triangulation, postpone_show)
 
 
-##
-# @param ax (matplotlib.axes.Axes): The axes object to apply the zoom on
-# @param x0 (float): x coordinate of the zoom center.
-# @param y0 (float): y coordinate of the zoom center.
-# @param zoom (float): Zoom factor.
-def _zoom_around(ax, x0, y0, zoom):
+def _zoom_around(ax: plt.Axes, x0: float, y0: float, zoom: float) -> None:
+    """
+    .. admonition:: Description
+
+        It zooms the given axes around the specified center point.
+    
+    :param ax: The axes object to apply the zoom on.
+    :param x0: x coordinate of the zoom center.
+    :param y0: y coordinate of the zoom center.
+    :param zoom: Zoom factor.
+    """
     x_min, x_max = ax.get_xlim()
     y_min, y_max = ax.get_ylim()
 
@@ -257,13 +281,21 @@ def _zoom_around(ax, x0, y0, zoom):
     ax.set_xlim(x0 - width/2,  x0 + width/2)
     ax.set_ylim(y0 - height/2, y0 + height/2)
 
-##
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @param zoom (list[int]): List of zoom levels for different subplots.
-# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
-def plot_domain(file, postpone_show=False, zoom: list[int] = None, center_points: list[tuple] = None):
-    """It plots the domain and the mesh."""
+
+def plot_domain(file: h5py.File, 
+                postpone_show=False, 
+                zoom: list[int] = None, 
+                center_points: list[tuple] = None) -> None:
+    """
+    .. admonition:: Description
+        
+        It plots the domain and the mesh.
+        
+    :param file: h5py file object containing the solution data.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    :param zoom: List of zoom levels for different subplots.
+    :param center_points: List of center points :math:`(x_0, y_0)` for each zoom level.
+    """
     n = 1 if zoom is None else len(zoom)
     if n > 1:
         rows = max(1, math.floor(math.sqrt(n) * 0.75))
@@ -306,15 +338,26 @@ def plot_domain(file, postpone_show=False, zoom: list[int] = None, center_points
         plt.show()
     
 
-## 
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @param zoom (list[int]): List of zoom levels for different subplots.
-# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
-# @param pred (bool): Whether to plot the predicted potential.
-# @param error (bool): Whether to plot the error in potential prediction.
-def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_points: list[tuple] = None, pred: bool = False, error: bool = False, error_type: str ="se"):
-    """It plots the electrostatic potential over the domain."""
+def plot_potential(file: h5py.File, 
+                   postpone_show=False, 
+                   zoom: list[int] = None, 
+                   center_points: list[tuple] = None, 
+                   pred: bool = False, 
+                   error: bool = False, 
+                   error_type: str ="se") -> None:
+    """
+    .. admonition:: Description
+        
+        It plots the electrostatic potential over the domain.
+        
+    :param file: h5py file object containing the solution data.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    :param zoom: List of zoom levels for different subplots.
+    :param center_points: List of center points :math:`(x_0, y_0)` for each zoom level.
+    :param pred: Whether to plot the predicted potential.
+    :param error: Whether to plot the error in potential prediction.
+    :param error_type: Type of error to plot ("se" for squared error, "ae" for absolute error).
+    """
     n = 1 if zoom is None else len(zoom)
     if pred and error:
         raise ValueError("Cannot set both pred and error to True.")
@@ -426,15 +469,22 @@ def plot_potential(file, postpone_show=False, zoom: list[int] = None, center_poi
         plt.show()
 
     
-    
-##
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @param zoom (list[int]): List of zoom levels for different subplots.
-# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
-# @param component (str): Component of the gradient to plot ("x" or "y").
-def plot_grad(file, postpone_show=False, zoom: list[int] = None, center_points: list[tuple] = None, component: str ="x"):
-    """It plots the x component of the gradient of the electrostatic potential."""
+def plot_grad(file: h5py.File, 
+              postpone_show=False, 
+              zoom: list[int] = None, 
+              center_points: list[tuple] = None, 
+              component: str ="x"):
+    """
+    .. admonition:: Description
+        
+        It plots the x component of the gradient of the electrostatic potential.
+        
+    :param file: h5py file object containing the solution data.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    :param zoom: List of zoom levels for different subplots.
+    :param center_points: List of center points :math:`(x_0, y_0)` for each zoom level.
+    :param component: Component of the gradient to plot ("x" or "y").
+    """
     n = 1 if zoom is None else len(zoom)
     if n > 1:
         rows = max(1, math.floor(math.sqrt(n) * 0.75))
@@ -488,17 +538,25 @@ def plot_grad(file, postpone_show=False, zoom: list[int] = None, center_points: 
     plt.tight_layout()
     if not postpone_show:
         plt.show()
-    
-##
-# @param file (h5py.File): h5py file object containing the solution data.
-# @param postpone_show (bool): Whether to postpone the plt.show() call.
-# @param pred (bool): Whether to plot the predicted normal derivative.
-# @param error (bool): Whether to plot the error in normal derivative prediction.
-# @param zoom (list[int]): List of zoom levels for different subplots.
-# @param center_points (list[tuple]): List of center points (x0, y0) for each zoom level.
-# @note If both pred and error are True, a ValueError is raised.
+   
+
 def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, zoom: list[int] = None, center_points: list[tuple] = None):   
-    """It plots the normal derivative of the potential on the upper plate as arrows.""" 
+    """
+    .. admonition:: Description
+        
+        It plots the normal derivative of the potential on the upper plate as arrows.
+    
+    :param file: h5py file object containing the solution data.
+    :param postpone_show: Whether to postpone the ``plt.show()`` call.
+    :param pred: Whether to plot the predicted normal derivative.
+    :param error: Whether to plot the error in normal derivative prediction.
+    :param zoom: List of zoom levels for different subplots.
+    :param center_points: List of center points :math:`(x_0, y_0)` for each zoom level.
+    
+    .. note::
+    
+        If both pred and error are True, a ``ValueError`` is raised.
+    """ 
     n = 1 if zoom is None else len(zoom)
     if n > 1:
         rows = max(1, math.floor(math.sqrt(n) * 0.75))
@@ -574,10 +632,15 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
     if not postpone_show:
         plt.show()
 
-##
-# @param file (h5py.File): h5py file object containing the solution data.
-def summary_plot(file):
-    """It creates a summary plot with all relevant plots."""
+
+def summary_plot(file: h5py.File) -> None:
+    """
+    .. admonition:: Description
+        
+        It creates a summary plot with all relevant plots.
+        
+    :param file: h5py file object containing the solution data.
+    """
     plot_domain(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)])
     plot_potential(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)])
     plot_grad(file, postpone_show=True, zoom=[1, 4, 15], center_points=[(0,0), (0,0), (-50,0)], component="x")
