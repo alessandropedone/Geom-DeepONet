@@ -251,7 +251,7 @@ def solvensave(mesh: str, data_folder: str = "test") -> None:
     :param data_folder: path to the data folder.
     """
     if mesh.is_file() and mesh.suffix == ".msh":
-        x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate = _fom(mesh) 
+        x, y, cells, potential, grad_x, grad_y, midpoints_plate, normal_derivatives_plate, normal_vectors_plate = fom(mesh) 
         # Save the results in a .h5 file
         results_folder = Path(data_folder) / "results"
         base_name = os.path.splitext(os.path.basename(mesh))[0]

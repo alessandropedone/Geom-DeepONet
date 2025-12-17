@@ -792,3 +792,21 @@ class DeepONet(tf.keras.Model):
         plt.title('Training and Validation Loss', fontsize=16)
         plt.grid(True)
         plt.show()
+
+    def summary(self, **kwargs):
+        """
+        Prints a summary of the DeepONet model architecture.
+
+        :param kwargs: Additional keyword arguments to pass to the Keras summary method.
+        """
+        RED = "\033[91m"
+        RESET = "\033[0m"
+
+        print(f"{RED}DeepONet Model Summary:{RESET}")
+        super(DeepONet, self).summary(**kwargs)
+
+        print(f"\n\n{RED}Branch Network Summary:{RESET}")
+        self.branch.summary(**kwargs)
+
+        print(f"\n\n{RED}Trunk Network Summary:{RESET}")
+        self.trunk.summary(**kwargs)
