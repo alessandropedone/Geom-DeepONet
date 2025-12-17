@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Data package" href="data.html"><link rel="prev" title="Introduction" href="README.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
-        <title>surrogate - Geom-DeepONet 0.1.0 documentation</title>
+        <title>Test cases - Geom-DeepONet 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -172,7 +172,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -191,8 +191,9 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Test cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="surrogate.html">Surrogate package</a></li>
 </ul>
@@ -215,7 +216,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/modules.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/run_test_cases.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -228,74 +229,85 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="surrogate">
-<h1>surrogate<a class="headerlink" href="#surrogate" title="Link to this heading">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="surrogate.html">Surrogate package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#surrogate-evaluate">surrogate.evaluate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#module-surrogate.gpu">surrogate.gpu</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.gpu.run_on_device"><code class="docutils literal notranslate"><span class="pre">run_on_device()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#module-surrogate.load">surrogate.load</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.load.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#module-surrogate.losses">surrogate.losses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.losses.masked_mae"><code class="docutils literal notranslate"><span class="pre">masked_mae()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.losses.masked_mse"><code class="docutils literal notranslate"><span class="pre">masked_mse()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#module-surrogate.model">surrogate.model</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet"><code class="docutils literal notranslate"><span class="pre">DeepONet</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet.build"><code class="docutils literal notranslate"><span class="pre">DeepONet.build()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet.call"><code class="docutils literal notranslate"><span class="pre">DeepONet.call()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet.from_config"><code class="docutils literal notranslate"><span class="pre">DeepONet.from_config()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet.get_config"><code class="docutils literal notranslate"><span class="pre">DeepONet.get_config()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet.plot_training_history"><code class="docutils literal notranslate"><span class="pre">DeepONet.plot_training_history()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DeepONet.train_model"><code class="docutils literal notranslate"><span class="pre">DeepONet.train_model()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork"><code class="docutils literal notranslate"><span class="pre">DenseNetwork</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.adapt"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.adapt()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.build"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.build()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.call"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.call()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.from_config"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.from_config()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.get_config"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.get_config()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.plot_training_history"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.plot_training_history()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.DenseNetwork.train_model"><code class="docutils literal notranslate"><span class="pre">DenseNetwork.train_model()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.model.EinsumLayer"><code class="docutils literal notranslate"><span class="pre">EinsumLayer</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.EinsumLayer.call"><code class="docutils literal notranslate"><span class="pre">EinsumLayer.call()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.EinsumLayer.get_config"><code class="docutils literal notranslate"><span class="pre">EinsumLayer.get_config()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.model.FourierFeatures"><code class="docutils literal notranslate"><span class="pre">FourierFeatures</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.FourierFeatures.build"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.build()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.FourierFeatures.call"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.call()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.FourierFeatures.get_config"><code class="docutils literal notranslate"><span class="pre">FourierFeatures.get_config()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="surrogate.html#surrogate.model.LogUniformFreqInitializer"><code class="docutils literal notranslate"><span class="pre">LogUniformFreqInitializer</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="surrogate.html#surrogate.model.LogUniformFreqInitializer.get_config"><code class="docutils literal notranslate"><span class="pre">LogUniformFreqInitializer.get_config()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#surrogate-predict">surrogate.predict</a></li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#surrogate-train">surrogate.train</a></li>
-<li class="toctree-l2"><a class="reference internal" href="surrogate.html#module-surrogate">Module contents</a></li>
-</ul>
-</li>
-</ul>
+          <section id="test-cases">
+<h1>Test cases<a class="headerlink" href="#test-cases" title="Link to this heading">¶</a></h1>
+<p>In our test cases we proceed with the following structure in mind:</p>
+<ol class="arabic simple">
+<li><p>use the data generation pipeline we developed to produce an example of a dataset (smaller compared to the one we used to train the network);</p></li>
+<li><p>evaluate the performance of the models we trained on the new dataset;</p></li>
+<li><p>show the training pipeline building a new (weak) model on the new (small) dataset.</p></li>
+</ol>
+<section id="cantilevered-beam">
+<h2>1. Cantilevered beam<a class="headerlink" href="#cantilevered-beam" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><p>In this case the upper plate is clamped at the left end and free at the right one (i.e. it’s a cantilever).</p>
+</div></blockquote>
+<p>First you can create the <strong>dataset</strong>. Some plots of the domain and the (traditional) numerical solutions corresponding a combination of parameters present in the dataset you’ve just generated.
+If you want you can play with the number of <strong>workers</strong> to make the generation faster.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>data.generate<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--data_file<span class="w"> </span><span class="s2">&quot;test/test1.csv&quot;</span><span class="w"> </span>--geometry_input<span class="w"> </span><span class="s2">&quot;geometries/cantilever1.geo&quot;</span><span class="w"> </span>--workers<span class="w"> </span><span class="m">2</span>
+</pre></div>
 </div>
+<blockquote>
+<div><p>Note the real bottleneck of the process in this case is the mesh generation section, since the FOM (Full Order Model) is quite fast, since it’s only a laplacian.</p>
+</div></blockquote>
+<p>Then you can <strong>evaluate</strong> the model for the electrostatic potential we already trained on the test set you generated.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>surrogate.evaluate<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--model_path<span class="w"> </span><span class="s2">&quot;models/potential1.keras&quot;</span><span class="w"> </span>--target<span class="w"> </span><span class="s2">&quot;potential&quot;</span><span class="w"> </span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Since the process data splitting is random, we actually don’t know if the model has already seen the data we are generating here. So this is an unbiased estimator of the real performance of the model.</p>
+</div></blockquote>
+<p>Now you can visualize with some plots the predictions that the model can make.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>surrogate.predict<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--model_path<span class="w"> </span><span class="s2">&quot;models/potential1.keras&quot;</span><span class="w">  </span>--target<span class="w"> </span><span class="s2">&quot;potential&quot;</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>You can do the same for with the model for the normal derivative of the potential on the boundary of the upper plate.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>surrogate.evalutate<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--model_path<span class="w"> </span><span class="s2">&quot;models/derivative1.keras&quot;</span><span class="w"> </span>--target<span class="w"> </span><span class="s2">&quot;normal_derivative&quot;</span><span class="w"> </span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>surrogate.predict<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--model_path<span class="w"> </span><span class="s2">&quot;models/derivative1.keras&quot;</span><span class="w">  </span>--target<span class="w"> </span><span class="s2">&quot;normal_derivative&quot;</span><span class="w"> </span>
+</pre></div>
+</div>
+<p>If you want you can try training the model, with the dedicated module.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>surrogate.train<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--model_path<span class="w"> </span><span class="s2">&quot;models/potential.keras&quot;</span><span class="w"> </span>--target<span class="w"> </span><span class="s2">&quot;potential&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>surrogate.train<span class="w"> </span>--folder<span class="w"> </span><span class="s2">&quot;test/test1&quot;</span><span class="w"> </span>--model_path<span class="w"> </span><span class="s2">&quot;models/potential.keras&quot;</span><span class="w"> </span>--target<span class="w"> </span><span class="s2">&quot;normal_derivative&quot;</span>
+</pre></div>
+</div>
+<p>You are also able exploit a GPU if you have one, but you need to fulfill the (CUDA) requirements by modifying the environment by yourself (which could not be a straightforward task). For example, you may want to run in the terminal something like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>env-name
+conda<span class="w"> </span>install<span class="w"> </span>cuda-cudart<span class="w"> </span>cuda-version<span class="o">=</span><span class="m">12</span><span class="w"> </span>-y
+</pre></div>
+</div>
+<p>Logs of the training are available and you can open them in your browser using tensorboard:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tensorboard<span class="w"> </span>--logdir<span class="w"> </span>logs
+</pre></div>
+</div>
+</section>
+<section id="test-2-bigger-deformations">
+<h2>Test 2: Bigger Deformations<a class="headerlink" href="#test-2-bigger-deformations" title="Link to this heading">¶</a></h2>
+<p>You can just do the same as above but with the following changes:</p>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">test2</span></code> instead of <code class="docutils literal notranslate"><span class="pre">test1</span></code>;</p></li>
+<li><p>changing the reference geometry to <code class="docutils literal notranslate"><span class="pre">geometries/cantilever2.geo</span></code>;</p></li>
+<li><p>consider now the models <code class="docutils literal notranslate"><span class="pre">models/potential2.keras</span></code> and <code class="docutils literal notranslate"><span class="pre">models/derivative2.keras</span></code>.</p></li>
+</ul>
+</section>
+<section id="test-2-clamped-clamped-beam">
+<h2>Test 2: Clamped-Clamped Beam<a class="headerlink" href="#test-2-clamped-clamped-beam" title="Link to this heading">¶</a></h2>
+<p>You can just do the same as above but with the following changes:</p>
+<ul class="simple">
+<li><p>use <code class="docutils literal notranslate"><span class="pre">test3</span></code> instead of <code class="docutils literal notranslate"><span class="pre">test1</span></code>;</p></li>
+<li><p>changing the reference geometry to <code class="docutils literal notranslate"><span class="pre">geometries/clamed.geo</span></code>;</p></li>
+<li><p>consider now the models <code class="docutils literal notranslate"><span class="pre">models/potentia3.keras</span></code> and <code class="docutils literal notranslate"><span class="pre">models/derivative3.keras</span></code>.</p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -303,8 +315,26 @@
       <footer>
         
         <div class="related-pages">
-          
-          
+          <a class="next-page" href="data.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Data package</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="README.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Introduction</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -323,8 +353,29 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Test cases</a><ul>
+<li><a class="reference internal" href="#cantilevered-beam">1. Cantilevered beam</a></li>
+<li><a class="reference internal" href="#test-2-bigger-deformations">Test 2: Bigger Deformations</a></li>
+<li><a class="reference internal" href="#test-2-clamped-clamped-beam">Test 2: Clamped-Clamped Beam</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

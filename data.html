@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Surrogate package" href="surrogate.html"><link rel="prev" title="Introduction" href="README.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Surrogate package" href="surrogate.html"><link rel="prev" title="Test cases" href="run_test_cases.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
         <title>Data package - Geom-DeepONet 0.1.0 documentation</title>
@@ -193,6 +193,7 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="run_test_cases.html">Test cases</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Data package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="surrogate.html">Surrogate package</a></li>
 </ul>
@@ -618,23 +619,6 @@ in that folder avoid touching every file except the “geo” subfolder the para
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="data.mesh._remove_msh_files">
-<span class="sig-prename descclassname"><span class="pre">data.mesh.</span></span><span class="sig-name descname"><span class="pre">_remove_msh_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data/mesh.html#_remove_msh_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.mesh._remove_msh_files" title="Link to this definition">¶</a></dt>
-<dd><div class="admonition-description admonition">
-<p class="admonition-title">Description</p>
-<p>Remove all .msh files from the msh folder.</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_folder</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Path to the data folder.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="data.mesh.generate_meshes">
 <span class="sig-prename descclassname"><span class="pre">data.mesh.</span></span><span class="sig-name descname"><span class="pre">generate_meshes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_mesh_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data/mesh.html#generate_meshes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.mesh.generate_meshes" title="Link to this definition">¶</a></dt>
 <dd><div class="admonition-description admonition">
@@ -648,6 +632,23 @@ in that folder avoid touching every file except the “geo” subfolder the para
 <li><p><strong>empty_mesh_folder</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to empty the mesh folder before generating new meshes.</p></li>
 <li><p><strong>max_workers</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Maximum number of worker processes to use for parallel mesh generation.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="data.mesh.remove_msh_files">
+<span class="sig-prename descclassname"><span class="pre">data.mesh.</span></span><span class="sig-name descname"><span class="pre">remove_msh_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data/mesh.html#remove_msh_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.mesh.remove_msh_files" title="Link to this definition">¶</a></dt>
+<dd><div class="admonition-description admonition">
+<p class="admonition-title">Description</p>
+<p>Remove all .msh files from the msh folder.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_folder</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Path to the data folder.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
@@ -913,8 +914,18 @@ in that folder avoid touching every file except the “geo” subfolder the para
 </dd></dl>
 
 </section>
-<section id="data-remove-msh">
-<h2>data.remove_msh<a class="headerlink" href="#data-remove-msh" title="Link to this heading">¶</a></h2>
+<section id="module-data.remove_msh">
+<span id="data-remove-msh"></span><h2>data.remove_msh<a class="headerlink" href="#module-data.remove_msh" title="Link to this heading">¶</a></h2>
+<p>Script to remove all .msh files from a specified data folder.
+Example of usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">data</span><span class="o">.</span><span class="n">remove_msh</span> <span class="o">--</span><span class="n">folder</span> <span class="o">&lt;</span><span class="n">data_folder_path</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="data.remove_msh.main">
+<span class="sig-prename descclassname"><span class="pre">data.remove_msh.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/data/remove_msh.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.remove_msh.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-data.test">
 <span id="data-test"></span><h2>data.test<a class="headerlink" href="#module-data.test" title="Link to this heading">¶</a></h2>
@@ -971,14 +982,14 @@ It orchestrates the entire process by calling the relevant functions from other 
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="README.html">
+          <a class="prev-page" href="run_test_cases.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Introduction</div>
+                <div class="title">Test cases</div>
                 
               </div>
             </a>
@@ -1044,8 +1055,8 @@ It orchestrates the entire process by calling the relevant functions from other 
 <li><a class="reference internal" href="#module-data.mesh">data.mesh</a><ul>
 <li><a class="reference internal" href="#data.mesh._generate_mesh"><code class="docutils literal notranslate"><span class="pre">_generate_mesh()</span></code></a></li>
 <li><a class="reference internal" href="#data.mesh._generate_mesh_from_geo"><code class="docutils literal notranslate"><span class="pre">_generate_mesh_from_geo()</span></code></a></li>
-<li><a class="reference internal" href="#data.mesh._remove_msh_files"><code class="docutils literal notranslate"><span class="pre">_remove_msh_files()</span></code></a></li>
 <li><a class="reference internal" href="#data.mesh.generate_meshes"><code class="docutils literal notranslate"><span class="pre">generate_meshes()</span></code></a></li>
+<li><a class="reference internal" href="#data.mesh.remove_msh_files"><code class="docutils literal notranslate"><span class="pre">remove_msh_files()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-data.plot">data.plot</a><ul>
@@ -1061,7 +1072,10 @@ It orchestrates the entire process by calling the relevant functions from other 
 <li><a class="reference internal" href="#data.plot.summary_plot"><code class="docutils literal notranslate"><span class="pre">summary_plot()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#data-remove-msh">data.remove_msh</a></li>
+<li><a class="reference internal" href="#module-data.remove_msh">data.remove_msh</a><ul>
+<li><a class="reference internal" href="#data.remove_msh.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-data.test">data.test</a><ul>
 <li><a class="reference internal" href="#data.test.test"><code class="docutils literal notranslate"><span class="pre">test()</span></code></a></li>
 </ul>
