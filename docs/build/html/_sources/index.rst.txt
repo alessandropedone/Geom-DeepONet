@@ -16,5 +16,6 @@ Geom-DeepONet documentation
    :caption: Contents:
 
    README
+   run_test_cases
    data
    surrogate

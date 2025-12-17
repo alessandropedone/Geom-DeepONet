@@ -5,7 +5,7 @@ from tqdm import tqdm
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
-def _remove_msh_files(data_folder: str = "test") -> None:
+def remove_msh_files(data_folder: str = "test") -> None:
     """
     .. admonition:: Description
 

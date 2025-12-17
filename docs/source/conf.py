@@ -38,4 +38,3 @@ autodoc_default_options = {'members': True, 'private-members': True}
 html_theme = "furo"
 html_static_path = ['_static']
 
-
