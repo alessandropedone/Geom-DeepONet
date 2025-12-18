@@ -5,7 +5,7 @@ In our test cases we proceed with the following structure in mind:
 2. evaluate the performance of the models we trained on the new dataset;
 3. show the training pipeline building a new (weak) model on the new (small) dataset.
 
-## 1. Cantilevered beam
+## Test 1. Cantilevered beam
 
 > In this case the upper plate is clamped at the left end and free at the right one (i.e. it's a cantilever).
 
@@ -66,7 +66,7 @@ You can just do the same as above but with the following changes:
 - changing the reference geometry to `geometries/cantilever2.geo`; 
 - consider now the models `models/potential2.keras` and `models/derivative2.keras`.
 
-## Test 2: Clamped-Clamped Beam
+## Test 3: Clamped-Clamped Beam
 
 You can just do the same as above but with the following changes:
 - use `test3` instead of `test1`;
