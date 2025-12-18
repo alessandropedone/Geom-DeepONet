@@ -38,4 +38,5 @@ autodoc_default_options = {'members': True, 'private-members': True}
 html_theme = "furo"
 html_static_path = ['_static']
 html_baseurl = "https://alessandropedone.github.io/Geom-DeepONet/"
-
+html_use_index = True
+html_use_directory_urls = False
