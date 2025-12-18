@@ -176,7 +176,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -236,31 +236,27 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="geom-deeponet-documentation">
 <h1>Geom-DeepONet documentation<a class="headerlink" href="#geom-deeponet-documentation" title="Link to this heading">¶</a></h1>
-</section>
 <section id="abstract">
-<span id="id1"></span><h1>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">¶</a></h1>
+<span id="id1"></span><h2>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">¶</a></h2>
 <p>This project tackles the simulation of coupled electrostatic and mechanical phenomena in MEMS (Micro-Electro-Mechanical Systems) devices, whose widespread adoption in contemporary technologies makes accurate yet efficient modeling essential.</p>
 <p>Full-order numerical solvers quickly become computationally prohibitive for realistic geometries, and in such cases one of the possible solutions could be relying on reduced-order modeling.</p>
 <p>Indeed, we choose to do so: we construct an idealized test case that preserves the key physical features, then we develop a reduced-order model based on recent Deep Learning–based ROM (DL-ROM) techniques, in particular DeepONets, exploiting an approximation of mechanical deformation grounded in Euler–Bernoulli beam theory in order to design it to interface with a finite-element solver for the mechanical response.</p>
 <p>A brief literature review frames our methodology within current trends in MEMS modeling and data-driven model reduction.</p>
-<section id="tools">
-<h2>Tools<a class="headerlink" href="#tools" title="Link to this heading">¶</a></h2>
+<p><strong>Tools:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">gmsh</span></code> has been used for geometry and meshing</p></li>
 <li><p>TensorFlow/Keras for the network architecture</p></li>
 <li><p>Sphinx for the documentation</p></li>
 </ul>
-</section>
-<section id="keywords">
-<h2>Keywords<a class="headerlink" href="#keywords" title="Link to this heading">¶</a></h2>
-<p>DeepONet, DL-ROM, MEMS, Euler-Bernoulli beam theory</p>
+<p><strong>Keywords:</strong> DeepONet, DL-ROM, MEMS, Euler-Bernoulli beam theory</p>
+<p><strong>Authors:</strong> Alessandro Pedone, Marta Pignatelli</p>
 </section>
 <section id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Link to this heading">¶</a></h2>
@@ -308,8 +304,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Geom-DeepONet documentation</a><ul>
+<li><a class="reference internal" href="#abstract">Abstract</a></li>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

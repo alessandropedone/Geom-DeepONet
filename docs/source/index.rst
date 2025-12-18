@@ -12,7 +12,7 @@ Geom-DeepONet documentation
 .. _abstract:
 
 Abstract
-========
+--------
 
 This project tackles the simulation of coupled electrostatic and mechanical phenomena in MEMS (Micro-Electro-Mechanical Systems) devices, whose widespread adoption in contemporary technologies makes accurate yet efficient modeling essential.
 
@@ -22,17 +22,15 @@ Indeed, we choose to do so: we construct an idealized test case that preserves t
 
 A brief literature review frames our methodology within current trends in MEMS modeling and data-driven model reduction.
 
-Tools
------
+**Tools:**
 
 - ``gmsh`` has been used for geometry and meshing
 - TensorFlow/Keras for the network architecture
 - Sphinx for the documentation
 
-Keywords
---------
+**Keywords:** DeepONet, DL-ROM, MEMS, Euler-Bernoulli beam theory
 
-DeepONet, DL-ROM, MEMS, Euler-Bernoulli beam theory
+**Authors:** Alessandro Pedone, Marta Pignatelli
 
 Contents
 --------
