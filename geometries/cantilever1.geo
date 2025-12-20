@@ -26,19 +26,19 @@ L = 100 - overetch;
 n = 4; 
 
 // 1st mode coefficient
-coeff(1) = -0.15;
+coeff(1) = -0.12;
 beta(1) = 0.596864 * 3.1415926535 / L;
 
 // 2nd mode coefficient
-coeff(2) = -0.15;
+coeff(2) = -0.12;
 beta(2) = 1.49418 * 3.1415926535 / L;
 
 // 3rd mode coefficient
-coeff(3) = -0.15;
+coeff(3) = -0.12;
 beta(3) = 2.50025 * 3.1415926535 / L;
 
 // 4th mode coefficient
-coeff(4) = -0.15;
+coeff(4) = -0.12;
 beta(4) = 3.49999 * 3.1415926535 / L;
 
 
@@ -108,10 +108,10 @@ Plane Surface(1) = {1};
 //---------------------------------------
 
 // Vertices
-Point(1001) = {-50, -1, 0, 1.0};
-Point(1002) = { 50, -1, 0, 1.0};
-Point(1003) = { 50,  -5, 0, 1.0};
-Point(1004) = {-50,  -5, 0, 1.0};
+Point(1001) = {-50, -distance/2, 0, 1.0};
+Point(1002) = { 50, -distance/2, 0, 1.0};
+Point(1003) = { 50, -distance/2-4, 0, 1.0};
+Point(1004) = {-50, -distance/2-4, 0, 1.0};
 
 // Edges
 Line(5) = {1001, 1002};
@@ -157,14 +157,14 @@ BooleanDifference{ Surface{3}; Delete; }{ Surface{1}; Surface{2}; Delete; }
 //---------------------------------------
 
 // Set the number of points on the boundaries
-r = 12;
+r = 16;
 d = 0.15;
 
 // Plates
 Transfinite Curve {1} = 50*r/4 Using Progression 1;
 Transfinite Line {2} = 50*r Using Progression 1;
 Transfinite Curve {3, 4} = 2*r Using Progression 1+d;
-Transfinite Line {5} = 50*r Using Progression 1;
+Transfinite Line {5} = 50*r  Using Progression 1;
 Transfinite Line {7} = 50*r/4 Using Progression 1;
 Transfinite Line {6} = 2*r Using Progression 1+d;
 Transfinite Line {8} = 2*r Using Progression 1-d;
