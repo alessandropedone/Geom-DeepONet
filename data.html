@@ -869,11 +869,10 @@ in that folder avoid touching every file except the “geo” subfolder the para
 <li><p><strong>center_points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code>]]</span>) – List of center points <span class="math notranslate nohighlight">\((x_0, y_0)\)</span> for each zoom level.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If both pred and error are set to True.</p>
+</dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If both pred and error are True, a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> is raised.</p>
-</div>
 </dd></dl>
 
 <dl class="py function">
@@ -962,11 +961,11 @@ It orchestrates the entire process by calling the relevant functions from other 
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If plot_number is None, no plots are generated.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">plot_number</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, no plots are generated.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The geometry generation is skipped if one of the empty_old_mesh or empty_old_results is False.</p>
+<p>The geometry generation is skipped if one of the <code class="docutils literal notranslate"><span class="pre">empty_old_mesh</span></code> or <code class="docutils literal notranslate"><span class="pre">empty_old_results</span></code> is False.</p>
 </div>
 </dd></dl>
 

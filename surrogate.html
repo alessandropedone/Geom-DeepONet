@@ -965,12 +965,14 @@ to the solution of a physical problem.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">surrogate</span><span class="o">.</span><span class="n">train</span> <span class="o">--</span><span class="n">folder</span> <span class="s2">&quot;test/test1&quot;</span> <span class="o">--</span><span class="n">model_path</span> <span class="s2">&quot;models/potential.keras&quot;</span> <span class="o">--</span><span class="n">target</span> <span class="s2">&quot;potential&quot;</span>
 </pre></div>
 </div>
-<p>There are several optional arguments to customize the behavior:
-- <code class="docutils literal notranslate"><span class="pre">--folder</span></code>: Path to the data folder (default: “test”).
-- <code class="docutils literal notranslate"><span class="pre">--model_path</span></code>: Path to save the trained model (default: “models/model.keras”).
-- <code class="docutils literal notranslate"><span class="pre">--r</span></code>: Low-rank dimension of the DeepONet (default: <span class="math notranslate nohighlight">\(20\)</span>).
-- <code class="docutils literal notranslate"><span class="pre">--seed</span></code>: Random seed for data splitting (default: <span class="math notranslate nohighlight">\(40\)</span>).
-- <code class="docutils literal notranslate"><span class="pre">--target</span></code>: Target quantity to predict, either “potential” or “normal_derivative” (default: “potential”).</p>
+<p>There are several optional arguments to customize the behavior:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--folder</span></code>: Path to the data folder (default: “test”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model_path</span></code>: Path to save the trained model (default: “models/model.keras”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--r</span></code>: Low-rank dimension of the DeepONet (default: <span class="math notranslate nohighlight">\(20\)</span>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--seed</span></code>: Random seed for data splitting (default: <span class="math notranslate nohighlight">\(40\)</span>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--target</span></code>: Target quantity to predict, either “potential” or “normal_derivative” (default: “potential”).</p></li>
+</ul>
 <dl class="py function">
 <dt class="sig sig-object py" id="surrogate.train.main">
 <span class="sig-prename descclassname"><span class="pre">surrogate.train.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/train.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.train.main" title="Link to this definition">¶</a></dt>
