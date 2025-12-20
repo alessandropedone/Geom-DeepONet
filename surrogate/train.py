@@ -8,6 +8,7 @@ Example usage::
     python -m surrogate.train --folder "test/test1" --model_path "models/potential.keras" --target "potential"
 
 There are several optional arguments to customize the behavior:
+
 - ``--folder``: Path to the data folder (default: "test").
 - ``--model_path``: Path to save the trained model (default: "models/model.keras").
 - ``--r``: Low-rank dimension of the DeepONet (default: :math:`20`).

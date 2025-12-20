@@ -34,11 +34,11 @@ def test(names: list[str],
 
     .. note:: 
         
-        If plot_number is None, no plots are generated.
+        If ``plot_number`` is ``None``, no plots are generated.
 
     .. note:: 
         
-        The geometry generation is skipped if one of the empty_old_mesh or empty_old_results is False.
+        The geometry generation is skipped if one of the ``empty_old_mesh`` or ``empty_old_results`` is False.
     """
     if empty_old_mesh and empty_old_results:
         generate_geometries(

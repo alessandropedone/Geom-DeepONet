@@ -553,9 +553,7 @@ def plot_normal_derivative(file, postpone_show=False, pred=False, error=False, z
     :param zoom: List of zoom levels for different subplots.
     :param center_points: List of center points :math:`(x_0, y_0)` for each zoom level.
     
-    .. note::
-    
-        If both pred and error are True, a ``ValueError`` is raised.
+    :raises ValueError: If both pred and error are set to True.
     """ 
     n = 1 if zoom is None else len(zoom)
     if n > 1:
