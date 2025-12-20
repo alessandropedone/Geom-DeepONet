@@ -3,12 +3,16 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+        <link rel="canonical" href="https://alessandropedone.github.io/Geom-DeepONet/_modules/data/geometry.html">
+        <link rel="prefetch" href="../../_static/_static/logo-light.svg" as="image">
+        <link rel="prefetch" href="../../_static/_static/logo-dark.svg" as="image">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
         <title>data.geometry - Geom-DeepONet 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     
     
 
@@ -180,6 +184,10 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../_static/_static/logo-light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../_static/_static/logo-dark.svg" alt="Dark Logo"/>
+  </div>
   
   <span class="sidebar-brand-text">Geom-DeepONet 0.1.0 documentation</span>
   
@@ -189,8 +197,7 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+  <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../run_test_cases.html">Test cases</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data.html">Data package</a></li>
@@ -328,7 +335,12 @@
 <span class="sd">        - **names** (``list``) -- Variable names</span>
 <span class="sd">        - **ranges** (``list[tuple]``) -- Value ranges for each variable</span>
 <span class="sd">        - **num_points** (``list``) -- Number of points per variable</span>
+
+<span class="sd">    :raises FileNotFoundError: If the specified data file does not exist.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The specified data file &#39;</span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&#39; does not exist.&quot;</span><span class="p">)</span>
 
     <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">ranges</span> <span class="o">=</span> <span class="p">[]</span>

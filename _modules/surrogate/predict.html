@@ -268,6 +268,8 @@
 
 <span class="sd">    :returns:</span>
 <span class="sd">        - test_sample_number (``int``) -- The index of the test sample in ``parameters.csv``.</span>
+
+<span class="sd">    :raises ValueError: If the test sample mu is not found in ``parameters.csv``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parameters_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_folder</span><span class="p">,</span> <span class="s2">&quot;parameters.csv&quot;</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">parameters_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>

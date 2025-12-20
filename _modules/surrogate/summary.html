@@ -1,15 +1,18 @@
 <!doctype html>
-<html class="no-js" lang="en" data-content_root="./">
-  <head>
-<meta charset="utf-8">
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="#">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+        <link rel="canonical" href="https://alessandropedone.github.io/Geom-DeepONet/_modules/surrogate/summary.html">
+        <link rel="prefetch" href="../../_static/_static/logo-light.svg" as="image">
+        <link rel="prefetch" href="../../_static/_static/logo-dark.svg" as="image">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
-<meta name="robots" content="noindex" />
-<title>Search - Geom-DeepONet 0.1.0 documentation</title><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+        <title>surrogate.summary - Geom-DeepONet 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     
     
 
@@ -161,7 +164,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Geom-DeepONet 0.1.0 documentation</div></a>
+      <a href="../../index.html"><div class="brand">Geom-DeepONet 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -180,21 +183,25 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../_static/_static/logo-light.svg" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../_static/_static/logo-dark.svg" alt="Dark Logo"/>
+  </div>
   
   <span class="sidebar-brand-text">Geom-DeepONet 0.1.0 documentation</span>
   
-</a><form class="sidebar-search-container" method="get" action="#" role="search">
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="run_test_cases.html">Test cases</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data.html">Data package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="surrogate.html">Surrogate package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../run_test_cases.html">Test cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data.html">Data package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../surrogate.html">Surrogate package</a></li>
 </ul>
 
 </div>
@@ -227,18 +234,51 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<noscript>
-<div class="admonition error">
-  <p class="admonition-title">Error</p>
-  <p>
-    Please activate JavaScript to enable the search functionality.
-  </p>
-</div>
-</noscript>
+          <h1>Source code for surrogate.summary</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A file to summarize the specified surrogate model.</span>
 
-<div id="search-results"></div>
+<span class="sd">Example usage::</span>
+<span class="sd">    </span>
+<span class="sd">    python -m surrogate.summary --model_path &quot;models/potential1.keras&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../surrogate.html#surrogate.summary.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Read input arguments</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--model_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;models/model.keras&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to save the trained model.&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">model_path</span>
+
+    <span class="c1"># Load the trained model</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">DenseNetwork</span><span class="p">,</span> <span class="n">FourierFeatures</span><span class="p">,</span> <span class="n">LogUniformFreqInitializer</span><span class="p">,</span> <span class="n">EinsumLayer</span><span class="p">,</span> <span class="n">DeepONet</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.losses</span><span class="w"> </span><span class="kn">import</span> <span class="n">masked_mse</span><span class="p">,</span> <span class="n">masked_mae</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span>
+        <span class="n">model_path</span><span class="p">,</span> 
+        <span class="n">custom_objects</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;DenseNetwork&quot;</span><span class="p">:</span> <span class="n">DenseNetwork</span><span class="p">,</span> 
+            <span class="s1">&#39;FourierFeatures&#39;</span><span class="p">:</span> <span class="n">FourierFeatures</span><span class="p">,</span> 
+            <span class="s1">&#39;LogUniformFreqInitializer&#39;</span><span class="p">:</span> <span class="n">LogUniformFreqInitializer</span><span class="p">,</span> 
+            <span class="s1">&#39;EinsumLayer&#39;</span><span class="p">:</span> <span class="n">EinsumLayer</span><span class="p">,</span> 
+            <span class="s1">&#39;DeepONet&#39;</span><span class="p">:</span> <span class="n">DeepONet</span><span class="p">,</span>
+            <span class="s1">&#39;masked_mse&#39;</span><span class="p">:</span> <span class="n">masked_mse</span><span class="p">,</span>
+            <span class="s1">&#39;masked_mae&#39;</span><span class="p">:</span> <span class="n">masked_mae</span><span class="p">,</span>
+            <span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[38;2;0;175;6m</span><span class="se">\n\n</span><span class="s2">Loaded surrogate model summary.</span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
         </article>
       </div>
       <footer>
@@ -270,12 +310,9 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=01f34227"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
-    
-<script src="_static/searchtools.js"></script>
-<script src="_static/language_data.js"></script>
-<script src="searchindex.js"></script></body>
+</div><script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
 </html>

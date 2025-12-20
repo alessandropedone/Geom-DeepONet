@@ -4,16 +4,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Data package" href="data.html">
-        <link rel="canonical" href="https://alessandropedone.github.io/Geom-DeepONet/surrogate.html">
-        <link rel="prefetch" href="_static/_static/logo-light.svg" as="image">
-        <link rel="prefetch" href="_static/_static/logo-dark.svg" as="image">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
         <title>Surrogate package - Geom-DeepONet 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
     
     
 
@@ -185,10 +181,6 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
-  <div class="sidebar-logo-container">
-    <img class="sidebar-logo only-light" src="_static/_static/logo-light.svg" alt="Light Logo"/>
-    <img class="sidebar-logo only-dark" src="_static/_static/logo-dark.svg" alt="Dark Logo"/>
-  </div>
   
   <span class="sidebar-brand-text">Geom-DeepONet 0.1.0 documentation</span>
   
@@ -320,6 +312,12 @@ It pads the data arrays to ensure uniform lengths across all samples.</p>
 <li><p>y (<code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>) – y-coordinates of the domain points.</p></li>
 </ul>
 </p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the specified data folder does not exist.</p></li>
+<li><p><strong>FileNotFoundError</strong> – If the results folder does not exist.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -933,12 +931,28 @@ If you are using the model we trained just keep the default value of <span class
 </ul>
 </p>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the test sample mu is not found in <code class="docutils literal notranslate"><span class="pre">parameters.csv</span></code>.</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="surrogate.predict.main">
 <span class="sig-prename descclassname"><span class="pre">surrogate.predict.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/predict.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.predict.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-surrogate.summary">
+<span id="surrogate-summary"></span><h2>surrogate.summary<a class="headerlink" href="#module-surrogate.summary" title="Link to this heading">¶</a></h2>
+<p>A file to summarize the specified surrogate model.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">surrogate</span><span class="o">.</span><span class="n">summary</span> <span class="o">--</span><span class="n">model_path</span> <span class="s2">&quot;models/potential1.keras&quot;</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="surrogate.summary.main">
+<span class="sig-prename descclassname"><span class="pre">surrogate.summary.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/surrogate/summary.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#surrogate.summary.main" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -1096,6 +1110,10 @@ and spatial coordinates to the solution of the physical problem.</p>
 <li><a class="reference internal" href="#module-surrogate.predict">surrogate.predict</a><ul>
 <li><a class="reference internal" href="#surrogate.predict._find_id"><code class="docutils literal notranslate"><span class="pre">_find_id()</span></code></a></li>
 <li><a class="reference internal" href="#surrogate.predict.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-surrogate.summary">surrogate.summary</a><ul>
+<li><a class="reference internal" href="#surrogate.summary.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-surrogate.train">surrogate.train</a><ul>
