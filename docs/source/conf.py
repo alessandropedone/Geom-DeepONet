@@ -38,25 +38,3 @@ autodoc_default_options = {'members': True, 'private-members': True}
 html_theme = "furo"
 html_static_path = ['_static']
 
-# Base URL for GitHub Pages (used for canonical links / SEO)
-html_baseurl = "https://alessandropedone.github.io/Geom-DeepONet/"
-
-# Ensure Furo generates relative URLs correctly for GitHub Pages
-html_theme_options = {
-    "light_logo": "_static/logo-light.svg",
-    "dark_logo": "_static/logo-dark.svg",
-    "sidebar_hide_name": False,
-}
-
-# Optional: GitHub integration in the top-right corner
-html_context = {
-    "display_github": True,
-    "github_user": "alessandropedone",
-    "github_repo": "Geom-DeepONet",
-    "github_version": "main/docs/",  # points to docs folder in main branch
-}
-
-# Extra CSS/JS if needed
-html_css_files = [
-    "custom.css",
-]

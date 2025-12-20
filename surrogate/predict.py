@@ -29,6 +29,8 @@ def _find_id(mu: np.ndarray,
 
     :returns:
         - test_sample_number (``int``) -- The index of the test sample in ``parameters.csv``.
+
+    :raises ValueError: If the test sample mu is not found in ``parameters.csv``.
     """
     parameters_file = os.path.join(data_folder, "parameters.csv")
     with open(parameters_file, 'r') as f:

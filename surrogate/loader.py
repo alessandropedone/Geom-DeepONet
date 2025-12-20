@@ -18,8 +18,14 @@ def load(data_folder: str = "test") -> tuple[np.ndarray, np.ndarray, np.ndarray,
         - mu (``np.ndarray``) -- Geometrical parameters.
         - x (``np.ndarray``) -- x-coordinates of the domain points.
         - y (``np.ndarray``) -- y-coordinates of the domain points.
+    
+    :raises FileNotFoundError: If the specified data folder does not exist.
+    :raises FileNotFoundError: If the results folder does not exist.
         
     """
+    
+    if not os.path.exists(data_folder):
+        raise FileNotFoundError(f"The specified data folder '{data_folder}' does not exist.")
     
     # Empty lists to collect data from all files
     x = []
@@ -31,6 +37,9 @@ def load(data_folder: str = "test") -> tuple[np.ndarray, np.ndarray, np.ndarray,
 
     # Define the results folder path
     results_folder = f"{data_folder}/results"
+    
+    if not os.path.exists(results_folder):
+        raise FileNotFoundError(f"The specified results folder '{results_folder}' does not exist.")
 
     # Loop through all HDF5 files in the results folder
     for i in range(len(os.listdir(results_folder))):

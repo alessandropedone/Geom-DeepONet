@@ -93,7 +93,12 @@ def read_data_file(file_path: str = "test.csv") -> tuple:
         - **names** (``list``) -- Variable names
         - **ranges** (``list[tuple]``) -- Value ranges for each variable
         - **num_points** (``list``) -- Number of points per variable
+
+    :raises FileNotFoundError: If the specified data file does not exist.
     """
+
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"The specified data file '{file_path}' does not exist.")
 
     names = []
     ranges = []

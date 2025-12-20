@@ -56,6 +56,14 @@ surrogate.predict
    :undoc-members:
    :show-inheritance:
 
+surrogate.summary
+----------------------
+
+.. automodule:: surrogate.summary
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 surrogate.train
 ----------------------
 

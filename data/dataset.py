@@ -29,6 +29,8 @@ def generate_datasets(data_folder: str = "test", empty_results_folder: bool = Tr
 
     :param data_folder: path to the data folder.
     :param empty_results_folder: Whether to empty the results folder before generating new datasets.
+
+    :raises FileNotFoundError: If the mesh folder does not exist.
     """
     # Set up the environment
     if empty_results_folder:
@@ -36,6 +38,8 @@ def generate_datasets(data_folder: str = "test", empty_results_folder: bool = Tr
 
     # Get the list of mesh files
     mesh_folder_path = Path(f"{data_folder}/msh")
+    if not mesh_folder_path.exists():
+        raise FileNotFoundError(f"The specified mesh folder '{mesh_folder_path}' does not exist.")
     meshes = list(mesh_folder_path.iterdir())
 
     # Process only the meshes that don't have a corresponding results file yet
