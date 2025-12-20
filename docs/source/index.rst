@@ -25,6 +25,7 @@ A brief literature review frames our methodology within current trends in MEMS m
 **Tools:**
 
 - ``gmsh`` has been used for geometry and meshing
+- FEniCSx for high-fidelity data generation
 - TensorFlow/Keras for the network architecture
 - Sphinx for the documentation
 

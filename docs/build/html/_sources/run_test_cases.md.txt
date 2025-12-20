@@ -70,5 +70,5 @@ You can just do the same as above but with the following changes:
 
 You can just do the same as above but with the following changes:
 - use `test3` instead of `test1`;
-- changing the reference geometry to `geometries/clamed.geo`; 
-- consider now the models `models/potentia3.keras` and `models/derivative3.keras`.
+- changing the reference geometry to `geometries/clamped.geo`; 
+- consider now the models `models/potential3.keras` and `models/derivative3.keras`.
