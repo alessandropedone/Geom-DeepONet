@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Geom-DeepONet'
+project = 'deeponet-for-mems'
 copyright = '2025, Alessandro Pedone, Marta Pignatelli'
 author = 'Alessandro Pedone, Marta Pignatelli'
 release = '0.1.0'
